@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% load static %}
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="{% static 'css/job_signup_form.css' %}">
+    </head>
+    <body>
+        <h3>Please fill this form</h3>
+        <div class="form_div">
+            <form action method="post">
+                {% csrf_token %}
+                <div class="labels">
+
+                    <div class="labels_basic">
+                        <div class="cell">
+                            <label for>Fullname</label>
+                            <input name="fullname" type="text">
+                        </div>
+                        <div class="cell">
+                            <label for>Date of birth</label>
+                            <input name="dob" type="date">
+                        </div>
+                        <div class="cell">
+                            <label for>Gender</label>
+                            <select name="gender" id>
+                                <option value disabled>Select gender</option>
+                                <option value="male">male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="cell">
+                            <label for>Phone</label>
+                            <input name="phone" type="text" maxlength="10">
+                        </div>
+                        <div class="cell">
+                            <label for>E mail</label>
+                            <input name="email" type="email">
+                        </div>
+                        <div class="cell">
+                            <label for>Photo</label>
+                            <input name="photo" type="file" accept="image/*">
+                        </div>
+                    </div>
+
+                    <div class="labels_location">
+                        <div class="cell">
+                            <label for>Town/City/Neighbourhood</label>
+                            <input type="text">
+                        </div>
+                        <div class="cell">
+                            <label for>Pincode</label>
+                            <input type="text" maxlength="6">
+                        </div>                                          
+                    </div>
+
+                    <div class="skills">
+                        <div class="cell">
+                            <label for>Categories</label>
+                            <select name="categories" id>
+                                <option value="" disabled selected>Select Catogary</option>
+                                <option value>Electrical</option>
+                                <option value>Plumbing</option>
+                                <option value>Cleaning</option>
+                                <option value>Carpentry</option>
+                                <option value>Gardening</option>
+                                <option value>Moving</option>
+                                <option value>Other</option>
+                            </select>
+                        </div>
+                        <div class="cell">
+                            <label for>Availability</label>
+                            <select name="availability" id="">
+                                <option value="" disabled selected>Select Availability</option>
+                                <option value="weekdays">Weekdays</option>
+                                <option value="weekends">Weekends</option>
+                                <option value="allday">all day</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="cell">
+                            <label for>Experience</label>
+                            <textarea name="experience" id=""></textarea>
+                        </div>
+                        <div class="cell">
+                            <label for>Bio</label>
+                            <textarea name="bio" id="" cols="20" rows="5" placeholder="Tell us about yourself.."></textarea>
+                        </div>
+                    </div>
+                    <div class="submit_div"><button type="submit">Submit</button></div>                   
+                </div>
+
+            </form>
+        </div>
+    </body>
+</html>
