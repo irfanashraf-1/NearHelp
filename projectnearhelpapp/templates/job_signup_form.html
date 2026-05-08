@@ -10,7 +10,7 @@
     <body>
         <h3>Please fill this form</h3>
         <div class="form_div">
-            <form action method="post">
+            <form action="{% url 'Login_page' %}" method="post">
                 {% csrf_token %}
                 <div class="labels">
 
@@ -54,43 +54,57 @@
                         <div class="cell">
                             <label for>Pincode</label>
                             <input type="text" maxlength="6">
-                        </div>                                          
+                        </div>
                     </div>
 
                     <div class="skills">
                         <div class="cell">
                             <label for>Categories</label>
                             <select name="categories" id>
-                                <option value="" disabled selected>Select Catogary</option>
-                                <option value>Electrical</option>
-                                <option value>Plumbing</option>
-                                <option value>Cleaning</option>
-                                <option value>Carpentry</option>
-                                <option value>Gardening</option>
-                                <option value>Moving</option>
-                                <option value>Other</option>
+                                <option value disabled selected>Select
+                                    Category</option>
+                                <option value="Electrical">Electrical</option>
+                                <option value="Plumbing">Plumbing</option>
+                                <option value="Cleaning">Cleaning</option>
+                                <option value="Carpentry">Carpentry</option>
+                                <option value="Gardening">Gardening</option>
+                                <option value="Moving">Moving</option>
+                                <option value="Other">Other</option>
                             </select>
                         </div>
                         <div class="cell">
                             <label for>Availability</label>
-                            <select name="availability" id="">
-                                <option value="" disabled selected>Select Availability</option>
+                            <select name="availability" id>
+                                <option value disabled selected>Select
+                                    Availability</option>
                                 <option value="weekdays">Weekdays</option>
                                 <option value="weekends">Weekends</option>
                                 <option value="allday">all day</option>
                                 <option value="other">Other</option>
                             </select>
                         </div>
-                        <div class="cell">
+                        <!-- <div class="cell">
                             <label for>Experience</label>
-                            <textarea name="experience" id=""></textarea>
+                            <textarea name="experience" id></textarea>
                         </div>
                         <div class="cell">
                             <label for>Bio</label>
-                            <textarea name="bio" id="" cols="20" rows="5" placeholder="Tell us about yourself.."></textarea>
+                            <textarea name="bio" id cols="20" rows="5"
+                                placeholder="Tell us about yourself.."></textarea>
+                        </div> -->
+                        <div class="cell">
+                            <label for>Password</label>
+                            <input name="password" type="password"
+                                minlength="8">
+                        </div>
+                        <div class="cell">
+                            <label for>Confirm Password</label>
+                            <input name="confirm_passsword" type="password"
+                                minlength="8">
                         </div>
                     </div>
-                    <div class="submit_div"><button type="submit">Submit</button></div>                   
+                    <div class="submit_div"><button
+                            type="submit">Submit</button></div>
                 </div>
 
             </form>

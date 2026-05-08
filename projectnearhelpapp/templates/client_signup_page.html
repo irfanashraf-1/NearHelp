@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>signup / login</title>
+</head>
+<body>
+    <H2>signup/<a href="{% url 'Login_page' %}">Login</a></H2>
+    <div class="form_div">
+        <form action="{% url 'Login_page' %}" method="post">
+            {% csrf_token %}
+            <div class="cell">
+                <label for="">Full name</label>
+                <input name="fullname" type="text">
+            </div>
+            <div class="cell">
+                <label for="">Phone number</label>
+                <input name="phone_number" type="text" maxlength="10" minlength="10"> 
+            </div>
+            <div class="cell">
+                <label for="">E mail</label>
+                <input name="email" type="email">
+            </div>
+            <div class="cell">
+                <label for="">Area/neighbourhood</label>
+                <input name="area" type="text">
+            </div>
+            <div class="cell">
+                <label for="">Town/City</label>
+                <input name="town" type="text">
+            </div>
+            <!-- <div class="cell">
+                <label for="">City</label>
+                <input name="city" type="text">
+            </div> -->
+            <div class="cell">
+                <label for="">PIN</label>
+                <input name="pin" type="text" maxlength="6">
+            </div>
+            <div class="cell">
+                <label for="">Password</label>
+                <input name="password" type="password" minlength="8">
+            </div>
+            <div class="cell">
+                <label for="">Confirm Password</label>
+                <input name="confirm_passsword" type="password" minlength="8">
+            </div>
+            <div class="submit_div"><button type="submit">Submit</button></div>
+        </form>
+    </div>
+</body>
+</html>
