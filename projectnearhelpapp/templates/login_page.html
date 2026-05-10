@@ -6,9 +6,15 @@
     <title>Login</title>
 </head>
 <body>
+    <div class="flash-messages">
+        {% for i in messages %}
+        <h1>{{i}}</h1>
+        {% endfor %}
+    </div>
+    
     <h1>Login</h1>
     <div class="form_div">
-        <form action="" method="post">
+        <form action="{% url 'Login' %}" method="post">
             {% csrf_token %}
             <div class="cell">
                 <label for="">Phone number</label>
@@ -18,10 +24,10 @@
                 <label for="">Password</label>
                 <input name="password" type="password">
             </div>
-            <div class="cell">
+            <!-- <div class="cell">
                 <label for="">Confirm password</label>
                 <input name="confirm_password" type="password">
-            </div>
+            </div> -->
             <div><button type="submit">Submit</button></div>
         </form>
     </div>

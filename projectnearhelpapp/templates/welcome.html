@@ -8,10 +8,11 @@
     </head>
     <body>
         <h1>WELCOME</h1>
-        <h3>Looking for ..</h3>
+        <a href="{% url 'Login_page' %}">login</a>
+        <h3>Looking for a..</h3>
         <div class="two_buttons">
-            <a href="{% url 'Job_signup_page' %}">Job</a> <br>
-            <a href="{% url 'Client_signup_page' %}">worker</a>
+            <a href="{% url 'Helper_signup_page' %}">Job</a> <br>
+            <a href="{% url 'Client_signup_page' %}">Helper</a>
         </div>
 
     </body>

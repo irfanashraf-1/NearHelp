@@ -8,9 +8,14 @@
         <link rel="stylesheet" href="{% static 'css/job_signup_form.css' %}">
     </head>
     <body>
+        <div class="flash-messages">
+        {% for i in messages %}
+        <h1>{{i}}</h1>
+        {% endfor %}
+        </div>
         <h3>Please fill this form</h3>
         <div class="form_div">
-            <form action="{% url 'Login_page' %}" method="post">
+            <form action="{% url 'Save_helper_data' %}" method="post">
                 {% csrf_token %}
                 <div class="labels">
 
@@ -26,7 +31,7 @@
                         <div class="cell">
                             <label for>Gender</label>
                             <select name="gender" id>
-                                <option value disabled>Select gender</option>
+                                <option value disabled selected>Select gender</option>
                                 <option value="male">male</option>
                                 <option value="female">Female</option>
                                 <option value="other">Other</option>
@@ -48,19 +53,23 @@
 
                     <div class="labels_location">
                         <div class="cell">
+                            <label for>Area</label>
+                            <input name="area" type="text">
+                        </div>
+                        <div class="cell">
                             <label for>Town/City/Neighbourhood</label>
-                            <input type="text">
+                            <input name="town" type="text">
                         </div>
                         <div class="cell">
                             <label for>Pincode</label>
-                            <input type="text" maxlength="6">
+                            <input name="pin" type="text" maxlength="6">
                         </div>
                     </div>
 
                     <div class="skills">
                         <div class="cell">
-                            <label for>Categories</label>
-                            <select name="categories" id>
+                            <label for>Category</label>
+                            <select name="category" id>
                                 <option value disabled selected>Select
                                     Category</option>
                                 <option value="Electrical">Electrical</option>
@@ -83,11 +92,8 @@
                                 <option value="other">Other</option>
                             </select>
                         </div>
+                        
                         <!-- <div class="cell">
-                            <label for>Experience</label>
-                            <textarea name="experience" id></textarea>
-                        </div>
-                        <div class="cell">
                             <label for>Bio</label>
                             <textarea name="bio" id cols="20" rows="5"
                                 placeholder="Tell us about yourself.."></textarea>

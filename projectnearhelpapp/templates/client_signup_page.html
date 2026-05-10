@@ -6,9 +6,15 @@
     <title>signup / login</title>
 </head>
 <body>
+    <div class="flash-messages">
+        {% for i in messages %}
+        <h1>{{i}}</h1>
+        {% endfor %}
+    </div>
+
     <H2>signup/<a href="{% url 'Login_page' %}">Login</a></H2>
     <div class="form_div">
-        <form action="{% url 'Login_page' %}" method="post">
+        <form action="{% url 'Save_client_data' %}" method="post">
             {% csrf_token %}
             <div class="cell">
                 <label for="">Full name</label>
