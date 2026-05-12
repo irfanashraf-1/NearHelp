@@ -1,0 +1,43 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>users data table</h1>
+
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Full Name</th>
+                    <th>Phone Number</th>
+                    <th>Email</th>
+                    <th>Area</th>
+                    <th>Town</th>
+                    <th>Pin</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in users %}
+                <tr>
+                    <td>{{i.id}}</td>
+                    <td>{{i.full_name}}</td>
+                    <td>{{i.phone_number}}</td>
+                    <td>{{i.email}}</td>
+                    <td>{{i.area}}</td>
+                    <td>{{i.town}}</td>
+                    <td>{{i.pin}}</td>
+
+                    <td><a href="{% url 'Edit_user' i.id %}">Edit</a></td>
+                    <td><a href="{% url 'Delete_user' i.id %}">Delete</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html> -->

@@ -18,16 +18,13 @@
             {% csrf_token %}
             <div class="cell">
                 <label for="">Phone number</label>
-                <input name="phone_number" type="text" maxlength="10" minlength="10">
+                <input name="phone_number" type="text">
             </div>
             <div class="cell">
                 <label for="">Password</label>
                 <input name="password" type="password">
             </div>
-            <!-- <div class="cell">
-                <label for="">Confirm password</label>
-                <input name="confirm_password" type="password">
-            </div> -->
+           
             <div><button type="submit">Submit</button></div>
         </form>
     </div>

@@ -2,6 +2,7 @@ from django.shortcuts import render ,redirect
 from projectnearhelpapp.models import Client_details , Helper_details
 from django.contrib.auth.models import User , auth
 from django.contrib import messages
+from django.contrib.auth import login
 
 
 # Create your views here.
@@ -15,6 +16,15 @@ def Login_page(request):
     return render(request,'login_page.html')
 def Home(request):
     return render(request,'homepage.html')
+
+def Admin_dashboard(request):
+    return render(request,'admin_dashboard.html')
+def Helper_data_table(request):
+    return render(request,'helper_data_table.html')
+def Client_data_table(request):
+    return render(request,'client_data_table.html')
+def Users_data_table(request):
+    return render(request,'users_data_table.html')
 
 
 def Save_client_data(request):
@@ -98,8 +108,13 @@ def Login(request):
         user = auth.authenticate(username =  phone_number, password = password)
 
         if user is not None :
-            auth.login(request,user)
-            return redirect('Home')
+            if user.is_staff:
+                login(request,user)
+                return redirect('Admin_dashboard')
+            else:
+                auth.login(request,user)
+                return redirect('Home')
         else:
             messages.info(request,'invalid username or password')
             return redirect('Login')
+
