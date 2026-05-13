@@ -15,7 +15,9 @@ def Client_signup_page(request):
 def Login_page(request):
     return render(request,'login_page.html')
 def Home(request):
-    return render(request,'homepage.html')
+    return render(request,'home.html')
+def Job_posting_form(request):
+    return render(request,'job_posting_form.html')
 
 def Admin_dashboard(request):
     return render(request,'admin_dashboard.html')
@@ -116,5 +118,5 @@ def Login(request):
                 return redirect('Home')
         else:
             messages.info(request,'invalid username or password')
-            return redirect('Login')
+            return redirect('Login_page')
 

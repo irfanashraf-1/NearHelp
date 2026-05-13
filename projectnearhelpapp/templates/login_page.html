@@ -1,32 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-</head>
-<body>
-    <div class="flash-messages">
-        {% for i in messages %}
-        <h1>{{i}}</h1>
-        {% endfor %}
-    </div>
-    
-    <h1>Login</h1>
-    <div class="form_div">
-        <form action="{% url 'Login' %}" method="post">
-            {% csrf_token %}
-            <div class="cell">
-                <label for="">Phone number</label>
-                <input name="phone_number" type="text">
+    <head>
+        {% load static %}
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login</title>
+        <link rel="stylesheet" href="{% static 'css/login_page.css' %}">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+
+    </head>
+    <body>
+       
+        <!-- NAV -->
+        <nav class="nav">
+            <a class="logo" href="#">Near<span>Help</span></a>
+            <a class="nav-signup" href="{% url 'Welcomepage' %}">New here? <strong>Sign
+                    up</strong></a>
+        </nav>
+
+        <!-- PAGE -->
+        <div class="page">
+            <div class="form-wrap">
+
+                <!-- FLASH MESSAGES -->
+                <div class="flash-messages">
+                    {% for i in messages %}
+                    <h1>{{ i }}</h1>
+                    {% endfor %}
+                </div>
+
+                <!-- HEADER -->
+                <div class="form-head">
+                    <div class="brand-icon">
+                        <i class="ti ti-map-pin"></i>
+                    </div>
+                    <h1>Welcome back</h1>
+                    <p>Log in to your NearHelp account</p>
+                </div>
+
+                <!-- ROLE TABS -->
+                <div class="role-tabs">
+                    <button class="role-tab active"
+                        onclick="setRole(this, 'client')">Client</button>
+                    <button class="role-tab"
+                        onclick="setRole(this, 'helper')">Helper</button>
+                </div>
+
+                <!-- FORM -->
+                <form action="{% url 'Login' %}" method="post">
+                    {% csrf_token %}
+
+                    <div class="field">
+                        <label for="phone_number">Phone number</label>
+                        <div class="input-wrap">
+                            <i class="ti ti-phone"></i>
+                            <input type="text" id="phone_number"
+                                name="phone_number"
+                                placeholder="10-digit mobile number" maxlength="10"/>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="password">Password</label>
+                        <div class="input-wrap">
+                            <i class="ti ti-lock"></i>
+                            <input type="password" id="password" name="password"
+                                placeholder="Enter your password" />
+                            <button type="button" class="toggle-pw"
+                                onclick="togglePassword()" id="toggleBtn">
+                                <i class="ti ti-eye" id="eyeIcon"></i>
+                            </button>
+                        </div>
+                        <div class="forgot-row">
+                            <a href="#">Forgot password?</a>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-primary">Log in</button>
+
+                </form>
+
+                <div class="divider">or</div>
+
+                <div class="signup-row">
+                    Don't have an account? <a href="{% url 'Welcomepage' %}">Sign up</a>
+                </div>
+
             </div>
-            <div class="cell">
-                <label for="">Password</label>
-                <input name="password" type="password">
-            </div>
-           
-            <div><button type="submit">Submit</button></div>
-        </form>
-    </div>
-</body>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="page-footer">© 2025 NearHelp · All rights reserved</div>
+
+        <script>
+            function togglePassword() {
+            const input = document.getElementById('password');
+            const icon = document.getElementById('eyeIcon');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.className = 'ti ti-eye-off';
+            } else {
+                input.type = 'password';
+                icon.className = 'ti ti-eye';
+            }
+            }
+        
+            function setRole(btn, role) {
+            document.querySelectorAll('.role-tab').forEach(t => t.classList.remove('active'));
+            btn.classList.add('active');
+            }
+        </script>
+    </body>
 </html>

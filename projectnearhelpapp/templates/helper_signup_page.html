@@ -2,118 +2,360 @@
 <html lang="en">
     <head>
         {% load static %}
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
-        <link rel="stylesheet" href="{% static 'css/job_signup_form.css' %}">
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>NearHelp — Helper Signup</title>
+        <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+        <link rel="stylesheet" href="{% static 'css/helper_signup_page.css' %}">
+
     </head>
     <body>
-        <div class="flash-messages">
-        {% for i in messages %}
-        <h1>{{i}}</h1>
-        {% endfor %}
-        </div>
-        <h3>Please fill this form</h3>
-        <div class="form_div">
-            <form action="{% url 'Save_helper_data' %}" method="post">
-                {% csrf_token %}
-                <div class="labels">
 
-                    <div class="labels_basic">
-                        <div class="cell">
-                            <label for>Fullname</label>
-                            <input name="fullname" type="text">
-                        </div>
-                        <div class="cell">
-                            <label for>Date of birth</label>
-                            <input name="dob" type="date">
-                        </div>
-                        <div class="cell">
-                            <label for>Gender</label>
-                            <select name="gender" id>
-                                <option value disabled selected>Select gender</option>
-                                <option value="male">male</option>
-                                <option value="female">Female</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                        <div class="cell">
-                            <label for>Phone</label>
-                            <input name="phone" type="text" maxlength="10">
-                        </div>
-                        <div class="cell">
-                            <label for>E mail</label>
-                            <input name="email" type="email">
-                        </div>
-                        <div class="cell">
-                            <label for>Photo</label>
-                            <input name="photo" type="file" accept="image/*">
-                        </div>
-                    </div>
+        <!-- NAV -->
+        <nav class="nav">
+            <a class="logo" href="#">Near<span>Help</span></a>
+            <a class="nav-login" href="{% url 'Login_page' %}">Already have an account? <strong>Log
+                    in</strong></a>
+        </nav>
 
-                    <div class="labels_location">
-                        <div class="cell">
-                            <label for>Area</label>
-                            <input name="area" type="text">
-                        </div>
-                        <div class="cell">
-                            <label for>Town/City/Neighbourhood</label>
-                            <input name="town" type="text">
-                        </div>
-                        <div class="cell">
-                            <label for>Pincode</label>
-                            <input name="pin" type="text" maxlength="6">
-                        </div>
-                    </div>
+        <!-- PAGE -->
+        <div class="page">
+            <div class="form-wrap">
 
-                    <div class="skills">
-                        <div class="cell">
-                            <label for>Category</label>
-                            <select name="category" id>
-                                <option value disabled selected>Select
-                                    Category</option>
-                                <option value="Electrical">Electrical</option>
-                                <option value="Plumbing">Plumbing</option>
-                                <option value="Cleaning">Cleaning</option>
-                                <option value="Carpentry">Carpentry</option>
-                                <option value="Gardening">Gardening</option>
-                                <option value="Moving">Moving</option>
-                                <option value="Other">Other</option>
-                            </select>
-                        </div>
-                        <div class="cell">
-                            <label for>Availability</label>
-                            <select name="availability" id>
-                                <option value disabled selected>Select
-                                    Availability</option>
-                                <option value="weekdays">Weekdays</option>
-                                <option value="weekends">Weekends</option>
-                                <option value="allday">all day</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                        
-                        <!-- <div class="cell">
-                            <label for>Bio</label>
-                            <textarea name="bio" id cols="20" rows="5"
-                                placeholder="Tell us about yourself.."></textarea>
-                        </div> -->
-                        <div class="cell">
-                            <label for>Password</label>
-                            <input name="password" type="password"
-                                minlength="8">
-                        </div>
-                        <div class="cell">
-                            <label for>Confirm Password</label>
-                            <input name="confirm_passsword" type="password"
-                                minlength="8">
-                        </div>
-                    </div>
-                    <div class="submit_div"><button
-                            type="submit">Submit</button></div>
+                <!-- FLASH MESSAGES -->
+                <div class="flash-messages">
+                    {% for i in messages %}
+                    <h1>{{ i }}</h1>
+                    {% endfor %}
                 </div>
 
-            </form>
+                <!-- HEADER -->
+                <div class="form-head">
+                    <div class="badge"><i class="ti ti-tool"></i> Helper
+                        account</div>
+                    <h1>Join as a Helper</h1>
+                    <p>Fill in your details and start taking jobs near you.</p>
+                </div>
+
+                <!-- PROGRESS -->
+                <div class="progress-bar">
+                    <div class="progress-step active"></div>
+                    <div class="progress-step"></div>
+                    <div class="progress-step"></div>
+                    <div class="progress-step"></div>
+                </div>
+
+                <!-- FORM -->
+                <form action="{% url 'Save_helper_data' %}" method="post"
+                    enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <!-- SECTION: PERSONAL INFO -->
+                    <div class="section-title">Personal info</div>
+
+                    <div class="field">
+                        <label for="fullname">Full name</label>
+                        <div class="input-wrap">
+                            <i class="ti ti-user"></i>
+                            <input type="text" id="fullname" name="fullname"
+                                placeholder="e.g. Rajan Kumar" required />
+                        </div>
+                    </div>
+
+                    <div class="two-col">
+                        <div class="field">
+                            <label for="dob">Date of birth</label>
+                            <div class="input-wrap">
+                                <i class="ti ti-calendar"></i>
+                                <input type="date" id="dob" name="dob"
+                                    required />
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="gender">Gender</label>
+                            <div class="input-wrap">
+                                <i class="ti ti-gender-bigender"></i>
+                                <select id="gender" name="gender" required>
+                                    <option value disabled selected>Select
+                                        gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="two-col">
+                        <div class="field">
+                            <label for="phone">Phone number</label>
+                            <div class="input-wrap">
+                                <i class="ti ti-phone"></i>
+                                <input type="text" id="phone" name="phone"
+                                    placeholder="10-digit number"
+                                    maxlength="10" pattern="[0-9]{10}"
+                                    title="Enter a valid 10-digit number"
+                                    required />
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="email">Email address</label>
+                            <div class="input-wrap">
+                                <i class="ti ti-mail"></i>
+                                <input type="email" id="email" name="email"
+                                    placeholder="you@example.com" required />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label>Profile photo</label>
+                        <div class="photo-upload" id="photoBox">
+                            <i class="ti ti-user-circle"></i>
+                            <p>Tap to upload your photo</p>
+                            <span>JPG or PNG · max 2MB</span>
+                            <input type="file" name="photo" accept="image/*"
+                                id="photoInput"
+                                onchange="previewPhoto(event)" />
+                        </div>
+                        <div class="photo-preview" id="photoPreview">
+                            <img id="previewImg" src alt="Preview" />
+                            <span>Photo selected ✓</span>
+                        </div>
+                    </div>
+
+                    <hr class="divider" />
+
+                    <!-- SECTION: LOCATION -->
+                    <div class="section-title">Location</div>
+
+                    <div class="field">
+                        <label for="area">Area / Neighbourhood</label>
+                        <span class="hint">Start typing — Google will suggest
+                            your area</span>
+                        <div class="input-wrap">
+                            <i class="ti ti-map-pin"></i>
+                            <input type="text" id="area" name="area"
+                                placeholder="e.g. Kaloor, Aluva" required />
+                        </div>
+                    </div>
+
+                    <div class="two-col">
+                        <div class="field">
+                            <label for="town">Town / City</label>
+                            <div class="input-wrap">
+                                <i class="ti ti-building"></i>
+                                <input type="text" id="town" name="town"
+                                    placeholder="e.g. Ernakulam" required />
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="pin">PIN code</label>
+                            <div class="input-wrap">
+                                <i class="ti ti-hash"></i>
+                                <input type="text" id="pin" name="pin"
+                                    placeholder="6-digit PIN"
+                                    maxlength="6" pattern="[0-9]{6}" required />
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="divider" />
+
+                    <!-- SECTION: SKILLS -->
+                    <div class="section-title">Skills & work</div>
+
+                    <div class="field">
+                        <label>Category <span
+                                style="font-weight:400;color:#aaa;">— select
+                                your main skill</span></label>
+                        <div class="chip-group" id="catGroup">
+                            <div class="chip active" data-val="Electrical"><i
+                                    class="ti ti-bolt"></i> Electrical</div>
+                            <div class="chip" data-val="Plumbing"><i
+                                    class="ti ti-droplet"></i> Plumbing</div>
+                            <div class="chip" data-val="Cleaning"><i
+                                    class="ti ti-sparkles"></i> Cleaning</div>
+                            <div class="chip" data-val="Carpentry"><i
+                                    class="ti ti-tools"></i> Carpentry</div>
+                            <div class="chip" data-val="Painting"><i
+                                    class="ti ti-brush"></i> Painting</div>
+                            <div class="chip" data-val="Gardening"><i
+                                    class="ti ti-plant"></i> Gardening</div>
+                            <div class="chip" data-val="Moving"><i
+                                    class="ti ti-truck"></i> Moving</div>
+                            <div class="chip" data-val="Other"><i
+                                    class="ti ti-dots-circle-horizontal"></i>
+                                Other</div>
+                        </div>
+                        <input type="hidden" name="category" id="catInput"
+                            value="Electrical" />
+                    </div>
+
+                    <div class="field">
+                        <label>Availability</label>
+                        <div class="avail-group" id="availGroup">
+                            <div class="avail-card active" data-val="weekdays">
+                                <i class="ti ti-briefcase"></i>
+                                <div class="a-label">Weekdays</div>
+                            </div>
+                            <div class="avail-card" data-val="weekends">
+                                <i class="ti ti-beach"></i>
+                                <div class="a-label">Weekends</div>
+                            </div>
+                            <div class="avail-card" data-val="allday">
+                                <i class="ti ti-clock-24"></i>
+                                <div class="a-label">All days</div>
+                            </div>
+                            <div class="avail-card" data-val="other">
+                                <i class="ti ti-adjustments"></i>
+                                <div class="a-label">Custom</div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="availability" id="availInput"
+                            value="weekdays" />
+                    </div>
+
+                    <hr class="divider" />
+
+                    <!-- SECTION: SECURITY -->
+                    <div class="section-title"></div>
+
+                    <div class="field">
+                        <label for="password">Password</label>
+                        <div class="input-wrap">
+                            <i class="ti ti-lock"></i>
+                            <input type="password" id="password" name="password"
+                                placeholder="Minimum 8 characters"
+                                minlength="8"
+                                oninput="checkStrength(this.value)"
+                                required />
+                            <button type="button" class="toggle-pw"
+                                onclick="togglePw('password','eye1')">
+                                <i class="ti ti-eye" id="eye1"></i>
+                            </button>
+                        </div>
+                        <div class="strength-bar">
+                            <div class="strength-seg" id="s1"></div>
+                            <div class="strength-seg" id="s2"></div>
+                            <div class="strength-seg" id="s3"></div>
+                            <div class="strength-seg" id="s4"></div>
+                        </div>
+                        <div class="strength-label" id="strengthLabel"></div>
+                    </div>
+
+                    <div class="field">
+                        <label for="confirm_passsword">Confirm password</label>
+                        <div class="input-wrap">
+                            <i class="ti ti-lock-check"></i>
+                            <input type="password" id="confirm_passsword"
+                                name="confirm_passsword"
+                                placeholder="Re-enter your password"
+                                minlength="8" required />
+                            <button type="button" class="toggle-pw"
+                                onclick="togglePw('confirm_passsword','eye2')">
+                                <i class="ti ti-eye" id="eye2"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- TERMS -->
+                    <div class="terms-row">
+                        <input type="checkbox" id="terms" required />
+                        <label for="terms">
+                            I agree to the <a href="#">Terms of Service</a> and
+                            <a href="#">Privacy Policy</a> of NearHelp.
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn-primary">Create Helper
+                        account</button>
+
+                </form>
+
+                <div class="login-row">
+                    Already have an account? <a href="{% url 'Login_page' %}">Log in</a>
+                </div>
+
+            </div>
         </div>
+
+        <!-- FOOTER -->
+        <div class="page-footer">© 2025 NearHelp · All rights reserved</div>
+
+        <script>
+    // Toggle password visibility
+    function togglePw(inputId, iconId) {
+      const input = document.getElementById(inputId);
+      const icon = document.getElementById(iconId);
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.className = 'ti ti-eye-off';
+      } else {
+        input.type = 'password';
+        icon.className = 'ti ti-eye';
+      }
+    }
+
+    // Password strength checker
+    function checkStrength(val) {
+      const segs = ['s1','s2','s3','s4'].map(id => document.getElementById(id));
+      const label = document.getElementById('strengthLabel');
+      segs.forEach(s => s.style.background = '#e0e0e0');
+
+      let score = 0;
+      if (val.length >= 8) score++;
+      if (/[A-Z]/.test(val)) score++;
+      if (/[0-9]/.test(val)) score++;
+      if (/[^A-Za-z0-9]/.test(val)) score++;
+
+      const colors = ['#E05C3A','#E09B3A','#5DCAA5','#1D9E75'];
+      const labels = ['Weak','Fair','Good','Strong'];
+      const labelColors = ['#993C1D','#854F0B','#0F6E56','#0F6E56'];
+
+      for (let i = 0; i < score; i++) segs[i].style.background = colors[score - 1];
+      label.textContent = val.length > 0 ? labels[score - 1] : '';
+      label.style.color = val.length > 0 ? labelColors[score - 1] : '#aaa';
+    }
+
+    // Single-select chip group
+    function setupChips(groupId, hiddenId) {
+      document.getElementById(groupId).querySelectorAll('.chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          document.getElementById(groupId).querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+          document.getElementById(hiddenId).value = chip.dataset.val;
+        });
+      });
+    }
+
+    // Single-select availability cards
+    function setupAvail(groupId, hiddenId) {
+      document.getElementById(groupId).querySelectorAll('.avail-card').forEach(card => {
+        card.addEventListener('click', () => {
+          document.getElementById(groupId).querySelectorAll('.avail-card').forEach(c => c.classList.remove('active'));
+          card.classList.add('active');
+          document.getElementById(hiddenId).value = card.dataset.val;
+        });
+      });
+    }
+
+    // Photo preview
+    function previewPhoto(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = e => {
+        document.getElementById('previewImg').src = e.target.result;
+        document.getElementById('photoPreview').style.display = 'flex';
+      };
+      reader.readAsDataURL(file);
+    }
+
+    setupChips('catGroup', 'catInput');
+    setupAvail('availGroup', 'availInput');
+  </script>
+
     </body>
 </html>

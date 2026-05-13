@@ -1,19 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        {% load static %}
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
-    </head>
-    <body>
-        <h1>WELCOME</h1>
-        <a href="{% url 'Login_page' %}">login</a>
-        <h3>Looking for a..</h3>
-        <div class="two_buttons">
-            <a href="{% url 'Helper_signup_page' %}">Job</a> <br>
-            <a href="{% url 'Client_signup_page' %}">Helper</a>
-        </div>
+<head>
+  {% load static %}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NearHelp — Find help near you</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+  <link rel="stylesheet" href="{% static 'css/welcome.css' %}">
+</head>
+<body>
 
-    </body>
+  <!-- NAV -->
+  <nav class="nav">
+    <a class="logo" href="#">Near<span>Help</span></a>
+    <a class="nav-login" href="{% url 'Login_page' %}">Log in</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">
+      <i class="ti ti-map-pin"></i> 
+    </div>
+    <h1>Find <span>help</span> near you.<br>Or become a Helper.</h1>
+    <p>Post small home jobs or find work in your neighbourhood — all in one place.</p>
+
+    <div class="role-cards">
+
+      <a href="{% url 'Client_signup_page' %}" class="role-card">
+        <div class="role-icon role-icon-client">
+          <i class="ti ti-user"></i>
+        </div>
+        <div class="role-card-body">
+          <div class="role-card-title">I am a Client</div>
+          <div class="role-card-desc">Post small jobs and find skilled helpers nearby.</div>
+          <div class="role-card-cta">Sign up as Client <i class="ti ti-arrow-right"></i></div>
+        </div>
+      </a>
+
+      <a href="{% url 'Helper_signup_page' %}" class="role-card helper-card">
+        <div class="role-icon role-icon-helper">
+          <i class="ti ti-tool"></i>
+        </div>
+        <div class="role-card-body">
+          <div class="role-card-title">I am a Helper</div>
+          <div class="role-card-desc">Find jobs near you and earn on your schedule.</div>
+          <div class="role-card-cta">Sign up as Helper <i class="ti ti-arrow-right"></i></div>
+        </div>
+      </a>
+
+    </div>
+
+    <div class="or-row">already have an account? <a href="{% url 'Login_page' %}" style="color:#1D9E75;text-decoration:none;font-weight:500;">Log in </a></div>
+
+  </section>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-num">1,240</div>
+      <div class="stat-lbl">Active jobs</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">3,800</div>
+      <div class="stat-lbl">Registered helpers</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">12,500</div>
+      <div class="stat-lbl">Jobs completed</div>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <section class="how">
+    <h2>How NearHelp works</h2>
+    <p class="how-sub">Three simple steps to get your job done</p>
+    <div class="how-steps">
+      <div class="how-step">
+        <div class="step-num"><i class="ti ti-pencil step-icon"></i></div>
+        <div class="step-title">Post a job</div>
+        <div class="step-desc">Describe what you need — takes less than 2 minutes.</div>
+      </div>
+      <div class="how-step">
+        <div class="step-num"><i class="ti ti-map-search step-icon"></i></div>
+        <div class="step-title">Helpers discover it</div>
+        <div class="step-desc">Nearby helpers see your job and express interest.</div>
+      </div>
+      <div class="how-step">
+        <div class="step-num"><i class="ti ti-message-circle step-icon"></i></div>
+        <div class="step-title">Chat & confirm</div>
+        <div class="step-desc">Connect via in-app chat, agree on details, get it done.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section class="categories">
+    <h2>What can you post?</h2>
+    <p class="categories-sub">From fixing a tap to moving furniture — anything small and local</p>
+    <div class="cat-grid">
+      <a href="{% url 'Client_signup_page' %}" class="cat-chip"><i class="ti ti-droplet"></i> Plumbing</a>
+      <a href="{% url 'Client_signup_page' %}" class="cat-chip"><i class="ti ti-bolt"></i> Electrical</a>
+      <a href="{% url 'Client_signup_page' %}" class="cat-chip"><i class="ti ti-sparkles"></i> Cleaning</a>
+      <a href="{% url 'Client_signup_page' %}" class="cat-chip"><i class="ti ti-tools"></i> Carpentry</a>
+      <a href="{% url 'Client_signup_page' %}" class="cat-chip"><i class="ti ti-brush"></i> Painting</a>
+      <a href="{% url 'Client_signup_page' %}" class="cat-chip"><i class="ti ti-plant"></i> Gardening</a>
+      <a href="{% url 'Client_signup_page' %}" class="cat-chip"><i class="ti ti-truck"></i> Moving</a>
+      <a href="{% url 'Client_signup_page' %}" class="cat-chip"><i class="ti ti-device-laptop"></i> Tech help</a>
+      <a href="{% url 'Client_signup_page' %}" class="cat-chip"><i class="ti ti-dots-circle-horizontal"></i> Other</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <a class="footer-logo" href="#">Near<span>Help</span></a>
+    <span class="footer-copy">© 2025 NearHelp · All rights reserved</span>
+  </footer>
+
+</body>
 </html>
