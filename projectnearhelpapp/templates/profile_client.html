@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% load static %}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NearHelp — My Profile</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+  <link rel="stylesheet" href="{% static 'css/profile_client.css' %}" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a class="logo" href="#">Near<span>Help</span></a>
+    <div class="nav-links">
+      <a class="nav-link" href="{% url 'Home' %}">Home</a>
+      <a class="nav-link" href="#">How it works</a>
+      <a class="nav-post" href="{% url 'Job_posting_form' %}">Post a job</a>
+    </div>
+  </nav>
+
+  <div class="page">
+
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+      <div>
+        <h1>My Profile</h1>
+        <p>Manage your account details and view your posted jobs</p>
+      </div>
+    </div>
+
+    <!-- PROFILE HEADER CARD -->
+    <div class="card">
+      <div class="profile-header-card">
+
+        <div class="avatar-area">
+          <!-- Show photo if uploaded, else initials -->
+          {% if client.photo %}
+            <img class="avatar-img" src="{{ client.photo.url }}" alt="Profile photo" />
+          {% else %}
+            <div class="avatar-placeholder">
+              {{ client.fullname|first|upper }}
+            </div>
+          {% endif %}
+          <label class="avatar-edit-btn" for="quickPhotoInput" title="Change photo">
+            <i class="ti ti-camera"></i>
+            <input type="file" id="quickPhotoInput" accept="image/*" style="display:none" onchange="quickPhotoPreview(event)" />
+          </label>
+        </div>
+
+        <div class="profile-summary">
+          <div class="profile-name">{{ client.fullname }}</div>
+          <div class="profile-meta">
+            <span class="profile-meta-item"><i class="ti ti-map-pin"></i> {{ client.town }}</span>
+            <span class="profile-meta-item"><i class="ti ti-phone"></i> {{ client.phone_number }}</span>
+            <span class="profile-badge"><i class="ti ti-user"></i> Client</span>
+          </div>
+        </div>
+
+        <div class="profile-actions">
+          <button class="btn-secondary" onclick="toggleEdit()">
+            <i class="ti ti-pencil"></i> Edit profile
+          </button>
+          <a class="btn-primary" href="{% url 'Job_posting_form' %}">
+            <i class="ti ti-plus"></i> Post a job
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="card" style="padding: 0; overflow: hidden;">
+      <div class="stats-row">
+        <div class="stat-box">
+          <div class="stat-num">{{ total_jobs|default:"0" }}</div>
+          <div class="stat-lbl">Jobs posted</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">{{ open_jobs|default:"0" }}</div>
+          <div class="stat-lbl">Open now</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">{{ completed_jobs|default:"0" }}</div>
+          <div class="stat-lbl">Completed</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">{{ client.rating|default:"—" }}</div>
+          <div class="stat-lbl">Rating</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAIN CONTENT: two columns on desktop -->
+    <div class="two-col" style="align-items: flex-start;">
+
+      <!-- LEFT: Profile info -->
+      <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+
+        <!-- VIEW MODE -->
+        <div class="card view-mode" id="viewMode">
+          <div class="card-title">Personal info</div>
+          <div class="info-row">
+
+            <div class="info-item">
+              <div class="info-icon"><i class="ti ti-user"></i></div>
+              <div class="info-content">
+                <div class="info-label">Full name</div>
+                <div class="info-value">{{ client.fullname }}</div>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <div class="info-icon"><i class="ti ti-phone"></i></div>
+              <div class="info-content">
+                <div class="info-label">Phone number</div>
+                <div class="info-value">{{ client.phone_number }}</div>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <div class="info-icon"><i class="ti ti-mail"></i></div>
+              <div class="info-content">
+                <div class="info-label">Email</div>
+                <div class="info-value">{{ client.email }}</div>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <div class="info-icon"><i class="ti ti-map-pin"></i></div>
+              <div class="info-content">
+                <div class="info-label">Area / Neighbourhood</div>
+                <div class="info-value">{{ client.area }}</div>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <div class="info-icon"><i class="ti ti-building"></i></div>
+              <div class="info-content">
+                <div class="info-label">Town / City</div>
+                <div class="info-value">{{ client.town }}</div>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <div class="info-icon"><i class="ti ti-hash"></i></div>
+              <div class="info-content">
+                <div class="info-label">PIN code</div>
+                <div class="info-value">{{ client.pin }}</div>
+              </div>
+            </div>
+
+            <!-- <div class="info-item">
+              <div class="info-icon"><i class="ti ti-lock"></i></div>
+              <div class="info-content">
+                <div class="info-label">Password</div>
+                <div class="info-value masked">••••••••</div>
+              </div>
+            </div> -->
+
+          </div>
+        </div>
+
+        <!-- EDIT MODE -->
+        <div class="card edit-form" id="editForm">
+          <div class="card-title">Edit profile</div>
+
+          <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="field">
+              <label>Profile photo <span style="font-weight:400;color:#aaa;">— optional</span></label>
+              <div class="photo-upload-area">
+                <i class="ti ti-camera"></i>
+                <p>Tap to upload a photo</p>
+                <span>JPG or PNG · max 2MB</span>
+                <input type="file" name="photo" accept="image/*" />
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="e_fullname">Full name</label>
+              <div class="input-wrap">
+                <i class="ti ti-user"></i>
+                <input type="text" id="e_fullname" name="fullname"
+                  value="{{ client.fullname }}" required />
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="e_phone">Phone number</label>
+              <div class="input-wrap">
+                <i class="ti ti-phone"></i>
+                <input type="text" id="e_phone" name="phone_number"
+                  value="{{ client.phone_number }}"
+                  maxlength="10" pattern="[0-9]{10}" required />
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="e_email">Email</label>
+              <div class="input-wrap">
+                <i class="ti ti-mail"></i>
+                <input type="email" id="e_email" name="email"
+                  value="{{ client.email }}" required />
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="e_area">Area / Neighbourhood</label>
+              <div class="input-wrap">
+                <i class="ti ti-map-pin"></i>
+                <input type="text" id="e_area" name="area"
+                  value="{{ client.area }}" required />
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="e_town">Town / City</label>
+              <div class="input-wrap">
+                <i class="ti ti-building"></i>
+                <input type="text" id="e_town" name="town"
+                  value="{{ client.town }}" required />
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="e_pin">PIN code</label>
+              <div class="input-wrap">
+                <i class="ti ti-hash"></i>
+                <input type="text" id="e_pin" name="pin"
+                  value="{{ client.pin }}"
+                  maxlength="6" pattern="[0-9]{6}" required />
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="e_password">New password <span style="font-weight:400;color:#aaa;">— leave blank to keep current</span></label>
+              <div class="input-wrap">
+                <i class="ti ti-lock"></i>
+                <input type="password" id="e_password" name="password"
+                  placeholder="Enter new password" minlength="8" />
+                <button type="button" class="toggle-pw" onclick="togglePw('e_password','ep_eye')">
+                  <i class="ti ti-eye" id="ep_eye"></i>
+                </button>
+              </div>
+              <div class="hint">Minimum 8 characters</div>
+            </div>
+
+            <div class="form-actions">
+              <button type="button" class="btn-cancel" onclick="toggleEdit()">Cancel</button>
+              <button type="submit" class="btn-save">Save changes</button>
+            </div>
+
+          </form>
+        </div>
+
+        <!-- DANGER ZONE -->
+        <div class="card danger-zone">
+          <div class="card-title"></div>
+          <p class="danger-text">Deleting your account is permanent and cannot be undone. All your posted jobs will also be removed.</p>
+          <button class="btn-danger">
+            <i class="ti ti-trash"></i> Delete my account
+          </button>
+        </div>
+
+      </div>
+
+      <!-- RIGHT: Posted jobs -->
+      <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+
+        <div>
+          <div class="jobs-header">
+            <h2>My posted jobs</h2>
+            <a class="btn-primary" href="{% url 'Job_posting_form' %}" style="font-size:12px; padding: 6px 12px;">
+              <i class="ti ti-plus"></i> New job
+            </a>
+          </div>
+
+          <div class="tab-row">
+            <button class="tab active" onclick="switchTab(this, 'all')">All</button>
+            <button class="tab" onclick="switchTab(this, 'open')">Open</button>
+            <button class="tab" onclick="switchTab(this, 'closed')">Closed</button>
+          </div>
+
+          <!-- JOBS LIST — populated by Django template -->
+          <div id="jobsList">
+            {% for job in client_jobs %}
+            <div class="job-card" data-status="{{ job.status }}">
+              <div class="job-card-top">
+                <div class="job-card-title">{{ job.title }}</div>
+                <div class="job-card-budget">₹{{ job.budget_min }}–{{ job.budget_max }}</div>
+              </div>
+              <div class="job-card-desc">{{ job.description|truncatewords:20 }}</div>
+              <div class="job-card-meta">
+                <span class="badge badge-cat">{{ job.category }}</span>
+                {% if job.urgency == 'today' %}
+                  <span class="badge badge-today">Today</span>
+                {% elif job.urgency == 'week' %}
+                  <span class="badge badge-week">This week</span>
+                {% else %}
+                  <span class="badge badge-flex">Flexible</span>
+                {% endif %}
+                {% if job.status == 'open' %}
+                  <span class="badge badge-open">Open</span>
+                {% else %}
+                  <span class="badge badge-closed">Closed</span>
+                {% endif %}
+              </div>
+              <div class="job-card-footer">
+                <div class="job-card-time">
+                  <i class="ti ti-clock"></i> {{ job.created_at|timesince }} ago
+                </div>
+                <div class="job-card-actions">
+                  <button class="action-btn"><i class="ti ti-pencil"></i> Edit</button>
+                  <button class="action-btn danger"><i class="ti ti-trash"></i> Delete</button>
+                </div>
+              </div>
+            </div>
+            {% empty %}
+            <div class="empty-state">
+              <i class="ti ti-clipboard-x"></i>
+              <p>You haven't posted any jobs yet.</p>
+              <a class="btn-primary" href="{% url 'Job_posting_form' %}" style="display:inline-flex;">
+                <i class="ti ti-plus"></i> Post your first job
+              </a>
+            </div>
+            {% endfor %}
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <a class="footer-logo" href="#">Near<span>Help</span></a>
+    <span class="footer-copy">© 2025 NearHelp · All rights reserved</span>
+  </footer>
+
+  <script>
+    // Toggle between view and edit mode
+    function toggleEdit() {
+      const view = document.getElementById('viewMode');
+      const form = document.getElementById('editForm');
+      view.classList.toggle('hidden');
+      form.classList.toggle('active');
+    }
+
+    // Show / hide password
+    function togglePw(inputId, iconId) {
+      const input = document.getElementById(inputId);
+      const icon = document.getElementById(iconId);
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.className = 'ti ti-eye-off';
+      } else {
+        input.type = 'password';
+        icon.className = 'ti ti-eye';
+      }
+    }
+
+    // Quick photo preview from avatar button
+    function quickPhotoPreview(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = e => {
+        const placeholder = document.querySelector('.avatar-placeholder');
+        const img = document.querySelector('.avatar-img');
+        if (placeholder) {
+          const newImg = document.createElement('img');
+          newImg.className = 'avatar-img';
+          newImg.src = e.target.result;
+          newImg.alt = 'Profile photo';
+          placeholder.replaceWith(newImg);
+        } else if (img) {
+          img.src = e.target.result;
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // Tab switching for job list
+    function switchTab(btn, status) {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.job-card').forEach(card => {
+        if (status === 'all') {
+          card.style.display = 'block';
+        } else {
+          card.style.display = card.dataset.status === status ? 'block' : 'none';
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>

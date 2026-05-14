@@ -1,4 +1,6 @@
+from django.conf import settings
 from django.db import models
+
 
 # Create your models here.
 class Client_details(models.Model):
@@ -23,4 +25,18 @@ class Helper_details(models.Model):
         Category = models.CharField()
         Availability = models.CharField()
         Password = models.CharField(max_length=128)
+
+class Job_postings(models.Model):
+        Client = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+        Title = models.CharField(max_length=80)
+        Category = models.CharField()
+        Description = models.TextField(max_length=500)
+        Photos = models.ImageField(upload_to="job_photos/" , blank=True, null=True)
+        Budget = models.IntegerField()
+        Duration = models.CharField()
+        Urgency = models.CharField()    
+        Area = models.CharField(max_length=100)
+        Town = models.CharField(max_length=100)
+        Pin = models.IntegerField(max_length=6)
+        Date_posted = models.DateTimeField(auto_now_add=True)
 

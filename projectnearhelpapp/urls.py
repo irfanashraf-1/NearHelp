@@ -17,7 +17,10 @@ urlpatterns = [
 
     path('Save_client_data',views.Save_client_data,name='Save_client_data'),
     path('Save_helper_data',views.Save_helper_data,name='Save_helper_data'),
+    path('Save_job_posting',views.Save_job_posting,name='Save_job_posting'),
     path('Login',views.Login,name='Login'),
+
+    path('Profile_client',views.Profile_client,name='Profile_client'),
 
 
 

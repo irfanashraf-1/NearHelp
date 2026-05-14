@@ -1,5 +1,5 @@
 from django.shortcuts import render ,redirect
-from projectnearhelpapp.models import Client_details , Helper_details
+from projectnearhelpapp.models import Client_details , Helper_details, Job_postings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User , auth
 from django.contrib import messages
@@ -32,6 +32,9 @@ def Client_data_table(request):
 def Users_data_table(request):
     return render(request,'users_data_table.html')
 
+# Profile pages
+def Profile_client(request):
+    return render(request,'profile_client.html')
 
 def Save_client_data(request):
     if request.method == 'POST':
@@ -124,3 +127,31 @@ def Login(request):
             messages.info(request,'invalid username or password')
             return redirect('Login_page')
 
+# Job details posted by client
+def Save_job_posting(request):
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        # category = request.POST.get('category')
+        description = request.POST.get('description')
+        photos = request.FILES.get('photos')
+        budget = request.POST.get('budget')
+        duration = request.POST.get('duration')
+        # urgency = request.POST.get('urgency')
+        area = request.POST.get('area')
+        town = request.POST.get('town')
+        pin = request.POST.get('pin')
+
+        job_postings = Job_postings(
+                                    Client = request.user,
+                                    Title = title,
+                                    # Category = category,
+                                    Description = description,
+                                    Photos = photos,
+                                    Budget = budget,
+                                    Duration = duration,
+                                    # Urgency = urgency,
+                                    Area = area,
+                                    Town = town,
+                                    Pin = pin)
+        job_postings.save()
+        return redirect('Home')
