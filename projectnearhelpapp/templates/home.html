@@ -27,8 +27,12 @@
             </div>
 
             <div class="nav-actions">
-                <a href="{% url 'Login_page' %}" class="nav-login">Log in</a>
+                <div class="role-icon role-icon-client">
+                    <a href=""><i class="ti ti-user"></i></a>
+                    <a href class="nav_profile">Profile</a>
 
+                </div>
+                
                 <a href="{% url 'Job_posting_form' %}" class="nav-post-btn">
                     Post a Job
                 </a>

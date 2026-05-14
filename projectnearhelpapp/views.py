@@ -1,5 +1,6 @@
 from django.shortcuts import render ,redirect
 from projectnearhelpapp.models import Client_details , Helper_details
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User , auth
 from django.contrib import messages
 from django.contrib.auth import login
@@ -14,11 +15,14 @@ def Client_signup_page(request):
     return render(request,'client_signup_page.html')
 def Login_page(request):
     return render(request,'login_page.html')
+
+
 def Home(request):
     return render(request,'home.html')
 def Job_posting_form(request):
     return render(request,'job_posting_form.html')
 
+@login_required
 def Admin_dashboard(request):
     return render(request,'admin_dashboard.html')
 def Helper_data_table(request):

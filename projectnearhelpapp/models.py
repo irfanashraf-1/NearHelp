@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 class Client_details(models.Model):
         Fullname = models.CharField(max_length=50)
-        Phone_number = models.IntegerField(max_length=10)
+        Phone_number = models.IntegerField()
         Email = models.CharField()
         Area = models.CharField()
         Town = models.CharField()
