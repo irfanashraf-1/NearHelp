@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% load static %}
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>NearHelp — Find help near you</title>
+
+        <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+
+        <link rel="stylesheet" href="{% static 'css/home_2.css' %}">
+    </head>
+
+    <body>
+
+        <!-- NAVBAR -->
+        <header class="nav">
+            <a href="#" class="logo">
+                Near<span>Help</span>
+            </a>
+
+            <div class="nav-links">
+                <a href="#how">How it works</a>
+                <a href="#categories">Categories</a>
+            </div>
+
+            <div class="nav-actions">
+                <div class="role-icon role-icon-client">
+                    <a href="{% url 'Profile_helper' %}"><i class="ti ti-user"></i></a>
+                    <a href="{% url 'Profile_helper' %}" class="nav_profile">Profile</a>
+
+                </div>
+                
+                <a href=""class="nav-post-btn">
+                    My jobs
+                </a>
+            </div>
+        </header>
+
+        <!-- HERO -->
+        <section class="hero">
+
+            <!-- <div class="hero-badge">
+                <i class="ti ti-map-pin"></i>
+                Hyperlocal Job Marketplace
+            </div> -->
+
+            <div class="hero-content">
+
+                <div class="hero-left">
+
+                    <h1 class="hero-left-h1">
+                       Your neighbour needs <span>help</span>
+                    </h1>
+
+                    <p>
+                        NearHelp connects people with local helpers for small
+                        jobs,
+                        home services, repairs and everyday tasks — fast, simple
+                        and nearby.
+                    </p>
+
+                    <div class="hero-actions">
+                        <a href=""
+                            class="btn-primary">
+                        </a>
+
+                        <a href=""
+                            class="btn-secondary">
+                        </a>
+                    </div>
+                    
+                    <div class="hero-mini-stats">
+                        <div>
+                            <h3>1,240</h3>
+                            <span>Active Jobs</span>
+                        </div>
+
+                        <div>
+                            <h3>3,800</h3>
+                            <span>Helpers</span>
+                        </div>
+
+                        <div>
+                            <h3>12K</h3>
+                            <span>Jobs Completed</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- RIGHT SIDE -->
+                <div class="hero-right">
+
+                    <div class="search-card">
+
+                        <div class="search-top">
+                            <h3>Find help nearby</h3>
+                            <p>Search jobs & services in your neighbourhood</p>
+                        </div>
+
+                        <div class="search-box">
+                            <i class="ti ti-search"></i>
+                            <input type="text"
+                                placeholder="e.g. plumber, cleaning, painting">
+                        </div>
+
+                        <div class="popular-tags">
+                            <a href="#">Plumbing</a>
+                            <a href="#">Electrical</a>
+                            <a href="#">Cleaning</a>
+                            <a href="#">Painting</a>
+                            <a href="#">Gardening</a>
+                            <a href="#">Moving</a>
+                        </div>
+
+                        <div class="quick-cards">
+
+                            <div class="quick-card">
+                                <div class="q-icon green">
+                                    <i class="ti ti-droplet"></i>
+                                </div>
+
+                                <div>
+                                    <h4>Plumbing</h4>
+                                    <p>Leaking taps, pipes & fittings</p>
+                                </div>
+                            </div>
+
+                            <div class="quick-card">
+                                <div class="q-icon orange">
+                                    <i class="ti ti-bolt"></i>
+                                </div>
+
+                                <div>
+                                    <h4>Electrical</h4>
+                                    <p>Switches, lights & wiring</p>
+                                </div>
+                            </div>
+
+                            <div class="quick-card">
+                                <div class="q-icon blue">
+                                    <i class="ti ti-sparkles"></i>
+                                </div>
+
+                                <div>
+                                    <h4>Cleaning</h4>
+                                    <p>Home & office cleaning</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- JOBS SECTION -->
+        <section class="jobs-section">
+
+            <div class="section-heading">
+                <h2>Browse nearby jobs</h2>
+                <p>Discover local opportunities posted by people near your
+                    area</p>
+            </div>
+
+            <div class="jobs-layout">
+
+                <!-- FILTERS -->
+                <aside class="jobs-filters">
+
+                    <!-- CATEGORY -->
+                    <div class="filter-box">
+
+                        <h3>CATEGORY</h3>
+
+                        <label class="filter-item">
+                            <div class="filter-left">
+                                <input type="checkbox" checked>
+                                <span>Plumbing</span>
+                            </div>
+
+                            <small>18</small>
+                        </label>
+
+                        <label class="filter-item">
+                            <div class="filter-left">
+                                <input type="checkbox" checked>
+                                <span>Electrical</span>
+                            </div>
+
+                            <small>12</small>
+                        </label>
+
+                        <label class="filter-item">
+                            <div class="filter-left">
+                                <input type="checkbox">
+                                <span>Cleaning</span>
+                            </div>
+
+                            <small>24</small>
+                        </label>
+
+                        <label class="filter-item">
+                            <div class="filter-left">
+                                <input type="checkbox">
+                                <span>Carpentry</span>
+                            </div>
+
+                            <small>9</small>
+                        </label>
+
+                        <label class="filter-item">
+                            <div class="filter-left">
+                                <input type="checkbox">
+                                <span>Painting</span>
+                            </div>
+
+                            <small>15</small>
+                        </label>
+
+                        <label class="filter-item">
+                            <div class="filter-left">
+                                <input type="checkbox">
+                                <span>Gardening</span>
+                            </div>
+
+                            <small>7</small>
+                        </label>
+
+                    </div>
+
+                    <!-- URGENCY -->
+                    <div class="filter-box">
+
+                        <h3>URGENCY</h3>
+
+                        <label class="filter-item">
+                            <div class="filter-left">
+                                <input type="checkbox" checked>
+                                <span>Today</span>
+                            </div>
+                        </label>
+
+                        <label class="filter-item">
+                            <div class="filter-left">
+                                <input type="checkbox" checked>
+                                <span>This week</span>
+                            </div>
+                        </label>
+
+                        <label class="filter-item">
+                            <div class="filter-left">
+                                <input type="checkbox">
+                                <span>Flexible</span>
+                            </div>
+                        </label>
+
+                    </div>
+
+                </aside>
+
+                <!-- JOB CARDS -->
+                <div class="jobs-list">
+
+                    <!-- CARD 1 -->
+                    <!-- <div class="job-card">
+                        
+                        <div class="job-top">
+                            
+                            <div>
+                                <h3>{{ i.Title }}</h3>
+
+                                <p>
+                                    {{ i.Description }}
+                                </p>
+                            </div>
+
+                            <h4>{{ i.Budget }}</h4>
+
+                        </div>
+
+                        <div class="job-tags">
+
+                            <span class="tag green-tag">Painting</span>
+                            <span class="tag yellow-tag">This week</span>
+
+                            <div class="distance">
+                                <i class="ti ti-map-pin"></i>
+                                2.8 km away
+                            </div>
+
+                        </div>
+
+                        <div class="job-bottom">
+
+                            <div class="user-box">
+
+                                <div class="avatar brown-avatar">
+                                    SM
+                                </div>
+
+                                <div>
+                                    <h5>Sreeja M.</h5>
+
+                                    <span>
+                                        <i class="ti ti-star-filled"></i>
+                                        4.5
+                                    </span>
+                                </div>
+
+                            </div>
+
+                            <div class="job-action">
+
+                                <small>2 hrs ago</small>
+
+                                <button>Chat</button>
+
+                            </div>
+
+
+                        </div>
+
+                    </div> -->
+
+                    <!-- CARD 2 -->
+                    <div class="job-card">
+
+                        <div class="job-top">
+
+                            <div>
+                                <h3>Garden cleanup and trimming</h3>
+
+                                <p>
+                                    Small garden needs weeding, trimming hedges
+                                    and clearing dry leaves. About 2–3 hours
+                                    work.
+                                    Tools available.
+                                </p>
+                            </div>
+
+                            <h4>₹400–600</h4>
+
+                        </div>
+
+                        <div class="job-tags">
+
+                            <span class="tag green-tag">Gardening</span>
+                            <span class="tag gray-tag">Flexible</span>
+
+                            <div class="distance">
+                                <i class="ti ti-map-pin"></i>
+                                4.1 km away
+                            </div>
+
+                        </div>
+
+                        <div class="job-bottom">
+
+                            <div class="user-box">
+
+                                <div class="avatar green-avatar">
+                                    AJ
+                                </div>
+
+                                <div>
+                                    <h5>Anoop J.</h5>
+
+                                    <span>
+                                        <i class="ti ti-star-filled"></i>
+                                        4.9
+                                    </span>
+                                </div>
+
+                            </div>
+
+                            <div class="job-action">
+
+                                <small>5 hrs ago</small>
+
+                                <button>Chat</button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- CARD 3 -->
+                    <div class="job-card">
+
+                        <div class="job-top">
+
+                            <div>
+                                <h3>Ceiling fan installation</h3>
+
+                                <p>
+                                    New ceiling fan purchased, needs
+                                    installation
+                                    in living room. Existing wiring in place.
+                                    Should take under an hour.
+                                </p>
+                            </div>
+
+                            <h4>₹300–500</h4>
+
+                        </div>
+
+                        <div class="job-tags">
+
+                            <span class="tag green-tag">Electrical</span>
+                            <span class="tag red-tag">Today</span>
+
+                            <div class="distance">
+                                <i class="ti ti-map-pin"></i>
+                                3.5 km away
+                            </div>
+
+                        </div>
+
+                        <div class="job-bottom">
+
+                            <div class="user-box">
+
+                                <div class="avatar pink-avatar">
+                                    PV
+                                </div>
+
+                                <div>
+                                    <h5>Priya V.</h5>
+
+                                    <span>
+                                        <i class="ti ti-star-filled"></i>
+                                        4.7
+                                    </span>
+                                </div>
+
+                            </div>
+
+                            <div class="job-action">
+
+                                <small>Yesterday</small>
+
+                                <button>Chat</button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- HOW IT WORKS -->
+        <!-- <section class="how-section" id="how"> -->
+
+        <!-- <div class="section-heading">
+                <h2>How NearHelp works</h2>
+                <p>Get your work done in just three simple steps</p>
+            </div>
+
+            <div class="steps-grid">
+
+                <div class="step-card">
+                    <div class="step-icon">
+                        <i class="ti ti-pencil"></i>
+                    </div>
+
+                    <h3>Post a Job</h3>
+
+                    <p>
+                        Describe your work, budget and location in less than 2
+                        minutes.
+                    </p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-icon">
+                        <i class="ti ti-map-search"></i>
+                    </div>
+
+                    <h3>Nearby Helpers Respond</h3>
+
+                    <p>
+                        Skilled helpers near your area discover and respond to
+                        your job.
+                    </p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-icon">
+                        <i class="ti ti-message-circle"></i>
+                    </div>
+
+                    <h3>Chat & Complete</h3>
+
+                    <p>
+                        Discuss details, confirm the work and get the job
+                        completed.
+                    </p>
+                </div>
+
+            </div> -->
+
+        <!-- </section> -->
+
+        <!-- CATEGORIES -->
+        <section class="categories-section" id="categories">
+
+            <div class="section-heading">
+                <h2>Popular categories</h2>
+                <p>Find help for everyday home and local services</p>
+            </div>
+
+            <div class="categories-grid">
+                <a href="{% url 'Plumbing_page' %}">
+                <div class="category-card">
+                    <i class="ti ti-droplet"></i>
+                    <h4>Plumbing</h4>
+                </div>
+                </a>
+
+                <div class="category-card">
+                    <i class="ti ti-bolt"></i>
+                    <h4>Electrical</h4>
+                </div>
+
+                <div class="category-card">
+                    <i class="ti ti-sparkles"></i>
+                    <h4>Cleaning</h4>
+                </div>
+
+                <div class="category-card">
+                    <i class="ti ti-tools"></i>
+                    <h4>Carpentry</h4>
+                </div>
+
+                <div class="category-card">
+                    <i class="ti ti-brush"></i>
+                    <h4>Painting</h4>
+                </div>
+
+                <div class="category-card">
+                    <i class="ti ti-plant"></i>
+                    <h4>Gardening</h4>
+                </div>
+
+                <div class="category-card">
+                    <i class="ti ti-truck"></i>
+                    <h4>Moving</h4>
+                </div>
+
+                <div class="category-card">
+                    <i class="ti ti-device-laptop"></i>
+                    <h4>Tech Help</h4>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- CTA -->
+        <!-- <section class="cta-section">
+
+            <div class="cta-box">
+
+                <h2>Need help for a small job?</h2>
+
+                <p>
+                    Post your work now and connect with trusted nearby helpers.
+                </p>
+
+                <a href="{% url 'Job_posting_form' %}" class="btn-primary">
+                    Post a Job Now
+                </a>
+
+            </div>
+
+        </section> -->
+
+        <!-- FOOTER -->
+        <footer class="footer">
+
+            <a href="#" class="footer-logo">
+                Near<span>Help</span>
+            </a>
+
+            <p>
+                © 2026 NearHelp · Hyperlocal job marketplace
+            </p>
+
+        </footer>
+
+    </body>
+</html>

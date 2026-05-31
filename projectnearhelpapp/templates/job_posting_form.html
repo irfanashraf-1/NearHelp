@@ -50,25 +50,26 @@
           <div class="field">
             <label>Category</label>
             <div class="chip-group" id="catGroup">
-              <div class="chip active" data-cat="plumbing"><i
+              <div class="chip active" data-val="plumbing" data-cat="plumbing"><i
                   class="ti ti-droplet"></i> Plumbing</div>
-              <div class="chip" data-cat="electrical"><i class="ti ti-bolt"></i>
+              <div class="chip" data-val="electrical" data-cat="electrical"><i class="ti ti-bolt"></i>
                 Electrical</div>
-              <div class="chip" data-cat="cleaning"><i
+              <div class="chip" data-val="cleaning" data-cat="cleaning"><i
                   class="ti ti-sparkles"></i> Cleaning</div>
-              <div class="chip" data-cat="carpentry"><i class="ti ti-tools"></i>
+              <div class="chip" data-val="carpentry" data-cat="carpentry"><i class="ti ti-tools"></i>
                 Carpentry</div>
-              <div class="chip" data-cat="painting"><i class="ti ti-brush"></i>
+              <div class="chip" data-val="painting" data-cat="painting"><i class="ti ti-brush"></i>
                 Painting</div>
-              <div class="chip" data-cat="gardening"><i class="ti ti-plant"></i>
+              <div class="chip" data-val="gardening" data-cat="gardening"><i class="ti ti-plant"></i>
                 Gardening</div>
-              <div class="chip" data-cat="moving"><i class="ti ti-truck"></i>
+              <div class="chip" data-val="moving" data-cat="moving"><i class="ti ti-truck"></i>
                 Moving</div>
-              <div class="chip" data-cat="tech"><i
+              <div class="chip" data-val="tech" data-cat="tech"><i
                   class="ti ti-device-laptop"></i> Tech help</div>
-              <div class="chip" data-cat="other"><i
+              <div class="chip" data-val="other" data-cat="other"><i
                   class="ti ti-dots-circle-horizontal"></i> Other</div>
             </div>
+            <input type="hidden" name="category" id="catInput" value="plumbing" />
           </div>
 
           <div class="field">
@@ -104,9 +105,9 @@
             <div class="field">
               <label>Budget (₹)</label>
               <div class="budget-row">
-                <input name="budget" type="number" placeholder min="0" />
-                <!-- <span>–</span>
-            <input type="number" placeholder="Max" min="0" /> -->
+                <input name="budget" type="number" placeholder="Min" min="0" />
+                <span>–</span>
+            <input type="number" placeholder="Max" min="0" />
               </div>
             </div>
             <div class="field">
@@ -122,22 +123,23 @@
           <div class="field">
             <label>Urgency</label>
             <div class="urgency-group" id="urgencyGroup">
-              <div class="urgency-card sel-today" data-u="today">
+              <div class="urgency-card sel-today" data-u="today" data-val="today">
                 <i class="ti ti-urgent"></i>
                 <div class="u-label">Today</div>
                 <div class="u-sub">Need it now</div>
               </div>
-              <div class="urgency-card" data-u="week">
+              <div class="urgency-card" data-u="week" data-val="this_week">
                 <i class="ti ti-calendar-week"></i>
                 <div class="u-label">This week</div>
                 <div class="u-sub">Within 7 days</div>
               </div>
-              <div class="urgency-card" data-u="flex">
+              <div class="urgency-card" data-u="flex" data-val="flexible">
                 <i class="ti ti-clock"></i>
                 <div class="u-label">Flexible</div>
                 <div class="u-sub">No rush</div>
               </div>
             </div>
+            <input type="hidden" name="urgency" id="urgencyInput" value="today" />
           </div>
 
           <hr class="divider" />
@@ -175,13 +177,14 @@
           <div class="field">
             <label>How should helpers contact you?</label>
             <div class="chip-group" id="contactGroup">
-              <div class="chip active" data-contact="chat"><i
+              <div class="chip active" data-contact="chat" data-val="chat"><i
                   class="ti ti-message"></i> In-app chat</div>
-              <div class="chip" data-contact="call"><i class="ti ti-phone"></i>
+              <div class="chip" data-contact="call" data-val="call"><i class="ti ti-phone"></i>
                 Phone call</div>
-              <div class="chip" data-contact="both"><i
+              <div class="chip" data-contact="both" data-val="both"><i
                   class="ti ti-layout-grid"></i> Both</div>
             </div>
+            <input type="text" name="contact_pref" id="contactInput" value="chat" hidden />
           </div>
 
           <!-- SUBMIT -->
@@ -228,6 +231,21 @@
         else card.classList.add('sel-flex');
       });
     });
+
+    // Chip selection — single select
+    function setupChips(groupId, hiddenId) {
+      document.getElementById(groupId).querySelectorAll('.chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          document.getElementById(groupId).querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+          document.getElementById(hiddenId).value = chip.dataset.val;
+        });
+      });
+    }
+
+    setupChips('catGroup', 'catInput');
+    setupChips('urgencyGroup', 'urgencyInput');
+    setupChips('contactGroup', 'contactInput');
   </script>
 
   </body>

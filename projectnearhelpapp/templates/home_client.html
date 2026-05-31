@@ -10,29 +10,31 @@
             href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
 
         <link rel="stylesheet" href="{% static 'css/home_2.css' %}">
+        <link rel="stylesheet" href="{% static 'css/home_client.css' %}">
     </head>
 
     <body>
 
         <!-- NAVBAR -->
         <header class="nav">
-            <a href="#" class="logo">
+            <a href class="logo">
                 Near<span>Help</span>
             </a>
 
             <div class="nav-links">
-                <a href="#how">How it works</a>
-                <a href="#categories">Categories</a>
-                <a href="{% url 'Helper_signup_page' %}">Become a Helper</a>
+                <a href>How it works</a>
+                <a href>Categories</a>
             </div>
 
             <div class="nav-actions">
                 <div class="role-icon role-icon-client">
-                    <a href="{% url 'Profile_client' %}"><i class="ti ti-user"></i></a>
-                    <a href="{% url 'Profile_client' %}" class="nav_profile">Profile</a>
+                    <a href="{% url 'Profile_client' %}"><i
+                            class="ti ti-user"></i></a>
+                    <a href="{% url 'Profile_client' %}"
+                        class="nav_profile">Profile</a>
 
                 </div>
-                
+
                 <a href="{% url 'Job_posting_form' %}" class="nav-post-btn">
                     Post a Job
                 </a>
@@ -69,10 +71,6 @@
                             Post a Job
                         </a>
 
-                        <a href="{% url 'Helper_signup_page' %}"
-                            class="btn-secondary">
-                            Become a Helper
-                        </a>
                     </div>
                     <!-- 
                     <div class="hero-mini-stats">
@@ -95,7 +93,7 @@
                 </div>
 
                 <!-- RIGHT SIDE -->
-                <div class="hero-right">
+                <!-- <div class="hero-right">
 
                     <div class="search-card">
 
@@ -158,7 +156,7 @@
 
                     </div>
 
-                </div>
+                </div> -->
 
             </div>
 
@@ -168,9 +166,9 @@
         <section class="jobs-section">
 
             <div class="section-heading">
-                <h2>Browse nearby jobs</h2>
-                <p>Discover local opportunities posted by people near your
-                    area</p>
+                <h2>Jobs posted</h2>
+                <!-- <p>Discover local opportunities posted by people near your
+                    area</p> -->
             </div>
 
             <div class="jobs-layout">
@@ -273,7 +271,7 @@
                 <div class="jobs-list">
 
                     <!-- CARD 1 -->
-                    <div class="job-card">
+                    <!-- <div class="job-card">
 
                         <div class="job-top">
 
@@ -332,10 +330,10 @@
 
                         </div>
 
-                    </div>
+                    </div> -->
 
                     <!-- CARD 2 -->
-                    <div class="job-card">
+                    <!-- <div class="job-card">
 
                         <div class="job-top">
 
@@ -395,10 +393,10 @@
 
                         </div>
 
-                    </div>
+                    </div> -->
 
                     <!-- CARD 3 -->
-                    <div class="job-card">
+                    <!-- <div class="job-card">
 
                         <div class="job-top">
 
@@ -458,7 +456,7 @@
 
                         </div>
 
-                    </div>
+                    </div> -->
 
                 </div>
 
@@ -467,9 +465,9 @@
         </section>
 
         <!-- HOW IT WORKS -->
-        <!-- <section class="how-section" id="how"> -->
+        <section class="how-section" id="how">
 
-        <!-- <div class="section-heading">
+            <div class="section-heading">
                 <h2>How NearHelp works</h2>
                 <p>Get your work done in just three simple steps</p>
             </div>
@@ -515,14 +513,14 @@
                     </p>
                 </div>
 
-            </div> -->
+            </div>
 
-        <!-- </section> -->
+        </section>
 
         <!-- CATEGORIES -->
         <section class="categories-section" id="categories">
 
-            <div class="section-heading">
+            <!-- <div class="section-heading">
                 <h2>Popular categories</h2>
                 <p>Find help for everyday home and local services</p>
             </div>
@@ -569,7 +567,7 @@
                     <h4>Tech Help</h4>
                 </div>
 
-            </div>
+            </div> -->
 
         </section>
 
