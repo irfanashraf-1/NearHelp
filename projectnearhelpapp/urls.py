@@ -9,7 +9,7 @@ urlpatterns = [
     path('Client_signup_page',views.Client_signup_page,name='Client_signup_page'),
     path('Login_page',views.Login_page,name='Login_page'),
 
-    #Landing pages
+    #Home pages
     path('Home_helper',views.Home_helper,name='Home_helper'),
     path('Home_client',views.Home_client,name='Home_client'),
 
@@ -17,9 +17,22 @@ urlpatterns = [
 
     #Admin pages
     path('Admin_dashboard',views.Admin_dashboard,name='Admin_dashboard'),
+
+    #Helper Data Table
     path('Helper_data_table',views.Helper_data_table,name='Helper_data_table'),
+    path('Edit_helper_data_table/<int:pk>/',views.Edit_helper_data_table,name='Edit_helper_data_table'),
+    path('Update_helper_data_table/<int:pk>/',views.Update_helper_data_table,name='Update_helper_data_table'),
+    path('Delete_helper_data_table/<int:pk>/',views.Delete_helper_data_table,name='Delete_helper_data_table'),
+    
+    #Client Data Table
     path('Client_data_table',views.Client_data_table,name='Client_data_table'),
+    path('Edit_client_data_table/<int:pk>/',views.Edit_client_data_table,name='Edit_client_data_table'),
+    path('Update_client_data_table/<int:pk>/',views.Update_client_data_table,name='Update_client_data_table'),
+    path('Delete_client_data_table/<int:pk>/',views.Delete_client_data_table,name='Delete_client_data_table'),
+
+    #User Data Table
     path('User_data_table',views.User_data_table,name='User_data_table'),
+    path('Delete_user_data_table/<int:pk>/',views.Delete_user_data_table,name='Delete_user_data_table'),
 
     path('Save_client_data',views.Save_client_data,name='Save_client_data'),
     path('Save_helper_data',views.Save_helper_data,name='Save_helper_data'),

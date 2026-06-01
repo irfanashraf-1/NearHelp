@@ -15,7 +15,9 @@ class Client_details_admin(admin.ModelAdmin):
     
 @admin.register(Helper_details)
 class Helper_details_admin(admin.ModelAdmin):
-    list_display =['Fullname',
+    list_display =[ 
+                    'id',
+                    'Fullname',
                     'Dob',
                     'Gender',
                     'Phone_number', 

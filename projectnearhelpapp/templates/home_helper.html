@@ -9,7 +9,7 @@
         <link rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
 
-        <link rel="stylesheet" href="{% static 'css/home_2.css' %}">
+        <link rel="stylesheet" href="{% static 'css/home_helper.css' %}">
     </head>
 
     <body>
@@ -27,13 +27,11 @@
 
             <div class="nav-actions">
                 <div class="role-icon role-icon-client">
-                    <a href="{% url 'Profile_helper' %}"><i class="ti ti-user"></i></a>
-                    <a href="{% url 'Profile_helper' %}" class="nav_profile">Profile</a>
-
+                    <a href="{% url 'Profile_helper' %}" class="nav_profile"><i class="ti ti-user"> </i>Profile</a>
                 </div>
                 
                 <a href=""class="nav-post-btn">
-                    My jobs
+                    Log out
                 </a>
             </div>
         </header>
@@ -530,40 +528,54 @@
                 </div>
                 </a>
 
+                <a href="{% url 'Electrical_page' %}">
                 <div class="category-card">
                     <i class="ti ti-bolt"></i>
                     <h4>Electrical</h4>
                 </div>
+                </a>
 
+                <a href="{% url 'Cleaning_page' %}">
                 <div class="category-card">
                     <i class="ti ti-sparkles"></i>
                     <h4>Cleaning</h4>
                 </div>
+                </a>
 
+                <a href="{% url 'Carpentry_page' %}">
                 <div class="category-card">
                     <i class="ti ti-tools"></i>
                     <h4>Carpentry</h4>
                 </div>
+                </a>
 
+                <a href="{% url 'Painting_page' %}">
                 <div class="category-card">
                     <i class="ti ti-brush"></i>
                     <h4>Painting</h4>
                 </div>
+                </a>
 
+                <a href="{% url 'Gardening_page' %}">
                 <div class="category-card">
                     <i class="ti ti-plant"></i>
                     <h4>Gardening</h4>
                 </div>
+                </a>
 
+                <a href="{% url 'Moving_page' %}">
                 <div class="category-card">
                     <i class="ti ti-truck"></i>
                     <h4>Moving</h4>
                 </div>
+                </a>
 
+                <a href="{% url 'Techhelp_page' %}">   
                 <div class="category-card">
                     <i class="ti ti-device-laptop"></i>
                     <h4>Tech Help</h4>
                 </div>
+                </a>
 
             </div>
 
@@ -596,7 +608,7 @@
             </a>
 
             <p>
-                © 2026 NearHelp · Hyperlocal job marketplace
+                © 2026 NearHelp
             </p>
 
         </footer>

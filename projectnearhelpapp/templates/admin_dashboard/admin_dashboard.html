@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% load static %}
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Admin Dashboard — NearHelp</title>
+        <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+        <link rel="stylesheet" href="{% static 'css/admin_dashboard/admin_dashboard.css' %}">    
+
+    </head>
+    <body>
+
+        <nav class="nav">
+            <a class="logo" href="#">Near<span>Help</span></a>
+        </nav>
+
+        <div class="main">
+            <h1>Admin Dashboard</h1>
+
+            <div class="nav-grid">
+                <a class="nav-card" href="{% url 'Helper_data_table' %}">
+                    <div class="icon-wrap"><i class="ti ti-tool"
+                            aria-hidden="true"></i></div>
+                    <div>
+                        <div class="card-label">Helper details</div>
+                        <div class="card-desc">View &amp; manage helpers</div>
+                    </div>
+                </a>
+                <a class="nav-card" href="{% url 'Client_data_table' %}">
+                    <div class="icon-wrap"><i class="ti ti-user"
+                            aria-hidden="true"></i></div>
+                    <div>
+                        <div class="card-label">Client details</div>
+                        <div class="card-desc">View &amp; manage clients</div>
+                    </div>
+                </a>
+                <a class="nav-card" href="{% url 'User_data_table' %}">
+                    <div class="icon-wrap"><i class="ti ti-users"
+                            aria-hidden="true"></i></div>
+                    <div>
+                        <div class="card-label">Users</div>
+                        <div class="card-desc">All registered users</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+    </body>
+</html>

@@ -15,8 +15,8 @@ class Client_details(models.Model):
         Preferred_language = models.CharField(max_length=50 , null=True, blank=True)
         Preferred_contact_method = models.CharField(max_length=50 , null=True, blank=True)
 
-        def __str__(self):
-                return f"Client: {self.user.username}"
+        # def __str__(self):
+        #         return f"Client: {self.user.username}"
 
 class Helper_details(models.Model):
         user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE , related_name='helper_details', null=True, blank=True)
@@ -33,8 +33,8 @@ class Helper_details(models.Model):
         Availability = models.CharField()
         Password = models.CharField(max_length=128)
 
-        def __str__(self):
-                return f"Helper: {self.user.username}"
+        # def __str__(self):
+        #         return f"Helper: {self.user.username}"
 
 class Job_postings(models.Model):
         Client = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -50,5 +50,5 @@ class Job_postings(models.Model):
         Pin = models.IntegerField(max_length=6)
         Date_posted = models.DateTimeField(auto_now_add=True)
 
-        def __str__(self):
-                return f"Order by {self.client.username} "
+        # def __str__(self):
+        #         return f"Order by {self.client.username} "

@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% load static %}
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>NearHelp — Helper Signup</title>
+        <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+        <link rel="stylesheet" href="{% static 'css/helper_signup_page.css' %}">
+        <style>
+            /* Custom styles for the edit page */
+            .edit_label {
+                font-weight: 500;
+                color: #555;
+                margin-bottom: 8px;
+                display: block;
+            }
+            .display_chip{
+                padding: 6px 12px;
+                display: flex;
+                border: 0.5px solid #ccc;
+                border-radius: 8px;
+                overflow: hidden;
+                background:#1D9E75;
+                transition: border-color 0.15s;
+            }
+            .display_input{
+                color: white;
+                background:#1D9E75;
+                border: none;
+            }
+            .field span{
+                font-size: 11px;
+                color: #aaa;
+            }
+        </style>
+
+    </head>
+    <body>
+
+        <!-- NAV -->
+        <nav class="nav">
+            <a class="logo" href="#">Near<span>Help</span></a>
+            <!-- <a class="nav-login" href="{% url 'Login_page' %}">Already have an account? <strong>Log
+                    in</strong></a> -->
+        </nav>
+
+        <!-- PAGE -->
+        <div class="page">
+            <div class="form-wrap">
+
+                <!-- FLASH MESSAGES -->
+                <div class="flash-messages">
+                    {% for i in messages %}
+                    <h1>{{ i }}</h1>
+                    {% endfor %}
+                </div>
+
+                <!-- HEADER -->
+                <div class="form-head">
+                    <div class="badge"><i class="ti ti-tool"></i> Helper
+                        account</div>
+                    <h1>Edit Helper Account</h1>
+                    <!-- <p>Fill in your details and start taking jobs near you.</p> -->
+                </div>
+
+                <!-- PROGRESS -->
+                <div class="progress-bar">
+                    <div class="progress-step active"></div>
+                    <div class="progress-step"></div>
+                    <div class="progress-step"></div>
+                    <div class="progress-step"></div>
+                </div>
+
+                <!-- FORM -->
+                <form
+                    action="{% url 'Update_helper_data_table' selected_helper.id %}"
+                    method="post"
+                    enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <!-- SECTION: PERSONAL INFO -->
+                    <div class="section-title">Personal info</div>
+
+                    <div class="field">
+                        <label for="fullname">Full name</label>
+                        <div class="input-wrap">
+                            <i class="ti ti-user"></i>
+                            <input type="text" id="fullname" name="fullname"
+                                value="{{ selected_helper.Fullname }}" />
+                        </div>
+                    </div>
+
+                    <div class="two-col">
+                        <!-- <div class="field">
+                            <label for="dob">Date of birth</label>
+                            <div class="input-wrap" style="padding-left: 10px;">
+                                <input class="" type="text"
+                                    value="{{ selected_helper.Dob }}" readonly>
+                            </div>
+                        </div> -->
+                        <div class="field">
+                            <label for>Date of birth <span>(format: YYYY-MM-DD)</span></label>
+                            <div class="input-wrap">
+                                <i class="ti ti-calendar"></i>
+                                <input type="text" id="dob" name="dob" value="{{ selected_helper.Dob|date:'c'  }}"/>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="gender">Gender</label>
+                            <div class="input-wrap">
+                                <i class="ti ti-gender-bigender"></i>
+                                <select id="gender" name="gender"
+                                    value="{{ selected_helper.Gender }}">
+                                    <option value disabled>Select
+                                        gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="two-col">
+                        <div class="field">
+                            <label for="phone">Phone number</label>
+                            <div class="input-wrap">
+                                <i class="ti ti-phone"></i>
+                                <input type="text" id="phone" name="phone"
+                                    maxlength="10" pattern="[0-9]{10}"
+                                    value="{{ selected_helper.Phone_number }}" />
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="email">Email address</label>
+                            <div class="input-wrap">
+                                <i class="ti ti-mail"></i>
+                                <input type="email" id="email" name="email"
+                                    value="{{ selected_helper.Email }}" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label>Profile photo</label>
+                        <div class="photo-upload" id="photoBox">
+                            <i class="ti ti-user-circle"></i>
+                            <p>Tap to upload your photo</p>
+                            <span>JPG or PNG · max 2MB</span>
+                            <input type="file" name="photo" accept="image/*"
+                                id="photoInput"
+                                onchange="previewPhoto(event)" />
+                        </div>
+                        <div class="photo-preview" id="photoPreview">
+                            <img id="previewImg" alt="Preview" />
+                            <span>Photo selected ✓</span>
+                        </div>
+                    </div>
+
+                    <hr class="divider" />
+
+                    <!-- SECTION: LOCATION -->
+                    <div class="section-title">Location</div>
+
+                    <div class="field">
+                        <label for="area">Area / Neighbourhood</label>
+                        <span class="hint">Start typing — Google will suggest
+                            your area</span>
+                        <div class="input-wrap">
+                            <i class="ti ti-map-pin"></i>
+                            <input type="text" id="area" name="area"
+                                value="{{ selected_helper.Area }}" />
+                        </div>
+                    </div>
+
+                    <div class="two-col">
+                        <div class="field">
+                            <label for="town">Town / City</label>
+                            <div class="input-wrap">
+                                <i class="ti ti-building"></i>
+                                <input type="text" id="town" name="town"
+                                    value="{{ selected_helper.Town }}" />
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="pin">PIN code</label>
+                            <div class="input-wrap">
+                                <i class="ti ti-hash"></i>
+                                <input type="text" id="pin" name="pin"
+                                    value="{{ selected_helper.Pin }}"
+                                    maxlength="6" pattern="[0-9]{6}" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="divider" />
+
+                    <!-- SECTION: SKILLS -->
+                    <div class="section-title">Skills & work</div>
+
+                    <div class="field">
+                        <label for="dob">Current Category</label>
+                        <div class="display_chip">
+                            <input class="display_input" type="text"
+                                value="{{ selected_helper.Category }}" readonly>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label>Edit Category <span
+                                style="font-weight:400;color:#aaa;">
+                            </span></label>
+                        <div class="chip-group" id="catGroup">
+                            <div class="chip active" data-val="Electrical"><i
+                                    class="ti ti-bolt"></i> Electrical</div>
+                            <div class="chip" data-val="Plumbing"><i
+                                    class="ti ti-droplet"></i> Plumbing</div>
+                            <div class="chip" data-val="Cleaning"><i
+                                    class="ti ti-sparkles"></i> Cleaning</div>
+                            <div class="chip" data-val="Carpentry"><i
+                                    class="ti ti-tools"></i> Carpentry</div>
+                            <div class="chip" data-val="Painting"><i
+                                    class="ti ti-brush"></i> Painting</div>
+                            <div class="chip" data-val="Gardening"><i
+                                    class="ti ti-plant"></i> Gardening</div>
+                            <div class="chip" data-val="Moving"><i
+                                    class="ti ti-truck"></i> Moving</div>
+                            <div class="chip" data-val="Other"><i
+                                    class="ti ti-dots-circle-horizontal"></i>
+                                Other</div>
+                        </div>
+                        <input type="hidden" name="category" id="catInput" value="{{ selected_helper.Category }}"  />
+                    </div>
+
+                    <div class="field">
+                        <label for="dob">Current Availability</label>
+                        <div class="display_chip">
+                            <input class="display_input" type="text"
+                                value="{{ selected_helper.Availability }}" readonly>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="edit_label">Edit Availability</label>
+                        <div class="avail-group" id="availGroup">
+                            <div class="avail-card active" data-val="weekdays">
+                                <i class="ti ti-briefcase"></i>
+                                <div class="a-label">Weekdays</div>
+                            </div>
+                            <div class="avail-card" data-val="weekends">
+                                <i class="ti ti-beach"></i>
+                                <div class="a-label">Weekends</div>
+                            </div>
+                            <div class="avail-card" data-val="allday">
+                                <i class="ti ti-clock-24"></i>
+                                <div class="a-label">All days</div>
+                            </div>
+                            <div class="avail-card" data-val="other">
+                                <i class="ti ti-adjustments"></i>
+                                <div class="a-label">Custom</div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="availability" id="availInput"
+                            value="{{ selected_helper.Availability }}" />
+                    </div>
+
+                    <hr class="divider" />
+
+                    <!-- SECTION: SECURITY -->
+                    <div class="section-title"></div>
+
+                    <!-- <div class="field">
+                        <label for="password">Password</label>
+                        <div class="input-wrap">
+                            <i class="ti ti-lock"></i>
+                            <input type="password" id="password" name="password"
+                                value="{{ selected_helper.Password }}"
+                                
+                                minlength="8"
+                                oninput="checkStrength(this.value)"
+                                 />
+                            <button type="button" class="toggle-pw"
+                                onclick="togglePw('password','eye1')">
+                                <i class="ti ti-eye" id="eye1"></i>
+                            </button>
+                        </div>
+                        <div class="strength-bar">
+                            <div class="strength-seg" id="s1"></div>
+                            <div class="strength-seg" id="s2"></div>
+                            <div class="strength-seg" id="s3"></div>
+                            <div class="strength-seg" id="s4"></div>
+                        </div>
+                        <div class="strength-label" id="strengthLabel"></div>
+                    </div> -->
+
+                    <!-- <div class="field">
+                        <label for="confirm_passsword">Confirm password</label>
+                        <div class="input-wrap">
+                            <i class="ti ti-lock-check"></i>
+                            <input type="password" id="confirm_passsword"
+                                name="confirm_passsword"
+                                value="{{ selected_helper.Password }}"
+                                minlength="8"  />
+                            <button type="button" class="toggle-pw"
+                                onclick="togglePw('confirm_passsword','eye2')">
+                                <i class="ti ti-eye" id="eye2"></i>
+                            </button>
+                        </div>
+                    </div> -->
+
+                    <!-- TERMS -->
+                    <!-- <div class="terms-row">
+                        <input type="checkbox" id="terms" required />
+                        <label for="terms">
+                            I agree to the <a href="#">Terms of Service</a> and
+                            <a href="#">Privacy Policy</a> of NearHelp.
+                        </label>
+                    </div> -->
+
+                    <button type="submit" class="btn-primary">Update
+                        account</button>
+
+                </form>
+
+                <!-- <div class="login-row">
+                    Already have an account? <a href="{% url 'Login_page' %}">Log in</a>
+                </div> -->
+
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="page-footer">© 2025 NearHelp · All rights reserved</div>
+
+        <script>
+    // Toggle password visibility
+    function togglePw(inputId, iconId) {
+      const input = document.getElementById(inputId);
+      const icon = document.getElementById(iconId);
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.className = 'ti ti-eye-off';
+      } else {
+        input.type = 'password';
+        icon.className = 'ti ti-eye';
+      }
+    }
+
+    // Password strength checker
+    function checkStrength(val) {
+      const segs = ['s1','s2','s3','s4'].map(id => document.getElementById(id));
+      const label = document.getElementById('strengthLabel');
+      segs.forEach(s => s.style.background = '#e0e0e0');
+
+      let score = 0;
+      if (val.length >= 8) score++;
+      if (/[A-Z]/.test(val)) score++;
+      if (/[0-9]/.test(val)) score++;
+      if (/[^A-Za-z0-9]/.test(val)) score++;
+
+      const colors = ['#E05C3A','#E09B3A','#5DCAA5','#1D9E75'];
+      const labels = ['Weak','Fair','Good','Strong'];
+      const labelColors = ['#993C1D','#854F0B','#0F6E56','#0F6E56'];
+
+      for (let i = 0; i < score; i++) segs[i].style.background = colors[score - 1];
+      label.textContent = val.length > 0 ? labels[score - 1] : '';
+      label.style.color = val.length > 0 ? labelColors[score - 1] : '#aaa';
+    }
+
+    // Single-select chip group
+    function setupChips(groupId, hiddenId) {
+      document.getElementById(groupId).querySelectorAll('.chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          document.getElementById(groupId).querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+          document.getElementById(hiddenId).value = chip.dataset.val;
+        });
+      });
+    }
+
+    // Single-select availability cards
+    function setupAvail(groupId, hiddenId) {
+      document.getElementById(groupId).querySelectorAll('.avail-card').forEach(card => {
+        card.addEventListener('click', () => {
+          document.getElementById(groupId).querySelectorAll('.avail-card').forEach(c => c.classList.remove('active'));
+          card.classList.add('active');
+          document.getElementById(hiddenId).value = card.dataset.val;
+        });
+      });
+    }
+
+    // Photo preview
+    function previewPhoto(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = e => {
+        document.getElementById('previewImg').src = e.target.result;
+        document.getElementById('photoPreview').style.display = 'flex';
+      };
+      reader.readAsDataURL(file);
+    }
+
+    setupChips('catGroup', 'catInput');
+    setupAvail('availGroup', 'availInput');
+  </script>
+
+    </body>
+</html>

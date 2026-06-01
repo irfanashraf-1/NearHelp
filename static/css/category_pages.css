@@ -1,10 +1,14 @@
     *,
+   
+
     *::before,
     *::after {
         box-sizing: border-box;
         margin: 0;
         padding: 0;
+
     }
+
 
     :root {
         --green: #1D9E75;
@@ -137,7 +141,7 @@
     }
 
     .cat-header-inner {
-        max-width: 1100px;
+        max-width: 1250px;
         margin: 0 auto;
     }
 
@@ -232,7 +236,7 @@
 
     /* ── MAIN LAYOUT ── */
     .main {
-        max-width: 1100px;
+        max-width: 1300px;
         margin: 0 auto;
         padding: 20px;
         display: grid;

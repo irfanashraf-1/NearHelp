@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NearHelp — Client Edit</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+  <link rel="stylesheet" href="{% static 'css/client_signup_page.css' %}">
+
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a class="logo" href="#">Near<span>Help</span></a>
+    <!-- <a class="nav-login" href="{% url 'Login_page' %}">Already have an account? <strong>Log in</strong></a> -->
+  </nav>
+
+  <!-- PAGE -->
+  <div class="page">
+    <div class="form-wrap">
+
+      <!-- FLASH MESSAGES -->
+      <div class="flash-messages">
+        {% for i in messages %}
+        <h1>{{ i }}</h1>
+        {% endfor %}
+      </div>
+
+      <!-- HEADER -->
+      <div class="form-head">
+        <div class="badge"><i class="ti ti-user"></i> Client account</div>
+        <h1>Edit Client Account</h1>
+        <!-- <p>Post jobs and find helpers near you in minutes.</p> -->
+      </div>
+
+      <!-- PROGRESS -->
+      <div class="progress-bar">
+        <div class="progress-step active"></div>
+        <div class="progress-step"></div>
+        <div class="progress-step"></div>
+      </div>
+
+      <!-- FORM -->
+      <form action="{% url 'Update_client_data_table' selected_client.id %}" method="post">
+        {% csrf_token %}
+
+        <!-- SECTION: PERSONAL INFO -->
+        <div class="section-title">Personal info</div>
+
+        <div class="field">
+          <label for="fullname">Full name</label>
+          <div class="input-wrap">
+            <i class="ti ti-user"></i>
+            <input type="text" id="fullname" name="fullname" value="{{ selected_client.Fullname }}" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="phone_number">Phone number</label>
+          <div class="input-wrap">
+            <i class="ti ti-phone"></i>
+            <input type="text" id="phone_number" name="phone_number"
+              
+              maxlength="10" minlength="10"
+              pattern="[0-9]{10}"
+              value="{{ selected_client.Phone_number }}" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="email">Email address</label>
+          <div class="input-wrap">
+            <i class="ti ti-mail"></i>
+            <input type="email" id="email" name="email" value="{{ selected_client.Email }}" />
+          </div>
+        </div>
+
+        <hr class="divider" />
+
+        <!-- SECTION: LOCATION -->
+        <div class="section-title">Location</div>
+
+        <div class="field">
+          <label for="area">Area / Neighbourhood</label>
+          <span class="hint">Start typing — Google will suggest your area</span>
+          <div class="input-wrap">
+            <i class="ti ti-map-pin"></i>
+            <input type="text" id="area" name="area" value="{{ selected_client.Area }}" />
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="field">
+            <label for="town">Town / City</label>
+            <div class="input-wrap">
+              <i class="ti ti-building"></i>
+              <input type="text" id="town" name="town" value="{{ selected_client.Town }}" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="pin">PIN code</label>
+            <div class="input-wrap">
+              <i class="ti ti-hash"></i>
+              <input type="text" id="pin" name="pin" value="{{ selected_client.Pin }}"  maxlength="6" pattern="[0-9]{6}"  />
+            </div>
+          </div>
+        </div>
+
+        <hr class="divider" />
+
+        <!-- SECTION: PREFERENCES -->
+        <div class="section-title">Preferences</div>
+
+        <div class="field">
+          <label>Preferred language</label>
+          <div class="chip-group" id="langGroup">
+            <div class="chip active" data-val="malayalam"><i class="ti ti-language"></i> Malayalam</div>
+            <div class="chip" data-val="english"><i class="ti ti-language"></i> English</div>
+            <div class="chip" data-val="hindi"><i class="ti ti-language"></i> Hindi</div>
+            <div class="chip" data-val="tamil"><i class="ti ti-language"></i> Tamil</div>
+          </div>
+          <input type="hidden" name="language" id="langInput" value="{{ selected_client.Preferred_language }}" />
+        </div>
+
+        <div class="field">
+          <label>Preferred contact method</label>
+          <div class="chip-group" id="contactGroup">
+            <div class="chip active" data-val="chat"><i class="ti ti-message"></i> In-app chat</div>
+            <div class="chip" data-val="call"><i class="ti ti-phone"></i> Phone call</div>
+            <div class="chip" data-val="both"><i class="ti ti-layout-grid"></i> Both</div>
+          </div>
+          <input type="hidden" name="contact_preference" id="contactInput" value="{{ selected_client.Preferred_contact_method }}" />
+        </div>
+
+        <hr class="divider" />
+
+        <!-- SECTION: SECURITY -->
+        <div class="section-title"></div>
+
+        <!-- <div class="field">
+          <label for="password">Password</label>
+          <div class="input-wrap">
+            <i class="ti ti-lock"></i>
+            <input type="password" id="password" name="password"
+              placeholder="Minimum 8 characters"
+              minlength="8"
+              oninput="checkStrength(this.value)"
+              required />
+            <button type="button" class="toggle-pw" onclick="togglePw('password','eye1')">
+              <i class="ti ti-eye" id="eye1"></i>
+            </button>
+          </div>
+          <div class="strength-bar">
+            <div class="strength-seg" id="s1"></div>
+            <div class="strength-seg" id="s2"></div>
+            <div class="strength-seg" id="s3"></div>
+            <div class="strength-seg" id="s4"></div>
+          </div>
+          <div class="strength-label" id="strengthLabel"></div>
+        </div> -->
+
+        <!-- <div class="field">
+          <label for="confirm_passsword">Confirm password</label>
+          <div class="input-wrap">
+            <i class="ti ti-lock-check"></i>
+            <input type="password" id="confirm_passsword" name="confirm_passsword"
+              placeholder="Re-enter your password"
+              minlength="8"
+              required />
+            <button type="button" class="toggle-pw" onclick="togglePw('confirm_passsword','eye2')">
+              <i class="ti ti-eye" id="eye2"></i>
+            </button>
+          </div>
+        </div> -->
+
+        <!-- TERMS -->
+        <!-- <div class="terms-row">
+          <input type="checkbox" id="terms" required />
+          <label for="terms">
+            I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a> of NearHelp.
+          </label>
+        </div> -->
+
+        <button type="submit" class="btn-primary">Update account</button>
+
+      </form>
+
+      <!-- <div class="login-row">
+        Already have an account? <a href="{% url 'Login_page' %}">Log in</a>
+      </div> -->
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="page-footer">© 2025 NearHelp · All rights reserved</div>
+
+  <script>
+    // Toggle password visibility
+    function togglePw(inputId, iconId) {
+      const input = document.getElementById(inputId);
+      const icon = document.getElementById(iconId);
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.className = 'ti ti-eye-off';
+      } else {
+        input.type = 'password';
+        icon.className = 'ti ti-eye';
+      }
+    }
+
+    // Password strength checker
+    function checkStrength(val) {
+      const segs = [document.getElementById('s1'), document.getElementById('s2'),
+                    document.getElementById('s3'), document.getElementById('s4')];
+      const label = document.getElementById('strengthLabel');
+      segs.forEach(s => s.style.background = '#e0e0e0');
+
+      let score = 0;
+      if (val.length >= 8) score++;
+      if (/[A-Z]/.test(val)) score++;
+      if (/[0-9]/.test(val)) score++;
+      if (/[^A-Za-z0-9]/.test(val)) score++;
+
+      const colors = ['#E05C3A', '#E09B3A', '#5DCAA5', '#1D9E75'];
+      const labels = ['Weak', 'Fair', 'Good', 'Strong'];
+      const labelColors = ['#993C1D', '#854F0B', '#0F6E56', '#0F6E56'];
+
+      for (let i = 0; i < score; i++) {
+        segs[i].style.background = colors[score - 1];
+      }
+      label.textContent = val.length > 0 ? labels[score - 1] : '';
+      label.style.color = val.length > 0 ? labelColors[score - 1] : '#aaa';
+    }
+
+    // Chip selection — single select
+    function setupChips(groupId, hiddenId) {
+      document.getElementById(groupId).querySelectorAll('.chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          document.getElementById(groupId).querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+          document.getElementById(hiddenId).value = chip.dataset.val;
+        });
+      });
+    }
+
+    setupChips('langGroup', 'langInput');
+    setupChips('contactGroup', 'contactInput');
+  </script>
+
+</body>
+</html>
+

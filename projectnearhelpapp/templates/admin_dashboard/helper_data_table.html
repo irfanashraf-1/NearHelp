@@ -1,11 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Helper Data — NearHelp</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+    <link rel="stylesheet" href="{% static 'css/admin_dashboard/helper_data_table.css' %}">
+
 </head>
 <body>
-    <h1>helper data table</h1>
+
+    <!-- NAV -->
+    <nav>
+        <a class="logo" href="#">Near<span>Help</span></a>
+        <div class="nav-divider"></div>
+        <span class="nav-label">Admin</span>
+    </nav>
+
+    <!-- PAGE -->
+    <div class="page">
+
+        <div class="page-header">
+            <div>
+                <div class="page-title">Helpers</div>
+                <div class="page-subtitle">Manage registered helper profiles</div>
+            </div>
+        </div>
+
+        <div class="table-card">
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Photo</th>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Date of Birth</th>
+                            <th>Gender</th>
+                            <th>Area</th>
+                            <th>Town</th>
+                            <th>PIN</th>
+                            <th>Category</th>
+                            <th>Availability</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in helperdata %}
+                        <tr>
+                            <td class="photo-cell">
+                                {% if i.Photo %}
+                                    <img src="{{ i.Photo.url }}" alt="Photo">
+                                {% else %}
+                                    <div class="photo-placeholder">
+                                        <i class="ti ti-user"></i>
+                                    </div>
+                                {% endif %}
+                            </td>
+                            <td><strong>{{ i.Fullname }}</strong></td>
+                            <td>{{ i.Email }}</td>
+                            <td>{{ i.Phone_number }}</td>
+                            <td>{{ i.Dob }}</td>
+                            <td>{{ i.Gender }}</td>
+                            <td>{{ i.Area }}</td>
+                            <td>{{ i.Town }}</td>
+                            <td>{{ i.Pin }}</td>
+                            <td>
+                                <span class="chip chip-category">{{ i.Category }}</span>
+                            </td>
+                            <td>
+                                {% if i.Availability %}
+                                    <span class="chip chip-available">
+                                        <i class="ti ti-circle-filled" style="font-size:8px;"></i>
+                                        {{ i.Availability }}
+                                    </span>
+                                {% else %}
+                                    <span class="chip chip-unavailable">—</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <div class="actions">
+                                    <a href="{% url 'Edit_helper_data_table' i.id %}" class="btn-action btn-edit">
+                                        <i class="ti ti-pencil"></i> Edit
+                                    </a>
+                                    <a href="{% url 'Delete_helper_data_table' i.id %}" class="btn-action btn-delete">
+                                        <i class="ti ti-trash"></i> Delete
+                                    </a>
+                                    <a href="" class="btn-action btn-block">
+                                        <i class="ti ti-ban"></i> Block
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                        {% if not helperdata %}
+                        <tr>
+                            <td colspan="12">
+                                <div class="empty-state">
+                                    <i class="ti ti-users"></i>
+                                    No helpers registered yet
+                                </div>
+                            </td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
 </body>
 </html>

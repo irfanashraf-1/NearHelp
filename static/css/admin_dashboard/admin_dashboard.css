@@ -1,0 +1,105 @@
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f3;
+            min-height: 100vh;
+        }
+
+        .nav {
+            height: 56px;
+            background: #fff;
+            border-bottom: 0.5px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .logo {
+            font-size: 18px;
+            font-weight: 500;
+            color: #111;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: #1D9E75;
+        }
+
+        .main {
+            padding: 32px 24px;
+            max-width: 720px;
+        }
+
+        h1 {
+            font-size: 22px;
+            font-weight: 500;
+            color: #111;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 32px;
+        }
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+        }
+
+        .nav-card {
+            background: #fff;
+            border: 0.5px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            transition: border-color 0.15s;
+        }
+
+        .nav-card:hover {
+            border-color: #1D9E75;
+        }
+
+        .nav-card:hover .icon-wrap {
+            background: #E1F5EE;
+            color: #1D9E75;
+        }
+
+        .icon-wrap {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: #f5f5f3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #555;
+            font-size: 20px;
+            flex-shrink: 0;
+            transition: background 0.15s, color 0.15s;
+        }
+
+        .card-label {
+            font-size: 15px;
+            font-weight: 500;
+            color: #111;
+        }
+
+        .card-desc {
+            font-size: 12px;
+            color: #888;
+            margin-top: 2px;
+        }

@@ -4,18 +4,22 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User , auth
 from django.contrib import messages
 from django.contrib.auth import login
+from datetime import datetime
 
 
-# Create your views here.
+
+
 def Welcomepage(request):
     return render(request,'welcome.html')
+#Login & Signup 
 def Helper_signup_page(request):
-    return render(request,'helper_signup_page.html')
+    return render(request,'login_signup/helper_signup_page.html')
 def Client_signup_page(request):
-    return render(request,'client_signup_page.html')
+    return render(request,'login_signup/client_signup_page.html')
 def Login_page(request):
-    return render(request,'login_page.html')
+    return render(request,'login_signup/login_page.html')
 
+#Home page
 @login_required
 def Home_helper(request):
     return render(request,'home_helper.html')
@@ -24,26 +28,22 @@ def Home_helper(request):
 def Home_client(request):
     return render(request,'home_client.html')
 
+#job posting form
 def Job_posting_form(request):
     return render(request,'job_posting_form.html')
 
+#Admin page
 @login_required
 def Admin_dashboard(request):
-    return render(request,'admin_dashboard.html')
-def Helper_data_table(request):
-    return render(request,'admin_dashboard/helper_data_table.html')
-def Client_data_table(request):
-    return render(request,'admin_dashboard/client_data_table.html')
-def User_data_table(request):
-    return render(request,'admin_dashboard/user_data_table.html')
+    return render(request,'admin_dashboard/admin_dashboard.html')
 
-# Profile pages
+# Profile 
 def Profile_client(request):
-    return render(request,'profile_client.html')
+    return render(request,'profile_pages/profile_client.html')
 def Profile_helper(request):
-    return render(request,'profile_helper.html')
+    return render(request,'profile_pages/profile_helper.html')
 
-#Category pages
+#Categories
 def Carpentry_page(request):
     return render(request,'category/carpentry_cat_page.html')
 def Plumbing_page(request):
@@ -268,3 +268,73 @@ def Save_job_posting(request):
 #         return render(request, 'profile_helper.html', context)
     
 #     return redirect('Login_page')
+
+#Helper signup data table in admin dashboard 
+def Helper_data_table(request):
+    alldata = Helper_details.objects.all()
+    return render(request,'admin_dashboard/helper_data_table.html',{'helperdata':alldata})
+
+def Edit_helper_data_table(request, pk):
+    selected_helper = Helper_details.objects.get(id=pk)
+    return render(request,'admin_dashboard/edit_helper_data_admin.html',{'selected_helper':selected_helper})
+
+def Update_helper_data_table(request, pk):
+    if request.method == 'POST':
+        modified = Helper_details.objects.get(id=pk)
+        modified.Fullname = request.POST.get('fullname')
+        modified.Dob = request.POST.get('dob')
+        modified.Gender = request.POST.get('gender')
+        modified.Phone_number = request.POST.get('phone')
+        modified.Email = request.POST.get('email')
+        if request.FILES.get('photo'):
+            modified.Photo = request.FILES.get('photo')
+        modified.Area = request.POST.get('area')
+        modified.Town = request.POST.get('town')
+        modified.Pin = request.POST.get('pin')
+        modified.Category = request.POST.get('category')
+        modified.Availability = request.POST.get('availability')
+        modified.save()
+        return redirect('Helper_data_table')
+    
+def Delete_helper_data_table(request, pk):
+        deleted = Helper_details.objects.get(id=pk)
+        deleted.delete()
+        return redirect('Helper_data_table')
+
+#Client signup data table in admin dashboard
+def Client_data_table(request):
+    alldata = Client_details.objects.all()
+    return render(request,'admin_dashboard/client_data_table.html',{'clientdata':alldata})
+
+def Edit_client_data_table(request, pk):
+    selected_client = Client_details.objects.get(id=pk)
+    return render(request,'admin_dashboard/edit_client_data_admin.html',{'selected_client':selected_client})
+
+def Update_client_data_table(request, pk):
+    if request.method == 'POST':
+        modified = Client_details.objects.get(id=pk)
+        modified.Fullname = request.POST.get('fullname')
+        modified.Phone_number = request.POST.get('phone_number')
+        modified.Email = request.POST.get('email')
+        modified.Area = request.POST.get('area')
+        modified.Town = request.POST.get('town')
+        modified.Pin = request.POST.get('pin')
+        modified.Preferred_language = request.POST.get('language')
+        modified.Preferred_contact_method = request.POST.get('contact_preference')
+        modified.save()
+        return redirect('Client_data_table')
+
+def Delete_client_data_table(request, pk):
+        deleted = Client_details.objects.get(id=pk)
+        deleted.delete()
+        return redirect('Client_data_table')    
+
+#User data table in admin dashboard
+def User_data_table(request):
+    userdata = User.objects.all()
+    return render(request,'admin_dashboard/user_data_table.html',{'userdata':userdata})
+
+def Delete_user_data_table(request, pk):
+        deleted = User.objects.get(id=pk)
+        deleted.delete()
+        return redirect('User_data_table')

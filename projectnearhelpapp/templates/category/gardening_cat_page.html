@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% load static %}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gardening Jobs – NearHelp</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
+  <link rel="stylesheet" href="{% static 'css/category_pages.css' %}" />
+
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">Near<span>Help</span></a>
+  <!-- <button class="nav-btn"><i class="ti ti-plus"></i> Post a Job</button> -->
+  <button class="nav-btn"><i class="ti ti-user"></i>Profile</button>
+  <div class="nav-avatar">IK</div>
+</nav>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="#">Home</a>
+  <i class="ti ti-chevron-right sep"></i>
+  <a href="#">Categories</a>
+  <i class="ti ti-chevron-right sep"></i>
+  <span class="current">Gardening</span>
+</div>
+
+<!-- CATEGORY HEADER -->
+<div class="cat-header">
+  <div class="cat-header-inner">
+    <div class="cat-title-row">
+      <div class="cat-icon-wrap">
+        <i class="ti ti-tool"></i>
+      </div>
+      <div>
+        <h1>Gardening</h1>
+        <p>Landscaping, lawn care, tree trimming &amp; more near you</p>
+      </div>
+    </div>
+
+    <div class="cat-meta">
+      <span class="cat-meta-item"><i class="ti ti-list-check"></i> 34 open jobs</span>
+      <!-- <span class="cat-meta-item"><i class="ti ti-users"></i> 12 workers nearby</span> -->
+      <!-- <span class="cat-meta-item"><i class="ti ti-clock"></i> Avg. response: 18 min</span> -->
+    </div>
+
+    <div class="subcat-tabs">
+      <button class="subcat-tab active">All Gardening</button>
+      <button class="subcat-tab">Lawn Care</button>
+      <button class="subcat-tab">Tree Trimming</button>
+      <button class="subcat-tab">Landscaping</button>
+      <button class="subcat-tab">Garden Design</button>
+      <button class="subcat-tab">Irrigation Installation</button>
+      <button class="subcat-tab">Weed Control</button>
+      <button class="subcat-tab">Fertilization</button>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <!-- Map -->
+    <!-- <div class="sidebar-card">
+      <h4>Nearby Jobs</h4>
+      <div class="map-box">
+        <div class="map-dots"></div>
+        <div class="map-placeholder">
+          <i class="ti ti-map-2"></i>
+          <span>Map view</span>
+        </div>
+      </div>
+      <div class="radius-row">
+        <span>Search radius</span>
+        <span id="radius-val">5 km</span>
+      </div>
+      <input type="range" min="1" max="20" value="5" id="radius-slider"
+             oninput="document.getElementById('radius-val').textContent=this.value+' km'"/>
+    </div> -->
+
+    <!-- Filters -->
+    <div class="sidebar-card">
+      <h4>Filters</h4>
+
+      <div class="filter-group">
+        <div class="filter-label">Urgency</div>
+        <div class="filter-chips">
+          <button class="chip active">Any</button>
+          <button class="chip">Today</button>
+          <button class="chip">This Week</button>
+          <button class="chip">Flexible</button>
+        </div>
+      </div>
+
+      <div class="filter-group" style="margin-top:14px">
+        <div class="filter-label">Budget (₹)</div>
+        <div class="price-inputs">
+          <input type="number" placeholder="Min" />
+          <input type="number" placeholder="Max" />
+        </div>
+      </div>
+
+      <!-- <div class="filter-group" style="margin-top:14px">
+        <div class="filter-label">Client Rating</div>
+        <div class="filter-chips">
+          <button class="chip active">Any</button>
+          <button class="chip">4.0+</button>
+          <button class="chip">4.5+</button>
+        </div>
+      </div> -->
+
+      <div class="filter-group" style="margin-top:14px">
+        <div class="filter-label">Job Type</div>
+        <div class="filter-chips">
+          <button class="chip active">All</button>
+          <button class="chip">One-time</button>
+          <button class="chip">Recurring</button>
+        </div>
+      </div>
+
+      <button class="apply-btn">Apply Filters</button>
+    </div>
+
+  </aside>
+
+  <!-- RIGHT COLUMN -->
+  <div class="right-col">
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <div class="search-box">
+        <i class="ti ti-search"></i>
+        <input type="text" placeholder="Search gardening jobs…" />
+      </div>
+      <select class="sort-select">
+        <option>Most recent</option>
+        <option>Highest pay</option>
+        <option>Lowest pay</option>
+      </select>
+    </div>
+
+    <div class="results-info"><strong>34 jobs</strong> found in Gardening near you</div>
+
+    <!-- JOB CARDS -->
+    <div class="jobs-grid">
+
+      <!-- Card 1 -->
+      <div class="job-card urgent">
+        <div class="job-top">
+          <div>
+            <h3>Kitchen sink pipe leaking urgently</h3>
+            <p>Water dripping under the sink cabinet. Needs immediate repair. Please come ASAP, minor flooding risk.</p>
+          </div>
+          <h4>₹400–700</h4>
+        </div>
+        <div class="job-tags">
+          <span class="tag green-tag">Plumbing</span>
+          <span class="tag red-tag">Urgent</span>
+          <span class="tag red-tag">Today</span>
+          <div class="distance"><i class="ti ti-map-pin"></i>1.2 km away</div>
+        </div>
+        <div class="job-bottom">
+          <div class="user-box">
+            <div class="avatar blue-avatar">RM</div>
+            <div>
+              <h5>Rahul M.</h5>
+              <span><i class="ti ti-star-filled"></i>4.9</span>
+            </div>
+          </div>
+          <div class="job-action">
+            <small>20 min ago</small>
+            <button>Chat</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="job-card">
+        <div class="job-top">
+          <div>
+            <h3>Bathroom tap replacement</h3>
+            <p>Old mixer tap needs replacing in master bathroom. New tap already purchased and ready. Should be a straightforward swap.</p>
+          </div>
+          <h4>₹250–400</h4>
+        </div>
+        <div class="job-tags">
+          <span class="tag green-tag">Plumbing</span>
+          <span class="tag blue-tag">This Week</span>
+          <div class="distance"><i class="ti ti-map-pin"></i>2.7 km away</div>
+        </div>
+        <div class="job-bottom">
+          <div class="user-box">
+            <div class="avatar pink-avatar">SV</div>
+            <div>
+              <h5>Sunita V.</h5>
+              <span><i class="ti ti-star-filled"></i>4.6</span>
+            </div>
+          </div>
+          <div class="job-action">
+            <small>2 hrs ago</small>
+            <button>Chat</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="job-card">
+        <div class="job-top">
+          <div>
+            <h3>Overhead tank pipeline connection</h3>
+            <p>New overhead tank installed, need plumber to connect pipelines and fit ball valve. Approx 3–4 hours work.</p>
+          </div>
+          <h4>₹800–1,200</h4>
+        </div>
+        <div class="job-tags">
+          <span class="tag green-tag">Plumbing</span>
+          <span class="tag green-tag">New Installation</span>
+          <span class="tag orange-tag">Tomorrow</span>
+          <div class="distance"><i class="ti ti-map-pin"></i>3.1 km away</div>
+        </div>
+        <div class="job-bottom">
+          <div class="user-box">
+            <div class="avatar yellow-avatar">AK</div>
+            <div>
+              <h5>Arjun K.</h5>
+              <span><i class="ti ti-star-filled"></i>4.8</span>
+            </div>
+          </div>
+          <div class="job-action">
+            <small>Yesterday</small>
+            <button>Chat</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="job-card">
+        <div class="job-top">
+          <div>
+            <h3>Blocked drain in kitchen</h3>
+            <p>Kitchen drain is completely blocked, water not draining at all. Need a plumber with drain cleaning equipment today.</p>
+          </div>
+          <h4>₹300–500</h4>
+        </div>
+        <div class="job-tags">
+          <span class="tag green-tag">Plumbing</span>
+          <span class="tag green-tag">Drain Cleaning</span>
+          <span class="tag red-tag">Today</span>
+          <div class="distance"><i class="ti ti-map-pin"></i>4.0 km away</div>
+        </div>
+        <div class="job-bottom">
+          <div class="user-box">
+            <div class="avatar purple-avatar">MN</div>
+            <div>
+              <h5>Meera N.</h5>
+              <span><i class="ti ti-star-filled"></i>4.4</span>
+            </div>
+          </div>
+          <div class="job-action">
+            <small>3 hrs ago</small>
+            <button>Chat</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="job-card">
+        <div class="job-top">
+          <div>
+            <h3>Geyser/water heater pipe fitting</h3>
+            <p>New 25L geyser installed but inlet/outlet pipes not connected yet. Need someone experienced with heater connections.</p>
+          </div>
+          <h4>₹350–550</h4>
+        </div>
+        <div class="job-tags">
+          <span class="tag green-tag">Plumbing</span>
+          <span class="tag green-tag">Water Heater</span>
+          <span class="tag blue-tag">This Week</span>
+          <div class="distance"><i class="ti ti-map-pin"></i>2.2 km away</div>
+        </div>
+        <div class="job-bottom">
+          <div class="user-box">
+            <div class="avatar teal-avatar">VR</div>
+            <div>
+              <h5>Vijay R.</h5>
+              <span><i class="ti ti-star-filled"></i>4.7</span>
+            </div>
+          </div>
+          <div class="job-action">
+            <small>5 hrs ago</small>
+            <button>Chat</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="job-card">
+        <div class="job-top">
+          <div>
+            <h3>Toilet flush mechanism repair</h3>
+            <p>Toilet cistern not filling properly, flush weak. Likely needs new fill valve or float ball. Small apartment in 2nd floor.</p>
+          </div>
+          <h4>₹200–350</h4>
+        </div>
+        <div class="job-tags">
+          <span class="tag green-tag">Plumbing</span>
+          <span class="tag green-tag">Toilet Repair</span>
+          <span class="tag blue-tag">Flexible</span>
+          <div class="distance"><i class="ti ti-map-pin"></i>5.5 km away</div>
+        </div>
+        <div class="job-bottom">
+          <div class="user-box">
+            <div class="avatar orange-avatar">PK</div>
+            <div>
+              <h5>Pradeep K.</h5>
+              <span><i class="ti ti-star-filled"></i>4.3</span>
+            </div>
+          </div>
+          <div class="job-action">
+            <small>Yesterday</small>
+            <button>Chat</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- /jobs-grid -->
+
+    <!-- PAGINATION -->
+    <div class="pagination">
+      <button class="page-btn disabled"><i class="ti ti-chevron-left"></i></button>
+      <button class="page-btn active">1</button>
+      <button class="page-btn">2</button>
+      <button class="page-btn">3</button>
+      <button class="page-btn"><i class="ti ti-chevron-right"></i></button>
+    </div>
+
+  </div>
+  <!-- /right-col -->
+</div>
+
+<script>
+  // Sub-category tab switching
+  document.querySelectorAll('.subcat-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.subcat-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+    });
+  });
+
+  // Filter chip toggling
+  document.querySelectorAll('.filter-chips').forEach(group => {
+    group.querySelectorAll('.chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        group.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+      });
+    });
+  });
+
+  // Pagination
+  document.querySelectorAll('.page-btn:not(.disabled)').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.page-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>

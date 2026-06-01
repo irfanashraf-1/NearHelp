@@ -41,3 +41,150 @@
     </div>
 </body>
 </html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% load static %}
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>User Data — NearHelp</title>
+        <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+        <link rel="stylesheet"
+            href="{% static 'css/admin_dashboard/helper_data_table.css' %}">
+
+    </head>
+    <body>
+
+        <!-- NAV -->
+        <nav>
+            <a class="logo" href="#">Near<span>Help</span></a>
+            <div class="nav-divider"></div>
+            <span class="nav-label">Admin</span>
+        </nav>
+
+        <!-- PAGE -->
+        <div class="page">
+
+            <div class="page-header">
+                <div>
+                    <div class="page-title">Users</div>
+                    <div class="page-subtitle">Manage registered user
+                        profiles</div>
+                </div>
+            </div>
+
+            <div class="table-card">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Full Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Super User</th>
+                                <th>Staff</th>
+                                <th>active</th>
+                                <th>Date Joined</th>
+                                <th>Last Login</th>
+                                <th>Password</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in userdata %}
+                            <tr>
+                                <!-- <td class="photo-cell">
+                                    {% if i.Photo %}
+                                    <img src="{{ i.Photo.url }}" alt="Photo">
+                                    {% else %}
+                                    <div class="photo-placeholder">
+                                        <i class="ti ti-user"></i>
+                                    </div>
+                                    {% endif %}
+                                </td> -->
+                                <td><strong>{{ i.id }}</strong></td>
+                                <td><strong>{{ i.first_name }}</strong></td>
+                                <td>{{ i.email }}</td>
+                                <td>{{ i.username }}</td>
+                                <td>
+                                    {% if i.is_superuser %}
+                                    <span class="chip chip-available">
+                                        <i class="ti ti-circle-filled"
+                                            style="font-size:8px;"></i>
+                                        {{ i.is_superuser }}
+                                    </span>
+                                    {% else %}
+                                    <span class="chip chip-unavailable">No</span>
+                                    {% endif %}
+                                </td>
+
+                                <td>
+                                    {% if i.is_staff %}
+                                    <span class="chip chip-available">
+                                        <i class="ti ti-circle-filled"
+                                            style="font-size:8px;"></i>
+                                        {{ i.is_staff }}
+                                    </span>
+                                    {% else %}
+                                    <span class="chip chip-unavailable">No</span>
+                                    {% endif %}
+                                </td>
+
+                                <td>
+                                    {% if i.is_active %}
+                                    <span class="chip chip-available">
+                                        <i class="ti ti-circle-filled"
+                                            style="font-size:8px;"></i>
+                                        {{ i.is_active }}
+                                    </span>
+                                    {% else %}
+                                    <span class="chip chip-unavailable">No</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ i.date_joined }}</td>
+                                <td>{{ i.last_login }}</td>
+                                <td>{{ i.password }}</td>
+                                
+
+                                <td>
+                                    <div class="actions">
+                                        <a
+                                            href=""
+                                            class="btn-action btn-edit">
+                                            <i class="ti ti-pencil"></i> Edit
+                                        </a>
+                                        <a
+                                            href="{% url 'Delete_user_data_table' i.id %}"
+                                            class="btn-action btn-delete">
+                                            <i class="ti ti-trash"></i> Delete
+                                        </a>
+                                        <a href class="btn-action btn-block">
+                                            <i class="ti ti-ban"></i> Block
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+
+                            {% if not userdata %}
+                            <tr>
+                                <td colspan="12">
+                                    <div class="empty-state">
+                                        <i class="ti ti-users"></i>
+                                        No Users registered yet
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+    </body>
+</html>
