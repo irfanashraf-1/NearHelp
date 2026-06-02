@@ -35,7 +35,8 @@
 
         <!-- SECTION: JOB DETAILS -->
         <div class="section-title">Job details</div>
-        <form action="{% url 'Save_job_posting' %}" method="post" enctype="multipart/form-data">
+        <form action="{% url 'Save_job_posting' %}" method="post"
+          enctype="multipart/form-data">
           {% csrf_token %}
           <div class="field">
             <label for="jobTitle">Job title</label>
@@ -50,26 +51,33 @@
           <div class="field">
             <label>Category</label>
             <div class="chip-group" id="catGroup">
-              <div class="chip active" data-val="plumbing" data-cat="plumbing"><i
+              <div class="chip active" data-val="plumbing"
+                data-cat="plumbing"><i
                   class="ti ti-droplet"></i> Plumbing</div>
-              <div class="chip" data-val="electrical" data-cat="electrical"><i class="ti ti-bolt"></i>
+              <div class="chip" data-val="electrical" data-cat="electrical"><i
+                  class="ti ti-bolt"></i>
                 Electrical</div>
               <div class="chip" data-val="cleaning" data-cat="cleaning"><i
                   class="ti ti-sparkles"></i> Cleaning</div>
-              <div class="chip" data-val="carpentry" data-cat="carpentry"><i class="ti ti-tools"></i>
+              <div class="chip" data-val="carpentry" data-cat="carpentry"><i
+                  class="ti ti-tools"></i>
                 Carpentry</div>
-              <div class="chip" data-val="painting" data-cat="painting"><i class="ti ti-brush"></i>
+              <div class="chip" data-val="painting" data-cat="painting"><i
+                  class="ti ti-brush"></i>
                 Painting</div>
-              <div class="chip" data-val="gardening" data-cat="gardening"><i class="ti ti-plant"></i>
+              <div class="chip" data-val="gardening" data-cat="gardening"><i
+                  class="ti ti-plant"></i>
                 Gardening</div>
-              <div class="chip" data-val="moving" data-cat="moving"><i class="ti ti-truck"></i>
+              <div class="chip" data-val="moving" data-cat="moving"><i
+                  class="ti ti-truck"></i>
                 Moving</div>
               <div class="chip" data-val="tech" data-cat="tech"><i
                   class="ti ti-device-laptop"></i> Tech help</div>
               <div class="chip" data-val="other" data-cat="other"><i
                   class="ti ti-dots-circle-horizontal"></i> Other</div>
             </div>
-            <input type="hidden" name="category" id="catInput" value="plumbing" />
+            <input type="hidden" name="category" id="catInput"
+              value="plumbing" />
           </div>
 
           <div class="field">
@@ -91,7 +99,8 @@
               <i class="ti ti-photo-plus"></i>
               <p>Tap to upload photos</p>
               <span>JPG, PNG up to 5MB each · max 4 photos</span>
-              <input name="photos" type="file" id="photoInput" accept="image/*" multiple
+              <input name="photos" type="file" id="photoInput" accept="image/*"
+                multiple
                 style="display:none" />
             </div>
           </div>
@@ -105,9 +114,11 @@
             <div class="field">
               <label>Budget (₹)</label>
               <div class="budget-row">
-                <input name="budget" type="number" placeholder="Min" min="0" />
+                <input name="budget_min" type="number" placeholder="Min"
+                  min="0" />
                 <span>–</span>
-            <input type="number" placeholder="Max" min="0" />
+                <input name="budget_max" type="number" placeholder="Max"
+                  min="0" />
               </div>
             </div>
             <div class="field">
@@ -123,7 +134,8 @@
           <div class="field">
             <label>Urgency</label>
             <div class="urgency-group" id="urgencyGroup">
-              <div class="urgency-card sel-today" data-u="today" data-val="today">
+              <div class="urgency-card sel-today" data-u="today"
+                data-val="today">
                 <i class="ti ti-urgent"></i>
                 <div class="u-label">Today</div>
                 <div class="u-sub">Need it now</div>
@@ -139,7 +151,8 @@
                 <div class="u-sub">No rush</div>
               </div>
             </div>
-            <input type="hidden" name="urgency" id="urgencyInput" value="today" />
+            <input type="hidden" name="urgency" id="urgencyInput"
+              value="today" />
           </div>
 
           <hr class="divider" />
@@ -161,11 +174,13 @@
           <div class="two-col">
             <div class="field">
               <label for="city">Town / City</label>
-              <input name="town" type="text" id="city" placeholder="Auto-filled"  />
+              <input name="town" type="text" id="city"
+                placeholder="Auto-filled" />
             </div>
             <div class="field">
               <label for="pin">PIN code</label>
-              <input name="pin" type="text" id="pin" placeholder="Auto-filled"  />
+              <input name="pin" type="text" id="pin"
+                placeholder="Auto-filled" />
             </div>
           </div>
 
@@ -179,12 +194,14 @@
             <div class="chip-group" id="contactGroup">
               <div class="chip active" data-contact="chat" data-val="chat"><i
                   class="ti ti-message"></i> In-app chat</div>
-              <div class="chip" data-contact="call" data-val="call"><i class="ti ti-phone"></i>
+              <div class="chip" data-contact="call" data-val="call"><i
+                  class="ti ti-phone"></i>
                 Phone call</div>
               <div class="chip" data-contact="both" data-val="both"><i
                   class="ti ti-layout-grid"></i> Both</div>
             </div>
-            <input type="text" name="contact_pref" id="contactInput" value="chat" hidden />
+            <input type="text" name="contact_pref" id="contactInput"
+              value="chat" hidden />
           </div>
 
           <!-- SUBMIT -->

@@ -26,7 +26,16 @@ def Home_helper(request):
 
 @login_required
 def Home_client(request):
-    return render(request,'home_client.html')
+    client = request.user.client_details  
+    client_jobs = Job_postings.objects.filter(Client=request.user)
+    context = {
+        'client': client,
+        'client_jobs': client_jobs,
+        'total_jobs': client_jobs.count(),
+        'open_jobs': client_jobs.filter(Status='open').count(),     
+        'completed_jobs': client_jobs.filter(Status='closed').count(),
+    }
+    return render(request,'home_client.html', context)
 
 #job posting form
 def Job_posting_form(request):
@@ -39,7 +48,17 @@ def Admin_dashboard(request):
 
 # Profile 
 def Profile_client(request):
-    return render(request,'profile_pages/profile_client.html')
+    client = request.user.client_details  
+    client_jobs = Job_postings.objects.filter(Client=request.user)
+    context = {
+        'client': client,
+        'client_jobs': client_jobs,
+        'total_jobs': client_jobs.count(),
+        'open_jobs': client_jobs.filter(Status='open').count(),     
+        'completed_jobs': client_jobs.filter(Status='closed').count(),
+    }
+    return render(request,'profile_pages/profile_client.html', context)
+
 def Profile_helper(request):
     return render(request,'profile_pages/profile_helper.html')
 
@@ -83,7 +102,9 @@ def Save_client_data(request):
                 user = User.objects.create_user(first_name= fullname , username= phone_number , email= email , password= password)
                 user.save()
 
-                client_data = Client_details(   Fullname = fullname,
+                client_data = Client_details(   
+                                                user=user,
+                                                Fullname = fullname,
                                                 Phone_number = phone_number,
                                                 Email = email,
                                                 Area = area,
@@ -219,7 +240,8 @@ def Save_job_posting(request):
         category = request.POST.get('category')
         description = request.POST.get('description')
         photos = request.FILES.get('photos')
-        budget = request.POST.get('budget')
+        budget_min = request.POST.get('budget_min')
+        budget_max = request.POST.get('budget_max')
         duration = request.POST.get('duration')
         urgency = request.POST.get('urgency')
         area = request.POST.get('area')
@@ -232,7 +254,8 @@ def Save_job_posting(request):
                                     Category = category,
                                     Description = description,
                                     Photos = photos,
-                                    Budget = budget,
+                                    Budget_min = budget_min,
+                                    Budget_max = budget_max,
                                     Duration = duration,
                                     Urgency = urgency,
                                     Area = area,

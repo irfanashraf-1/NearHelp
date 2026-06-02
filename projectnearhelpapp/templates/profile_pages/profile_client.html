@@ -36,24 +36,24 @@
 
         <div class="avatar-area">
           <!-- Show photo if uploaded, else initials -->
-          {% if client.photo %}
-            <img class="avatar-img" src="{{ client.photo.url }}" alt="Profile photo" />
+          {% if client.Photo %}
+            <img class="avatar-img" src="{{ client.Photo.url }}" alt="Profile photo" />
           {% else %}
             <div class="avatar-placeholder">
-              {{ client.fullname|first|upper }}
+              {{ client.Fullname|first|upper }}
             </div>
           {% endif %}
           <label class="avatar-edit-btn" for="quickPhotoInput" title="Change photo">
             <i class="ti ti-camera"></i>
-            <input type="file" id="quickPhotoInput" accept="image/*" style="display:none" onchange="quickPhotoPreview(event)" />
+            <input name="photo" type="file" id="quickPhotoInput" accept="image/*" style="display:none" onchange="quickPhotoPreview(event)" />
           </label>
         </div>
 
         <div class="profile-summary">
-          <div class="profile-name">{{ client.fullname }}</div>
+          <div class="profile-name">{{ client.Fullname }}</div>
           <div class="profile-meta">
-            <span class="profile-meta-item"><i class="ti ti-map-pin"></i> {{ client.town }}</span>
-            <span class="profile-meta-item"><i class="ti ti-phone"></i> {{ client.phone_number }}</span>
+            <span class="profile-meta-item"><i class="ti ti-map-pin"></i> {{ client.Town }}</span>
+            <span class="profile-meta-item"><i class="ti ti-phone"></i> {{ client.Phone_number }}</span>
             <span class="profile-badge"><i class="ti ti-user"></i> Client</span>
           </div>
         </div>
@@ -86,8 +86,8 @@
           <div class="stat-lbl">Completed</div>
         </div>
         <div class="stat-box">
-          <div class="stat-num">{{ client.rating|default:"—" }}</div>
-          <div class="stat-lbl">Rating</div>
+          <div class="stat-num">{{ client.rating|default:"" }}</div>
+          <div class="stat-lbl"></div>
         </div>
       </div>
     </div>
@@ -107,7 +107,7 @@
               <div class="info-icon"><i class="ti ti-user"></i></div>
               <div class="info-content">
                 <div class="info-label">Full name</div>
-                <div class="info-value">{{ request.user.first_name }}</div>
+                <div class="info-value">{{ client.Fullname }}</div>
               </div>
             </div>
 
@@ -115,7 +115,7 @@
               <div class="info-icon"><i class="ti ti-phone"></i></div>
               <div class="info-content">
                 <div class="info-label">Phone number</div>
-                <div class="info-value">{{ request.user.username }}</div>
+                <div class="info-value">{{ client.Phone_number }}</div>
               </div>
             </div>
 
@@ -123,7 +123,7 @@
               <div class="info-icon"><i class="ti ti-mail"></i></div>
               <div class="info-content">
                 <div class="info-label">Email</div>
-                <div class="info-value">{{ request.user.email }}</div>
+                <div class="info-value">{{ client.Email }}</div>
               </div>
             </div>
 
@@ -131,7 +131,7 @@
               <div class="info-icon"><i class="ti ti-map-pin"></i></div>
               <div class="info-content">
                 <div class="info-label">Area / Neighbourhood</div>
-                <div class="info-value">{{ request.user.client_details.Area }}</div>
+                <div class="info-value">{{ client.Area }}</div>
               </div>
             </div>
 
@@ -139,7 +139,7 @@
               <div class="info-icon"><i class="ti ti-building"></i></div>
               <div class="info-content">
                 <div class="info-label">Town / City</div>
-                <div class="info-value">{{ client.town }}</div>
+                <div class="info-value">{{ client.Town }}</div>
               </div>
             </div>
 
@@ -147,7 +147,7 @@
               <div class="info-icon"><i class="ti ti-hash"></i></div>
               <div class="info-content">
                 <div class="info-label">PIN code</div>
-                <div class="info-value">{{ client.pin }}</div>
+                <div class="info-value">{{ client.Pin }}</div>
               </div>
             </div>
 
@@ -184,7 +184,7 @@
               <div class="input-wrap">
                 <i class="ti ti-user"></i>
                 <input type="text" id="e_fullname" name="fullname"
-                  value="{{ client.fullname }}" required />
+                  value="{{ client.Fullname }}" required />
               </div>
             </div>
 
@@ -193,7 +193,7 @@
               <div class="input-wrap">
                 <i class="ti ti-phone"></i>
                 <input type="text" id="e_phone" name="phone_number"
-                  value="{{ client.phone_number }}"
+                  value="{{ client.Phone_number }}"
                   maxlength="10" pattern="[0-9]{10}" required />
               </div>
             </div>
@@ -203,7 +203,7 @@
               <div class="input-wrap">
                 <i class="ti ti-mail"></i>
                 <input type="email" id="e_email" name="email"
-                  value="{{ client.email }}" required />
+                  value="{{ client.Email }}" required />
               </div>
             </div>
 
@@ -212,7 +212,7 @@
               <div class="input-wrap">
                 <i class="ti ti-map-pin"></i>
                 <input type="text" id="e_area" name="area"
-                  value="{{ client.area }}" required />
+                  value="{{ client.Area }}" required />
               </div>
             </div>
 
@@ -221,7 +221,7 @@
               <div class="input-wrap">
                 <i class="ti ti-building"></i>
                 <input type="text" id="e_town" name="town"
-                  value="{{ client.town }}" required />
+                  value="{{ client.Town }}" required />
               </div>
             </div>
 
@@ -230,7 +230,7 @@
               <div class="input-wrap">
                 <i class="ti ti-hash"></i>
                 <input type="text" id="e_pin" name="pin"
-                  value="{{ client.pin }}"
+                  value="{{ client.Pin }}"
                   maxlength="6" pattern="[0-9]{6}" required />
               </div>
             </div>
@@ -287,22 +287,22 @@
           <!-- JOBS LIST — populated by Django template -->
           <div id="jobsList">
             {% for job in client_jobs %}
-            <div class="job-card" data-status="{{ job.status }}">
+            <div class="job-card" data-status="{{ job.Status }}">
               <div class="job-card-top">
-                <div class="job-card-title">{{ job.title }}</div>
-                <div class="job-card-budget">₹{{ job.budget_min }}–{{ job.budget_max }}</div>
+                <div class="job-card-title">{{ job.Title }}</div>
+                <div class="job-card-budget">₹{{ job.Budget_min }}–{{ job.Budget_max }}</div>
               </div>
-              <div class="job-card-desc">{{ job.description|truncatewords:20 }}</div>
+              <div class="job-card-desc">{{ job.Description|truncatewords:20 }}</div>
               <div class="job-card-meta">
-                <span class="badge badge-cat">{{ job.category }}</span>
-                {% if job.urgency == 'today' %}
+                <span class="badge badge-cat">{{ job.Category }}</span>
+                {% if job.Urgency == 'today' %}
                   <span class="badge badge-today">Today</span>
-                {% elif job.urgency == 'week' %}
+                {% elif job.Urgency == 'week' %}
                   <span class="badge badge-week">This week</span>
                 {% else %}
                   <span class="badge badge-flex">Flexible</span>
                 {% endif %}
-                {% if job.status == 'open' %}
+                {% if job.Status == 'open' %}
                   <span class="badge badge-open">Open</span>
                 {% else %}
                   <span class="badge badge-closed">Closed</span>
@@ -310,7 +310,7 @@
               </div>
               <div class="job-card-footer">
                 <div class="job-card-time">
-                  <i class="ti ti-clock"></i> {{ job.created_at|timesince }} ago
+                  <i class="ti ti-clock"></i> {{ job.Date_posted|timesince }} ago
                 </div>
                 <div class="job-card-actions">
                   <button class="action-btn"><i class="ti ti-pencil"></i> Edit</button>
