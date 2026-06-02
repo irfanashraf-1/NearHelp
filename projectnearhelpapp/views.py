@@ -8,6 +8,7 @@ from django.contrib import messages
 from django.contrib.auth import login
 from datetime import datetime
 from django.db.models import Count
+from django.contrib.auth import logout
 
 
 
@@ -23,47 +24,44 @@ def Login_page(request):
 
 #Home page
 @login_required
-def Home_helper(request):
-    # helper = request.user.helper_details
-    # client_jobs = Job_postings.objects.filter(Client=request.user)
-
-    # # --- Filters ---
-    # selected_categories = request.GET.getlist('category')   
-    # selected_urgencies  = request.GET.getlist('urgency')    
-
-    # if selected_categories:
-    #     client_jobs = client_jobs.filter(Category__in=selected_categories)
-
-    # if selected_urgencies:
-    #     client_jobs = client_jobs.filter(Urgency__in=selected_urgencies)
-    # # -----------------
-
+def Home_helper(request):    
     all_jobs = Job_postings.objects.all()
 
-    # category_counts = (
-    #                         Job_postings.objects
-    #                         .filter(Client=request.user)
-    #                         .values_list('Category', flat=False)
-    #                         .values('Category')
-    #                         .annotate(count=Count('id'))
-    #                         .values_list('Category', 'count')
-    #                         .order_by('Category')
-    #                     )
+    # --- Filters ---
+    selected_categories = request.GET.getlist('category')   
+    selected_urgencies  = request.GET.getlist('urgency')    
 
+    Whole_jobs = all_jobs
 
-    # context = {
-    #     'client': helper,
-    #     'client_jobs': client_jobs,
-    #     'total_jobs': client_jobs.count(),
-    #     'open_jobs': client_jobs.filter(Status='open').count(),     
-    #     'completed_jobs': client_jobs.filter(Status='closed').count(),
-    #     'selected_categories': selected_categories,
-    #     'selected_urgencies': selected_urgencies,
-    #     'category_counts': category_counts,
-    # }
+    if selected_categories:
+        Whole_jobs = Whole_jobs.filter(Category__in=selected_categories)
 
+    if selected_urgencies:
+        Whole_jobs = Whole_jobs.filter(Urgency__in=selected_urgencies)
+    # -----------------
 
-    return render(request,'home_helper.html', {'client_jobs':all_jobs})
+    
+
+    category_counts = (     
+                            Job_postings.objects
+                            .values_list('Category', flat=False)
+                            .values('Category')
+                            .annotate(count=Count('id'))
+                            .values_list('Category', 'count')
+                            .order_by('Category')
+                        )
+
+    context = {
+        'client_jobs':Whole_jobs,
+        'category_counts': category_counts,
+        'total_jobs': Whole_jobs.count(),
+        'open_jobs': Whole_jobs.filter(Status='open').count(),     
+        'completed_jobs': Whole_jobs.filter(Status='closed').count(),
+        'selected_categories': selected_categories,
+        'selected_urgencies': selected_urgencies
+
+    }
+    return render(request,'home_helper.html', context)
 
 @login_required
 def Home_client(request):
@@ -301,7 +299,11 @@ def Login(request):
     #     else:
     #         messages.info(request,'invalid username or password')
     #         return redirect('Login_page')
-        
+
+@login_required
+def Logout(request):
+    logout(request)
+    return redirect('Login_page')     
 # def Profile_view(request):
 #     user_type = request.session.get('user_type')
 

@@ -53,5 +53,17 @@ class Job_postings(models.Model):
         Date_posted = models.DateTimeField(auto_now_add=True)
         Status = models.CharField(max_length=20, default='open') 
 
+        @property
+        def client_fullname(self):
+                if hasattr(self.Client, 'client_details'):
+                        return self.Client.client_details.Fullname
+                return None
+
+        @property
+        def client_photo(self):
+                if hasattr(self.Client, 'client_details'):
+                        return self.Client.client_details.Photo
+                return None
+
         # def __str__(self):
         #         return f"Order by {self.client.username} "

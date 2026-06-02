@@ -4,10 +4,12 @@ from projectnearhelpapp import views
 urlpatterns = [
     path('',views.Welcomepage,name='Welcomepage'),
 
-    #Signup and login pages
+    #Signup login and logout pages
     path('Helper_signup_page',views.Helper_signup_page,name='Helper_signup_page'),
     path('Client_signup_page',views.Client_signup_page,name='Client_signup_page'),
+
     path('Login_page',views.Login_page,name='Login_page'),
+    path('logout/', views.Logout, name='Logout'),
 
     #Home pages
     path('Home_helper',views.Home_helper,name='Home_helper'),

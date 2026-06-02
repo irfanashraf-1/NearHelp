@@ -1,5 +1,5 @@
 from django.contrib import admin
-from projectnearhelpapp.models import Client_details , Helper_details
+from projectnearhelpapp.models import Client_details , Helper_details , Job_postings
 # Register your models here.
 
 @admin.register(Client_details)
@@ -30,4 +30,21 @@ class Helper_details_admin(admin.ModelAdmin):
                     'Availability', 
                     'Password']
     
-
+@admin.register(Job_postings)
+class Job_postings_admin(admin.ModelAdmin):
+    list_display =[
+                    'id',
+                    'Client',
+                    'Title',
+                    'Category',
+                    'Description',
+                    'Photos',
+                    'Budget_min',
+                    'Budget_max',
+                    'Duration',
+                    'Urgency',    
+                    'Area',
+                    'Town',
+                    'Pin',
+                    'Date_posted',
+                    'Status']

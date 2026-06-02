@@ -31,7 +31,7 @@
                             class="ti ti-user"> </i>Profile</a>
                 </div>
 
-                <a href class="nav-post-btn">
+                <a href="{% url 'Logout' %}" class="nav-post-btn">
                     Log out
                 </a>
             </div>
@@ -178,98 +178,79 @@
             <div class="jobs-layout">
 
                 <!-- FILTERS -->
-                <aside class="jobs-filters">
+                <form method="GET" id="filter-form">
+                    <aside class="jobs-filters">
 
-                    <!-- CATEGORY -->
-                    <div class="filter-box">
+                        <!-- CATEGORY -->
+                        <div class="filter-box">
+                            <h3>CATEGORY</h3>
 
-                        <h3>CATEGORY</h3>
+                            {% for cat, count in category_counts %}
+                            <label class="filter-item">
+                                <div class="filter-left">
+                                    <input type="checkbox" name="category"
+                                        value="{{ cat }}"
+                                        {% if cat in selected_categories %}
+                                        checked{% endif %}
+                                        onchange="document.getElementById('filter-form').submit()">
+                                    <span>{{ cat }}</span>
+                                </div>
+                                <small>{{ count }}</small>
+                            </label>
+                            {% endfor %}
+                        </div>
 
-                        <label class="filter-item">
-                            <div class="filter-left">
-                                <input type="checkbox" checked>
-                                <span>Plumbing</span>
-                            </div>
+                        <!-- URGENCY -->
+                        <div class="filter-box">
+                            <h3>URGENCY</h3>
 
-                            <small>18</small>
-                        </label>
+                            <label class="filter-item">
+                                <div class="filter-left">
+                                    <input type="checkbox" name="urgency"
+                                        value="today"
+                                        {% if 'today' in selected_urgencies %}
+                                        checked
+                                        {% endif %}
+                                        onchange="document.getElementById('filter-form').submit()">
+                                    <span>Today</span>
+                                </div>
+                            </label>
 
-                        <label class="filter-item">
-                            <div class="filter-left">
-                                <input type="checkbox" checked>
-                                <span>Electrical</span>
-                            </div>
+                            <label class="filter-item">
+                                <div class="filter-left">
+                                    <input type="checkbox" name="urgency"
+                                        value="week"
+                                        {% if 'week' in selected_urgencies %}
+                                        checked{% endif %}
+                                        onchange="document.getElementById('filter-form').submit()">
+                                    <span>This week</span>
+                                </div>
+                            </label>
 
-                            <small>12</small>
-                        </label>
+                            <label class="filter-item">
+                                <div class="filter-left">
+                                    <input type="checkbox" name="urgency"
+                                        value="flexible"
+                                        {% if 'flexible' in selected_urgencies %}
+                                        checked
+                                        {% endif %}
+                                        onchange="document.getElementById('filter-form').submit()">
+                                    <span>Flexible</span>
+                                </div>
+                            </label>
 
-                        <label class="filter-item">
-                            <div class="filter-left">
-                                <input type="checkbox">
-                                <span>Cleaning</span>
-                            </div>
+                        </div>
 
-                            <small>24</small>
-                        </label>
+                        <!-- Clear filters link -->
+                        {% if selected_categories or selected_urgencies %}
+                        <a href="{% url 'Home_helper' %}"
+                            class="clear-filters-link">
+                            <i class="ti ti-x"></i> Clear filters
+                        </a>
+                        {% endif %}
 
-                        <label class="filter-item">
-                            <div class="filter-left">
-                                <input type="checkbox">
-                                <span>Carpentry</span>
-                            </div>
-
-                            <small>9</small>
-                        </label>
-
-                        <label class="filter-item">
-                            <div class="filter-left">
-                                <input type="checkbox">
-                                <span>Painting</span>
-                            </div>
-
-                            <small>15</small>
-                        </label>
-
-                        <label class="filter-item">
-                            <div class="filter-left">
-                                <input type="checkbox">
-                                <span>Gardening</span>
-                            </div>
-
-                            <small>7</small>
-                        </label>
-
-                    </div>
-
-                    <!-- URGENCY -->
-                    <div class="filter-box">
-
-                        <h3>URGENCY</h3>
-
-                        <label class="filter-item">
-                            <div class="filter-left">
-                                <input type="checkbox" checked>
-                                <span>Today</span>
-                            </div>
-                        </label>
-
-                        <label class="filter-item">
-                            <div class="filter-left">
-                                <input type="checkbox" checked>
-                                <span>This week</span>
-                            </div>
-                        </label>
-
-                        <label class="filter-item">
-                            <div class="filter-left">
-                                <input type="checkbox">
-                                <span>Flexible</span>
-                            </div>
-                        </label>
-
-                    </div>
-
-                </aside>
+                    </aside>
+                </form>
 
                 <!-- JOB CARDS -->
                 <div class="jobs-list">
@@ -296,6 +277,7 @@
 
                             <span class="tag green-tag">{{ job.Category }}</span>
 
+                               
                             {% if job.Urgency == 'today' %}
                             <span class="tag red-tag">Today</span>
                             {% elif job.Urgency == 'week' %}
@@ -304,11 +286,9 @@
                             <span class="tag red-tag">Flexible</span>
                             {% endif%}
 
-
-
                             <div class="distance">
                                 <i class="ti ti-clock"></i><small>
-                                {{ job.Date_posted|timesince }} ago</small>
+                                    {{ job.Date_posted|timesince }} ago</small>
                             </div>
 
                         </div>
@@ -318,15 +298,25 @@
                             <div class="user-box">
 
                                 <div class="avatar green-avatar">
+                                    <!-- Show photo if uploaded, else initials -->
+                                    {% if client.Photo %}
+                                    <img class="avatar-img"
+                                        src="{{ job.client_photo.url }}"
+                                        alt="Profile photo" />
+                                    {% else %}
+                                    <div class="avatar-placeholder">
+                                        {{ job.client_fullname|first|upper }}
+                                    </div>
+                                    {% endif %}
                                     
                                 </div>
 
                                 <div>
-                                    <h5>Anoop J.</h5>
+                                    <h5>{{ job.client_fullname }}</h5>
 
                                     <span>
                                         <i class="ti ti-star-filled"></i>
-                                        4.9
+                                        
                                     </span>
                                 </div>
 
@@ -334,7 +324,7 @@
 
                             <div class="job-action">
 
-                                <small>5 hrs ago</small>
+                                <button>Accept</button>
 
                                 <button>Chat</button>
 
