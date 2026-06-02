@@ -10,7 +10,9 @@
             href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
 
         <link rel="stylesheet" href="{% static 'css/home_helper.css' %}">
-        <!-- <link rel="stylesheet" href="{% static 'css/home_client.css' %}"> -->
+        <link rel="stylesheet" href="{% static 'css/profile_client.css' %}">
+        <link rel="stylesheet" href="{% static 'css/home_client.css' %}">
+
     </head>
 
     <body>
@@ -22,8 +24,8 @@
             </a>
 
             <div class="nav-links">
-                <a href>How it works</a>
-                <a href>Categories</a>
+                <a href="#how">How it works</a>
+                <a href="{% url 'Job_posting_form' %}">Post a Job</a>
             </div>
 
             <div class="nav-actions">
@@ -35,8 +37,8 @@
 
                 </div>
 
-                <a href="{% url 'Job_posting_form' %}" class="nav-post-btn">
-                    Post a Job
+                <a href class="nav-post-btn">
+                    Log out
                 </a>
             </div>
         </header>
@@ -174,146 +176,145 @@
             <div class="jobs-layout">
 
                 <!-- FILTERS -->
-                <aside class="jobs-filters">
 
-                    <!-- CATEGORY -->
-                    <div class="filter-box">
 
-                        <h3>CATEGORY</h3>
+                <!-- FILTERS -->
+                <form method="GET" id="filter-form">
+                    <aside class="jobs-filters">
 
-                        <label class="filter-item">
-                            <div class="filter-left">
-                                <input type="checkbox" checked>
-                                <span>Plumbing</span>
-                            </div>
+                        <!-- CATEGORY -->
+                        <div class="filter-box">
+                            <h3>CATEGORY</h3>
 
-                            <small>18</small>
-                        </label>
+                            {% for cat, count in category_counts %}
+                            <label class="filter-item">
+                                <div class="filter-left">
+                                    <input type="checkbox" name="category"
+                                        value="{{ cat }}"
+                                        {% if cat in selected_categories %}
+                                        checked{% endif %}
+                                        onchange="document.getElementById('filter-form').submit()">
+                                    <span>{{ cat }}</span>
+                                </div>
+                                <small>{{ count }}</small>
+                            </label>
+                            {% endfor %}
+                        </div>
 
-                        <label class="filter-item">
-                            <div class="filter-left">
-                                <input type="checkbox" checked>
-                                <span>Electrical</span>
-                            </div>
+                        <!-- URGENCY -->
+                        <div class="filter-box">
+                            <h3>URGENCY</h3>
 
-                            <small>12</small>
-                        </label>
+                            <label class="filter-item">
+                                <div class="filter-left">
+                                    <input type="checkbox" name="urgency"
+                                        value="today"
+                                        {% if 'today' in selected_urgencies %}
+                                        checked
+                                        {% endif %}
+                                        onchange="document.getElementById('filter-form').submit()">
+                                    <span>Today</span>
+                                </div>
+                            </label>
 
-                        <label class="filter-item">
-                            <div class="filter-left">
-                                <input type="checkbox">
-                                <span>Cleaning</span>
-                            </div>
+                            <label class="filter-item">
+                                <div class="filter-left">
+                                    <input type="checkbox" name="urgency"
+                                        value="week"
+                                        {% if 'week' in selected_urgencies %}
+                                        checked{% endif %}
+                                        onchange="document.getElementById('filter-form').submit()">
+                                    <span>This week</span>
+                                </div>
+                            </label>
 
-                            <small>24</small>
-                        </label>
+                            <label class="filter-item">
+                                <div class="filter-left">
+                                    <input type="checkbox" name="urgency"
+                                        value="flexible"
+                                        {% if 'flexible' in selected_urgencies %}
+                                        checked
+                                        {% endif %}
+                                        onchange="document.getElementById('filter-form').submit()">
+                                    <span>Flexible</span>
+                                </div>
+                            </label>
 
-                        <label class="filter-item">
-                            <div class="filter-left">
-                                <input type="checkbox">
-                                <span>Carpentry</span>
-                            </div>
+                        </div>
 
-                            <small>9</small>
-                        </label>
+                        <!-- Clear filters link -->
+                        {% if selected_categories or selected_urgencies %}
+                        <a href="{% url 'Home_client' %}"
+                            class="clear-filters-link">
+                            <i class="ti ti-x"></i> Clear filters
+                        </a>
+                        {% endif %}
 
-                        <label class="filter-item">
-                            <div class="filter-left">
-                                <input type="checkbox">
-                                <span>Painting</span>
-                            </div>
-
-                            <small>15</small>
-                        </label>
-
-                        <label class="filter-item">
-                            <div class="filter-left">
-                                <input type="checkbox">
-                                <span>Gardening</span>
-                            </div>
-
-                            <small>7</small>
-                        </label>
-
-                    </div>
-
-                    <!-- URGENCY -->
-                    <div class="filter-box">
-
-                        <h3>URGENCY</h3>
-
-                        <label class="filter-item">
-                            <div class="filter-left">
-                                <input type="checkbox" checked>
-                                <span>Today</span>
-                            </div>
-                        </label>
-
-                        <label class="filter-item">
-                            <div class="filter-left">
-                                <input type="checkbox" checked>
-                                <span>This week</span>
-                            </div>
-                        </label>
-
-                        <label class="filter-item">
-                            <div class="filter-left">
-                                <input type="checkbox">
-                                <span>Flexible</span>
-                            </div>
-                        </label>
-
-                    </div>
-
-                </aside>
+                    </aside>
+                </form>
 
                 <!-- JOB CARDS -->
                 <div class="jobs-list">
 
                     <!-- CARD 1 -->
+                    {% for job in client_jobs %}
                     <div class="job-card">
 
                         <div class="job-top">
 
                             <div>
-                                <h3>Paint bedroom walls — 2 rooms</h3>
+                                <h3>{{ job.Title }}</h3>
 
                                 <p>
-                                    Two medium-sized rooms need repainting.
-                                    Paint and primer will be provided.
-                                    Looking for a neat, experienced painter.
+                                    {{ job.Description|truncatewords:20 }}
                                 </p>
                             </div>
 
-                            <h4>₹2,000–3,500</h4>
+                            <h4>₹{{ job.Budget_min }}–{{ job.Budget_max }}</h4>
 
                         </div>
 
                         <div class="job-tags">
 
-                            <span class="tag green-tag">Painting</span>
-                            <span class="tag yellow-tag">This week</span>
+                            <span class="tag yellow-tag">{{ job.Category }}
+                                </span>
+                            {% if job.Urgency == 'today' %}
+                            <span class="tag red-tag">Today</span>
+                            {% elif job.Urgency == 'week' %}
+                            <span class="tag red-tag">This Week</span>
+                            {% else %}
+                            <span class="tag red-tag">Flexible</span>
+                            {% endif%}
 
-                            <div class="distance">
-                                <i class="ti ti-map-pin"></i>
-                                2.8 km away
-                            </div>
+                            {% if job.Status == 'open' %}
+                            <span class=" badge-open tag green-tag">Open</span>
+                            {% else %}
+                            <span
+                                class=" badge-closed tag red-tag">Closed</span>
+                            {% endif %}
 
                         </div>
 
                         <div class="job-bottom">
 
                             <div class="user-box">
-
-                                
-
-                                
+                                <div class="job-card-actions">
+                                    <button class="action-btn"><i
+                                            class="ti ti-pencil"></i>
+                                        Edit</button>
+                                    <button class="action-btn danger"><i
+                                            class="ti ti-trash"></i>
+                                        Delete</button>
+                                </div>
 
                             </div>
 
                             <div class="job-action">
 
-                                <small>2 hrs ago</small>
+                                <div class="job-card-time">
+                                    <i class="ti ti-clock"></i>
+                                    {{ job.Date_posted|timesince }} ago
+                                </div>
 
                                 <button>Chat</button>
 
@@ -322,7 +323,7 @@
                         </div>
 
                     </div>
-
+                    {% endfor %}
 
                 </div>
 
@@ -383,7 +384,6 @@
 
         </section>
 
-
         <!-- CTA -->
         <section class="cta-section">
 
@@ -411,7 +411,7 @@
             </a>
 
             <p>
-                © 2026 NearHelp 
+                © 2026 NearHelp
             </p>
 
         </footer>

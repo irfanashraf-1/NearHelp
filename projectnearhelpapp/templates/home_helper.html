@@ -27,10 +27,11 @@
 
             <div class="nav-actions">
                 <div class="role-icon role-icon-client">
-                    <a href="{% url 'Profile_helper' %}" class="nav_profile"><i class="ti ti-user"> </i>Profile</a>
+                    <a href="{% url 'Profile_helper' %}" class="nav_profile"><i
+                            class="ti ti-user"> </i>Profile</a>
                 </div>
-                
-                <a href=""class="nav-post-btn">
+
+                <a href class="nav-post-btn">
                     Log out
                 </a>
             </div>
@@ -49,7 +50,7 @@
                 <div class="hero-left">
 
                     <h1 class="hero-left-h1">
-                       Your neighbour needs <span>help</span>
+                        Your neighbour needs <span>help</span>
                     </h1>
 
                     <p>
@@ -60,15 +61,15 @@
                     </p>
 
                     <div class="hero-actions">
-                        <a href=""
+                        <a href
                             class="btn-primary">
                         </a>
 
-                        <a href=""
+                        <a href
                             class="btn-secondary">
                         </a>
                     </div>
-                    
+
                     <div class="hero-mini-stats">
                         <div>
                             <h3>1,240</h3>
@@ -94,8 +95,9 @@
                     <div class="search-card">
 
                         <div class="search-top">
-                            <h3>Find help nearby</h3>
-                            <p>Search jobs & services in your neighbourhood</p>
+                            <h3>Jobs nearby</h3>
+                            <p>Search jobs & services needed in your
+                                neighbourhood</p>
                         </div>
 
                         <div class="search-box">
@@ -105,48 +107,54 @@
                         </div>
 
                         <div class="popular-tags">
-                            <a href="#">Plumbing</a>
-                            <a href="#">Electrical</a>
-                            <a href="#">Cleaning</a>
-                            <a href="#">Painting</a>
-                            <a href="#">Gardening</a>
-                            <a href="#">Moving</a>
+                            <a href="{% url 'Plumbing_page' %}">Plumbing</a>
+                            <a href="{% url 'Electrical_page' %}">Electrical</a>
+                            <a href="{% url 'Cleaning_page' %}">Cleaning</a>
+                            <a href="{% url 'Painting_page' %}">Painting</a>
+                            <a href="{% url 'Gardening_page' %}">Gardening</a>
+                            <a href="{% url 'Moving_page' %}">Moving</a>
                         </div>
 
                         <div class="quick-cards">
 
-                            <div class="quick-card">
-                                <div class="q-icon green">
-                                    <i class="ti ti-droplet"></i>
-                                </div>
+                            <a href="{% url 'Plumbing_page' %}">
+                                <div class="quick-card">
+                                    <div class="q-icon green">
+                                        <i class="ti ti-droplet"></i>
+                                    </div>
 
-                                <div>
-                                    <h4>Plumbing</h4>
-                                    <p>Leaking taps, pipes & fittings</p>
+                                    <div>
+                                        <h4>Plumbing</h4>
+                                        <p>Leaking taps, pipes & fittings</p>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
 
-                            <div class="quick-card">
-                                <div class="q-icon orange">
-                                    <i class="ti ti-bolt"></i>
-                                </div>
+                            <a href="{% url 'Electrical_page' %}">
+                                <div class="quick-card">
+                                    <div class="q-icon orange">
+                                        <i class="ti ti-bolt"></i>
+                                    </div>
 
-                                <div>
-                                    <h4>Electrical</h4>
-                                    <p>Switches, lights & wiring</p>
+                                    <div>
+                                        <h4>Electrical</h4>
+                                        <p>Switches, lights & wiring</p>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
 
-                            <div class="quick-card">
-                                <div class="q-icon blue">
-                                    <i class="ti ti-sparkles"></i>
-                                </div>
+                            <a href="{% url 'Cleaning_page' %}">
+                                <div class="quick-card">
+                                    <div class="q-icon blue">
+                                        <i class="ti ti-sparkles"></i>
+                                    </div>
 
-                                <div>
-                                    <h4>Cleaning</h4>
-                                    <p>Home & office cleaning</p>
+                                    <div>
+                                        <h4>Cleaning</h4>
+                                        <p>Home & office cleaning</p>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
 
                         </div>
 
@@ -266,95 +274,41 @@
                 <!-- JOB CARDS -->
                 <div class="jobs-list">
 
-                    <!-- CARD 1 -->
-                    <!-- <div class="job-card">
-                        
-                        <div class="job-top">
-                            
-                            <div>
-                                <h3>{{ i.Title }}</h3>
-
-                                <p>
-                                    {{ i.Description }}
-                                </p>
-                            </div>
-
-                            <h4>{{ i.Budget }}</h4>
-
-                        </div>
-
-                        <div class="job-tags">
-
-                            <span class="tag green-tag">Painting</span>
-                            <span class="tag yellow-tag">This week</span>
-
-                            <div class="distance">
-                                <i class="ti ti-map-pin"></i>
-                                2.8 km away
-                            </div>
-
-                        </div>
-
-                        <div class="job-bottom">
-
-                            <div class="user-box">
-
-                                <div class="avatar brown-avatar">
-                                    SM
-                                </div>
-
-                                <div>
-                                    <h5>Sreeja M.</h5>
-
-                                    <span>
-                                        <i class="ti ti-star-filled"></i>
-                                        4.5
-                                    </span>
-                                </div>
-
-                            </div>
-
-                            <div class="job-action">
-
-                                <small>2 hrs ago</small>
-
-                                <button>Chat</button>
-
-                            </div>
-
-
-                        </div>
-
-                    </div> -->
-
                     <!-- CARD 2 -->
+                    {% for job in client_jobs %}
                     <div class="job-card">
 
                         <div class="job-top">
 
                             <div>
-                                <h3>Garden cleanup and trimming</h3>
+                                <h3>{{ job.Title }}</h3>
 
                                 <p>
-                                    Small garden needs weeding, trimming hedges
-                                    and clearing dry leaves. About 2–3 hours
-                                    work.
-                                    Tools available.
+                                    {{ job.Description|truncatewords:20 }}
                                 </p>
                             </div>
 
-                            <h4>₹400–600</h4>
+                            <h4>₹{{ job.Budget_min }}–{{ job.Budget_max }}</h4>
 
                         </div>
 
                         <div class="job-tags">
 
-                            <span class="tag green-tag">Gardening</span>
-                            <span class="tag gray-tag">Flexible</span>
+                            <span class="tag green-tag">{{ job.Category }}</span>
+
+                            {% if job.Urgency == 'today' %}
+                            <span class="tag red-tag">Today</span>
+                            {% elif job.Urgency == 'week' %}
+                            <span class="tag red-tag">This Week</span>
+                            {% else %}
+                            <span class="tag red-tag">Flexible</span>
+                            {% endif%}
+
+
 
                             <div class="distance">
-                                <i class="ti ti-map-pin"></i>
-                                4.1 km away
+                                <i class="ti ti-clock"></i><small>
+                                {{ job.Date_posted|timesince }} ago</small>
                             </div>
 
                         </div>
@@ -364,7 +318,7 @@
                             <div class="user-box">
 
                                 <div class="avatar green-avatar">
-                                    AJ
+                                    
                                 </div>
 
                                 <div>
@@ -389,69 +343,7 @@
                         </div>
 
                     </div>
-
-                    <!-- CARD 3 -->
-                    <div class="job-card">
-
-                        <div class="job-top">
-
-                            <div>
-                                <h3>Ceiling fan installation</h3>
-
-                                <p>
-                                    New ceiling fan purchased, needs
-                                    installation
-                                    in living room. Existing wiring in place.
-                                    Should take under an hour.
-                                </p>
-                            </div>
-
-                            <h4>₹300–500</h4>
-
-                        </div>
-
-                        <div class="job-tags">
-
-                            <span class="tag green-tag">Electrical</span>
-                            <span class="tag red-tag">Today</span>
-
-                            <div class="distance">
-                                <i class="ti ti-map-pin"></i>
-                                3.5 km away
-                            </div>
-
-                        </div>
-
-                        <div class="job-bottom">
-
-                            <div class="user-box">
-
-                                <div class="avatar pink-avatar">
-                                    PV
-                                </div>
-
-                                <div>
-                                    <h5>Priya V.</h5>
-
-                                    <span>
-                                        <i class="ti ti-star-filled"></i>
-                                        4.7
-                                    </span>
-                                </div>
-
-                            </div>
-
-                            <div class="job-action">
-
-                                <small>Yesterday</small>
-
-                                <button>Chat</button>
-
-                            </div>
-
-                        </div>
-
-                    </div>
+                    {% endfor %}
 
                 </div>
 
@@ -459,10 +351,79 @@
 
         </section>
 
-        <!-- HOW IT WORKS -->
-        <!-- <section class="how-section" id="how"> -->
+        <!-- CATEGORIES -->
+        <section class="categories-section" id="categories">
 
-        <!-- <div class="section-heading">
+            <div class="section-heading">
+                <h2>Popular categories</h2>
+                <p>Find help for everyday home and local services</p>
+            </div>
+
+            <div class="categories-grid">
+                <a href="{% url 'Plumbing_page' %}">
+                    <div class="category-card">
+                        <i class="ti ti-droplet"></i>
+                        <h4>Plumbing</h4>
+                    </div>
+                </a>
+
+                <a href="{% url 'Electrical_page' %}">
+                    <div class="category-card">
+                        <i class="ti ti-bolt"></i>
+                        <h4>Electrical</h4>
+                    </div>
+                </a>
+
+                <a href="{% url 'Cleaning_page' %}">
+                    <div class="category-card">
+                        <i class="ti ti-sparkles"></i>
+                        <h4>Cleaning</h4>
+                    </div>
+                </a>
+
+                <a href="{% url 'Carpentry_page' %}">
+                    <div class="category-card">
+                        <i class="ti ti-tools"></i>
+                        <h4>Carpentry</h4>
+                    </div>
+                </a>
+
+                <a href="{% url 'Painting_page' %}">
+                    <div class="category-card">
+                        <i class="ti ti-brush"></i>
+                        <h4>Painting</h4>
+                    </div>
+                </a>
+
+                <a href="{% url 'Gardening_page' %}">
+                    <div class="category-card">
+                        <i class="ti ti-plant"></i>
+                        <h4>Gardening</h4>
+                    </div>
+                </a>
+
+                <a href="{% url 'Moving_page' %}">
+                    <div class="category-card">
+                        <i class="ti ti-truck"></i>
+                        <h4>Moving</h4>
+                    </div>
+                </a>
+
+                <a href="{% url 'Techhelp_page' %}">
+                    <div class="category-card">
+                        <i class="ti ti-device-laptop"></i>
+                        <h4>Tech Help</h4>
+                    </div>
+                </a>
+
+            </div>
+
+        </section>
+
+        <!-- HOW IT WORKS -->
+        <section class="how-section" id="how">
+
+            <div class="section-heading">
                 <h2>How NearHelp works</h2>
                 <p>Get your work done in just three simple steps</p>
             </div>
@@ -508,97 +469,9 @@
                     </p>
                 </div>
 
-            </div> -->
-
-        <!-- </section> -->
-
-        <!-- CATEGORIES -->
-        <section class="categories-section" id="categories">
-
-            <div class="section-heading">
-                <h2>Popular categories</h2>
-                <p>Find help for everyday home and local services</p>
-            </div>
-
-            <div class="categories-grid">
-                <a href="{% url 'Plumbing_page' %}">
-                <div class="category-card">
-                    <i class="ti ti-droplet"></i>
-                    <h4>Plumbing</h4>
-                </div>
-                </a>
-
-                <a href="{% url 'Electrical_page' %}">
-                <div class="category-card">
-                    <i class="ti ti-bolt"></i>
-                    <h4>Electrical</h4>
-                </div>
-                </a>
-
-                <a href="{% url 'Cleaning_page' %}">
-                <div class="category-card">
-                    <i class="ti ti-sparkles"></i>
-                    <h4>Cleaning</h4>
-                </div>
-                </a>
-
-                <a href="{% url 'Carpentry_page' %}">
-                <div class="category-card">
-                    <i class="ti ti-tools"></i>
-                    <h4>Carpentry</h4>
-                </div>
-                </a>
-
-                <a href="{% url 'Painting_page' %}">
-                <div class="category-card">
-                    <i class="ti ti-brush"></i>
-                    <h4>Painting</h4>
-                </div>
-                </a>
-
-                <a href="{% url 'Gardening_page' %}">
-                <div class="category-card">
-                    <i class="ti ti-plant"></i>
-                    <h4>Gardening</h4>
-                </div>
-                </a>
-
-                <a href="{% url 'Moving_page' %}">
-                <div class="category-card">
-                    <i class="ti ti-truck"></i>
-                    <h4>Moving</h4>
-                </div>
-                </a>
-
-                <a href="{% url 'Techhelp_page' %}">   
-                <div class="category-card">
-                    <i class="ti ti-device-laptop"></i>
-                    <h4>Tech Help</h4>
-                </div>
-                </a>
-
             </div>
 
         </section>
-
-        <!-- CTA -->
-        <!-- <section class="cta-section">
-
-            <div class="cta-box">
-
-                <h2>Need help for a small job?</h2>
-
-                <p>
-                    Post your work now and connect with trusted nearby helpers.
-                </p>
-
-                <a href="{% url 'Job_posting_form' %}" class="btn-primary">
-                    Post a Job Now
-                </a>
-
-            </div>
-
-        </section> -->
 
         <!-- FOOTER -->
         <footer class="footer">

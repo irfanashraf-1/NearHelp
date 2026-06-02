@@ -443,7 +443,8 @@ body {
 /* CTA */
 
 .cta-section {
-    padding: 0 2rem 5rem;
+    padding: 4rem 5rem 5rem 4rem;
+
 }
 
 .cta-box {

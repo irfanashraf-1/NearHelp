@@ -1,3 +1,5 @@
+from xmlrpc import client
+
 from django.shortcuts import render ,redirect
 from projectnearhelpapp.models import Client_details , Helper_details, Job_postings
 from django.contrib.auth.decorators import login_required
@@ -5,7 +7,7 @@ from django.contrib.auth.models import User , auth
 from django.contrib import messages
 from django.contrib.auth import login
 from datetime import datetime
-
+from django.db.models import Count
 
 
 
@@ -22,18 +24,86 @@ def Login_page(request):
 #Home page
 @login_required
 def Home_helper(request):
-    return render(request,'home_helper.html')
+    # helper = request.user.helper_details
+    # client_jobs = Job_postings.objects.filter(Client=request.user)
+
+    # # --- Filters ---
+    # selected_categories = request.GET.getlist('category')   
+    # selected_urgencies  = request.GET.getlist('urgency')    
+
+    # if selected_categories:
+    #     client_jobs = client_jobs.filter(Category__in=selected_categories)
+
+    # if selected_urgencies:
+    #     client_jobs = client_jobs.filter(Urgency__in=selected_urgencies)
+    # # -----------------
+
+    all_jobs = Job_postings.objects.all()
+
+    # category_counts = (
+    #                         Job_postings.objects
+    #                         .filter(Client=request.user)
+    #                         .values_list('Category', flat=False)
+    #                         .values('Category')
+    #                         .annotate(count=Count('id'))
+    #                         .values_list('Category', 'count')
+    #                         .order_by('Category')
+    #                     )
+
+
+    # context = {
+    #     'client': helper,
+    #     'client_jobs': client_jobs,
+    #     'total_jobs': client_jobs.count(),
+    #     'open_jobs': client_jobs.filter(Status='open').count(),     
+    #     'completed_jobs': client_jobs.filter(Status='closed').count(),
+    #     'selected_categories': selected_categories,
+    #     'selected_urgencies': selected_urgencies,
+    #     'category_counts': category_counts,
+    # }
+
+
+    return render(request,'home_helper.html', {'client_jobs':all_jobs})
 
 @login_required
 def Home_client(request):
+    
     client = request.user.client_details  
     client_jobs = Job_postings.objects.filter(Client=request.user)
+
+    # --- Filters ---
+    selected_categories = request.GET.getlist('category')   
+    selected_urgencies  = request.GET.getlist('urgency')    
+
+    if selected_categories:
+        client_jobs = client_jobs.filter(Category__in=selected_categories)
+
+    if selected_urgencies:
+        client_jobs = client_jobs.filter(Urgency__in=selected_urgencies)
+    # -----------------
+
+    all_jobs = Job_postings.objects.filter(Client=request.user)
+
+    category_counts = (     
+                            Job_postings.objects
+                            .filter(Client=request.user)
+                            .values_list('Category', flat=False)
+                            .values('Category')
+                            .annotate(count=Count('id'))
+                            .values_list('Category', 'count')
+                            .order_by('Category')
+                        )
+
+
     context = {
         'client': client,
         'client_jobs': client_jobs,
         'total_jobs': client_jobs.count(),
         'open_jobs': client_jobs.filter(Status='open').count(),     
         'completed_jobs': client_jobs.filter(Status='closed').count(),
+        'selected_categories': selected_categories,
+        'selected_urgencies': selected_urgencies,
+        'category_counts': category_counts,
     }
     return render(request,'home_client.html', context)
 
@@ -60,7 +130,18 @@ def Profile_client(request):
     return render(request,'profile_pages/profile_client.html', context)
 
 def Profile_helper(request):
-    return render(request,'profile_pages/profile_helper.html')
+    helper = request.user.helper_details
+    client_jobs = Job_postings.objects.filter(Client=request.user)
+
+    context = {
+        'client': helper,
+        'client_jobs': client_jobs,
+        'total_jobs': client_jobs.count(),
+        'open_jobs': client_jobs.filter(Status='open').count(),     
+        'completed_jobs': client_jobs.filter(Status='closed').count(),
+    }
+        
+    return render(request,'profile_pages/profile_helper.html', context)
 
 #Categories
 def Carpentry_page(request):
@@ -143,7 +224,9 @@ def Save_helper_data(request):
                 user = User.objects.create_user(first_name= fullname , username= phone_number , email= email , password= password)
                 user.save()
 
-                helper_data = Helper_details(   Fullname = fullname,
+                helper_data = Helper_details(   
+                                                user = user,
+                                                Fullname = fullname,
                                                 Dob = dob,
                                                 Gender = gender,
                                                 Phone_number = phone_number,
@@ -182,7 +265,7 @@ def Login(request):
                             'profile': user.client_details, 
                         }
                     return redirect('Home_client')
-                elif Helper_details.objects.filter(Phone_number = phone_number).exists():
+                if Helper_details.objects.filter(Phone_number = phone_number).exists():
                     if hasattr(user, 'helper_details'):
                         context = {
                             'role': 'Helper',
