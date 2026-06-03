@@ -15,6 +15,9 @@
 
         <nav class="nav">
             <a class="logo" href="#">Near<span>Help</span></a>
+            <a href="{% url 'Logout' %}" class="nav-post-btn">
+                    Log out
+            </a>
         </nav>
 
         <div class="main">
@@ -43,6 +46,14 @@
                     <div>
                         <div class="card-label">Users</div>
                         <div class="card-desc">All registered users</div>
+                    </div>
+                </a>
+                <a class="nav-card" href="{% url 'admin:index' %}">
+                    <div class="icon-wrap"><i class="ti ti-brand-django"
+                            aria-hidden="true"></i></div>
+                    <div>
+                        <div class="card-label">Django Administration</div>
+                        <div class="card-desc">Manage Django admin settings</div>
                     </div>
                 </a>
             </div>

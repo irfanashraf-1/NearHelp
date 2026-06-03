@@ -17,7 +17,7 @@
         <nav>
             <a class="logo" href="#">Near<span>Help</span></a>
             <div class="nav-divider"></div>
-            <span class="nav-label">Admin</span>
+            <span class="nav-label"><a href="{% url 'Admin_dashboard' %}">Admin</a></span>
         </nav>
 
         <!-- PAGE -->
@@ -37,6 +37,7 @@
                         <thead>
                             <tr>
                                 <!-- <th>Photo</th> -->
+                                <th>Photo</th>
                                 <th>Full Name</th>
                                 <th>Email</th>
                                 <th>Phone</th>
@@ -53,7 +54,7 @@
                         <tbody>
                             {% for i in clientdata %}
                             <tr>
-                                <!-- <td class="photo-cell">
+                                <td class="photo-cell">
                                 {% if i.Photo %}
                                     <img src="{{ i.Photo.url }}" alt="Photo">
                                 {% else %}
@@ -61,7 +62,9 @@
                                         <i class="ti ti-user"></i>
                                     </div>
                                 {% endif %}
-                            </td> -->
+
+
+                            </td>
                                 <td><strong>{{ i.Fullname }}</strong></td>
                                 <td>{{ i.Email }}</td>
                                 <td>{{ i.Phone_number }}</td>

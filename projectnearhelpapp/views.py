@@ -8,7 +8,8 @@ from django.contrib import messages
 from django.contrib.auth import login
 from datetime import datetime
 from django.db.models import Count
-from django.contrib.auth import logout
+from django.contrib.auth import logout 
+from django.db.models import Q
 
 
 
@@ -28,10 +29,19 @@ def Home_helper(request):
     all_jobs = Job_postings.objects.all()
 
     # --- Filters ---
+    search_query = request.GET.get('search', '').strip()
     selected_categories = request.GET.getlist('category')   
     selected_urgencies  = request.GET.getlist('urgency')    
 
     Whole_jobs = all_jobs
+
+    # ── Keyword search (title + description) ──
+    if search_query:
+        Whole_jobs = Whole_jobs.filter(
+            Q(Title__icontains=search_query) |
+            Q(Description__icontains=search_query)
+        )
+ 
 
     if selected_categories:
         Whole_jobs = Whole_jobs.filter(Category__in=selected_categories)
@@ -61,7 +71,7 @@ def Home_helper(request):
         'selected_urgencies': selected_urgencies
 
     }
-    return render(request,'home_helper.html', context)
+    return render(request,'home2_helper.html', context)
 
 @login_required
 def Home_client(request):
@@ -113,7 +123,7 @@ def Job_posting_form(request):
 @login_required
 def Admin_dashboard(request):
     return render(request,'admin_dashboard/admin_dashboard.html')
-
+    
 # Profile 
 def Profile_client(request):
     client = request.user.client_details  
@@ -143,9 +153,11 @@ def Profile_helper(request):
 
 #Categories
 def Carpentry_page(request):
-    return render(request,'category/carpentry_cat_page.html')
+    carpentry_jobs = Job_postings.objects.filter(Category='carpentry')
+    return render(request,'category/carpentry_cat_page.html', {'carpentry_jobs': carpentry_jobs})
 def Plumbing_page(request):
-    return render(request,'category/plumbing_cat_page.html')
+    plumbing_jobs = Job_postings.objects.filter(Category='plumbing')
+    return render(request,'category/plumbing_cat_page.html', {'plumbing_jobs': plumbing_jobs})
 def Electrical_page(request):
     return render(request,'category/electrical_cat_page.html')
 def Cleaning_page(request):
@@ -304,19 +316,6 @@ def Login(request):
 def Logout(request):
     logout(request)
     return redirect('Login_page')     
-# def Profile_view(request):
-#     user_type = request.session.get('user_type')
-
-#     if user_type == 'client':
-#         client = Client_details.objects.get(id=request.session['user_id'])
-#         return render(request, 'client_profile.html', {'client': client})
-
-#     elif user_type == 'helper':
-#         helper = Helper_details.objects.get(id=request.session['user_id'])
-#         return render(request, 'helper_profile.html', {'helper': helper})
-
-#     else:
-#         return redirect('Login_page')
 
 # Job details posted by client
 def Save_job_posting(request):
@@ -353,30 +352,6 @@ def Save_job_posting(request):
     #     job_posting = Job_postings.objects.all()
     #     return render(request, 'job_postings.html', {'job_postings': job_postings})
 
-    
-
-# @login_required
-# def Profile_dashboard_view(request):
-#     user = request.user
-    
-#     # Check if the logged-in user is a Client
-#     if hasattr(user, 'client_details'):
-#         context = {
-#             'role': 'Client',
-#             'profile': user.client_details, 
-#         }
-#         return render(request, 'profile_client.html', context)
-        
-#     # Check if the logged-in user is a Worker
-#     elif hasattr(user, 'helper_details'):
-#         context = {
-#             'role': 'Helper',
-#             'profile': user.helper_details, 
-#         }
-#         return render(request, 'profile_helper.html', context)
-    
-#     return redirect('Login_page')
-
 #Helper signup data table in admin dashboard 
 def Helper_data_table(request):
     alldata = Helper_details.objects.all()
@@ -407,6 +382,8 @@ def Update_helper_data_table(request, pk):
 def Delete_helper_data_table(request, pk):
         deleted = Helper_details.objects.get(id=pk)
         deleted.delete()
+        delete = User.objects.get(id=pk)
+        delete.delete()
         return redirect('Helper_data_table')
 
 #Client signup data table in admin dashboard
@@ -435,6 +412,8 @@ def Update_client_data_table(request, pk):
 def Delete_client_data_table(request, pk):
         deleted = Client_details.objects.get(id=pk)
         deleted.delete()
+        delete = User.objects.get(id=pk)
+        delete.delete()
         return redirect('Client_data_table')    
 
 #User data table in admin dashboard

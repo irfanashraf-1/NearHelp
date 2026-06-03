@@ -726,6 +726,10 @@ body {
     font-size:24px;
     white-space:nowrap;
 }
+/* .job-title{
+    color:#1D9E75;
+    font-size:24px;
+} */
 
 /* TAGS */
 
@@ -765,7 +769,14 @@ body {
     background:#f1f1f1;
     color:#555;
 }
-
+.blue-tag{
+    background: #DBEAFE;
+    color: #1E40AF;
+}
+.purple-tag{
+    background: #EDE9FE;
+    color: #5B21B6;
+}
 .distance{
     display:flex;
     align-items:center;

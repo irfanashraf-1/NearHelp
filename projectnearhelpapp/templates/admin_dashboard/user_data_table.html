@@ -61,7 +61,7 @@
         <nav>
             <a class="logo" href="#">Near<span>Help</span></a>
             <div class="nav-divider"></div>
-            <span class="nav-label">Admin</span>
+            <span class="nav-label"><a href="{% url 'Admin_dashboard' %}">Admin</a></span>
         </nav>
 
         <!-- PAGE -->
@@ -89,7 +89,7 @@
                                 <th>active</th>
                                 <th>Date Joined</th>
                                 <th>Last Login</th>
-                                <th>Password</th>
+                                <!-- <th>Password</th> -->
                                 <th></th>
                             </tr>
                         </thead>
@@ -146,7 +146,7 @@
                                 </td>
                                 <td>{{ i.date_joined }}</td>
                                 <td>{{ i.last_login }}</td>
-                                <td>{{ i.password }}</td>
+                                <!-- <td>{{ i.password }}</td> -->
                                 
 
                                 <td>

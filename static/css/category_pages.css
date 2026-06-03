@@ -692,7 +692,7 @@
 
     /* Urgent badge overlay */
     .job-card.urgent {
-        border-left: 3px solid #EF4444;
+        border-left: 3px solid #dbfbf1;
     }
 
     /* Pagination */

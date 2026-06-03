@@ -102,9 +102,12 @@
 
                         <div class="search-box">
                             <i class="ti ti-search"></i>
-                            <input type="text" name="search" id="hero-search"
+                            <input type="text"
+                                name="search"
+                                id="hero-search"
                                 value="{{ request.GET.search }}"
-                                placeholder="Search jobs…" autocomplete="off" />
+                                placeholder="Search jobs…"
+                                autocomplete="off" />
                         </div>
 
                         <div class="popular-tags">
@@ -181,10 +184,10 @@
                 <!-- FILTERS -->
                 <form method="GET" id="filter-form">
                     <!-- Carries the hero search query alongside checkbox filters -->
-                    <input type="hidden" name="search" id="filter-search-hidden" value="{{ request.GET.search }}">
-                    
+                    <input type="hidden" name="search" id="filter-search-hidden"
+                        value="{{ request.GET.search }}">
                     <aside class="jobs-filters">
-                        
+
                         <!-- CATEGORY -->
                         <div class="filter-box">
                             <h3>CATEGORY</h3>
@@ -235,7 +238,7 @@
                                 <div class="filter-left">
                                     <input type="checkbox" name="urgency"
                                         value="flexible"
-                                        {% if 'flexible' in selected_urgencies %}
+                                        {% if 'flexible' in selected_urgencies %}                                        
                                         checked
                                         {% endif %}
                                         onchange="document.getElementById('filter-form').submit()">
@@ -279,7 +282,8 @@
 
                         <div class="job-tags">
 
-                            <span class="tag purple-tag">{{ job.Category }}</span>
+                            <span class="tag purple-tag">
+                                {{ job.Category }}</span>
 
                             {% if job.Urgency == 'today' %}
                             <span class="tag red-tag">Today</span>
@@ -480,10 +484,26 @@
         </footer>
 
         <script>
+
+            // Put this at the top of your script or inside a DOMContentLoaded event
+            window.addEventListener('DOMContentLoaded', () => {
+                const heroInput = document.getElementById('hero-search');
+                
+                // Check if there is already a search query in the URL
+                const urlParams = new URLSearchParams(window.location.search);
+                const searchQuery = urlParams.get('search'); // Make sure 'search' matches your input's name attribute
+
+                if (searchQuery) {
+                    heroInput.value = searchQuery;
+                    heroInput.focus();
+                    
+                    // Move the cursor to the very end of the text
+                    const len = heroInput.value.length;
+                    heroInput.setSelectionRange(len, len);
+                }
+            });
             // ── NearHelp: keyword search ──────────────────────────────────
-            // The hero search box submits GET ?search=… via the filter form
-            // so it stays in sync with category/urgency checkboxes.
- 
+            
             const heroInput   = document.getElementById('hero-search');
             const filterForm  = document.getElementById('filter-form');
             const hiddenField = document.getElementById('filter-search-hidden');
@@ -493,11 +513,11 @@
             heroInput.addEventListener('input', () => {
                 hiddenField.value = heroInput.value.trim();
  
-                // Debounce: wait 400 ms after the user stops typing, then submit
+                // Debounce: wait 2000 ms after the user stops typing, then submit
                 clearTimeout(debounceTimer);
                 debounceTimer = setTimeout(() => {
                     filterForm.submit();
-                }, 400);
+                }, 2000);
             });
  
             heroInput.addEventListener('keydown', (e) => {
@@ -509,6 +529,6 @@
                 }
             });
         </script>
- 
+
     </body>
 </html>
