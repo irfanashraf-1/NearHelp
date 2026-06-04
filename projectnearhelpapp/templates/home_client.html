@@ -316,7 +316,7 @@
                                     {{ job.Date_posted|timesince }} ago
                                 </div>
 
-                                <button>Chat</button>
+                                <button><a href="{% url 'Job_detail_client' job.id %}" class="btn">View Details</a></button>
 
                             </div>
 

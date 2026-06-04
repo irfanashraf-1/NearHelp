@@ -67,3 +67,25 @@ class Job_postings(models.Model):
 
         # def __str__(self):
         #         return f"Order by {self.client.username} "
+
+
+class JobRequest(models.Model):
+    STATUS_CHOICES = [
+        ('pending',  'Pending'),
+        ('accepted', 'Accepted'),
+        ('declined', 'Declined'),
+    ]
+ 
+    job          = models.ForeignKey(Job_postings, on_delete=models.CASCADE, related_name='requests')
+    helper       = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='job_requests')
+    Note         = models.TextField(blank=True, null=True)
+    Status       = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    Requested_at = models.DateTimeField(auto_now_add=True)
+ 
+    class Meta:
+        unique_together = ('job', 'helper')
+        ordering = ['-Requested_at']
+ 
+    def __str__(self):
+        return f"{self.helper.helper_details.Fullname} → {self.job.Title} ({self.Status})"
+ 

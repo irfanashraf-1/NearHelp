@@ -1,6 +1,6 @@
 from xmlrpc import client
 
-from django.shortcuts import render ,redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from projectnearhelpapp.models import Client_details , Helper_details, Job_postings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User , auth
@@ -11,7 +11,10 @@ from django.db.models import Count
 from django.contrib.auth import logout 
 from django.db.models import Q
 
+from django.views.decorators.http import require_POST
+from django.http import HttpResponseForbidden
 
+from .models import Job_postings, JobRequest, Client_details, Helper_details
 
 def Welcomepage(request):
     return render(request,'welcome.html')
@@ -425,3 +428,121 @@ def Delete_user_data_table(request, pk):
         deleted = User.objects.get(id=pk)
         deleted.delete()
         return redirect('User_data_table')
+
+
+# ── 1. JOB DETAIL PAGE (client) ──────────────────────────────────────────────
+
+@login_required
+def job_detail_client(request, job_id):
+    """
+    URL:  /jobs/<job_id>/detail/
+    Name: Job_detail_client
+    """
+    job = get_object_or_404(Job_postings, id=job_id)
+
+    # Only the job owner can view this page
+    if job.Client != request.user:
+        return HttpResponseForbidden("You don't have permission to view this job.")
+
+    client_profile = get_object_or_404(Client_details, user=request.user)
+
+    # All requests for this job, newest first
+    requests_qs = (
+        JobRequest.objects
+        .filter(job=job)
+        .select_related('helper', 'helper__helper_details')
+        .order_by('-Requested_at')
+    )
+
+    context = {
+        'job':      job,
+        'client':   client_profile,
+        'requests': requests_qs,
+    }
+    return render(request, 'job_details_request.html', context)
+
+
+# ── 2. HELPER PRESSES "ACCEPT" ON A JOB CARD ────────────────────────────────
+
+@login_required
+@require_POST
+def helper_accept_job(request, job_id):
+    """
+    URL:  /jobs/<job_id>/accept/
+    Name: Helper_accept_job
+    """
+    job = get_object_or_404(Job_postings, id=job_id, Status='open')
+
+    already = JobRequest.objects.filter(job=job, helper=request.user).exists()
+    if already:
+        messages.info(request, "You've already sent a request for this job.")
+    else:
+        note = request.POST.get('note', '').strip()
+        JobRequest.objects.create(
+            job=job,
+            helper=request.user,
+            Note=note,
+            Status='pending',
+        )
+        messages.success(request, "Request sent! The client will be in touch.")
+
+    return redirect('Home_helper')
+
+
+# ── 3. CLIENT HIRES A HELPER ─────────────────────────────────────────────────
+
+@login_required
+@require_POST
+def accept_request(request, request_id):
+    """
+    URL:  /requests/<request_id>/accept/
+    Name: Accept_request
+    """
+    job_request = get_object_or_404(JobRequest, id=request_id)
+
+    if job_request.job.Client != request.user:
+        return HttpResponseForbidden("Not authorised.")
+
+    job_request.Status = 'accepted'
+    job_request.save()
+
+    helper_name = job_request.helper.helper_details.Fullname
+    messages.success(request, f"{helper_name} has been hired for this job.")
+    return redirect('Job_detail_client', job_id=job_request.job.id)
+
+
+# ── 4. TOGGLE JOB STATUS ─────────────────────────────────────────────────────
+
+@login_required
+def toggle_job_status(request, job_id):
+    """
+    URL:  /jobs/<job_id>/toggle-status/
+    Name: Toggle_job_status
+    """
+    job = get_object_or_404(Job_postings, id=job_id)
+
+    if job.Client != request.user:
+        return HttpResponseForbidden()
+
+    job.Status = 'closed' if job.Status == 'open' else 'open'
+    job.save()
+    messages.success(request, f"Job marked as {job.Status}.")
+    return redirect('Job_detail_client', job_id=job.id)
+
+
+# ── 5. DELETE JOB ─────────────────────────────────────────────────────────────
+
+@login_required
+def delete_job(request, job_id):
+    """
+    URL:  /jobs/<job_id>/delete/
+    Name: Delete_job
+    """
+    job = get_object_or_404(Job_postings, id=job_id)
+
+    if job.Client != request.user:
+        return HttpResponseForbidden()
+
+    job.delete()
+    messages.success(request, "Job deleted.")
+    return redirect('Home_client')

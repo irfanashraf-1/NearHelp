@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ job.Title }} — NearHelp</title>
+
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --green:       #1D9E75;
+            --green-dark:  #0F6E56;
+            --green-light: #E1F5EE;
+            --bg:          #f5f5f3;
+            --border:      0.5px solid #e0e0e0;
+            --radius-card: 8px;
+            --radius-lg:   12px;
+            --radius-chip: 999px;
+            --nav-h:       56px;
+            --font:        -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --text:        #1a1a1a;
+            --muted:       #6b7280;
+            --danger:      #ef4444;
+        }
+
+        body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; }
+
+        /* NAV */
+        .nav {
+            position: sticky; top: 0; z-index: 100;
+            height: var(--nav-h); background: #fff; border-bottom: var(--border);
+            display: flex; align-items: center; justify-content: space-between; padding: 0 24px;
+        }
+        .logo { font-size: 18px; font-weight: 700; color: var(--text); text-decoration: none; letter-spacing: -0.3px; }
+        .logo span { color: var(--green); }
+        .nav-actions { display: flex; align-items: center; gap: 12px; }
+        .nav-back {
+            display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500;
+            color: var(--muted); text-decoration: none; padding: 6px 12px;
+            border-radius: var(--radius-chip); transition: background 0.15s, color 0.15s;
+        }
+        .nav-back:hover { background: var(--bg); color: var(--text); }
+        .nav-logout {
+            font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none;
+            padding: 6px 14px; border-radius: var(--radius-chip); border: var(--border); transition: background 0.15s;
+        }
+        .nav-logout:hover { background: var(--bg); }
+
+        /* PAGE */
+        .page {
+            max-width: 1080px; margin: 0 auto; padding: 28px 24px 60px;
+            display: grid; grid-template-columns: 1fr 360px; gap: 24px; align-items: start;
+        }
+
+        /* BREADCRUMB */
+        .breadcrumb {
+            grid-column: 1 / -1; display: flex; align-items: center; gap: 6px;
+            font-size: 13px; color: var(--muted); margin-bottom: 4px;
+        }
+        .breadcrumb a { color: var(--muted); text-decoration: none; }
+        .breadcrumb a:hover { color: var(--green); }
+
+        /* CARD */
+        .card { background: #fff; border: var(--border); border-radius: var(--radius-lg); padding: 24px; }
+
+        /* JOB HEADER */
+        .job-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 16px; }
+        .job-title { font-size: 20px; font-weight: 700; line-height: 1.3; }
+        .job-budget { font-size: 18px; font-weight: 700; color: var(--green); white-space: nowrap; }
+
+        /* TAGS */
+        .tags-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+        .tag { font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: var(--radius-chip); letter-spacing: 0.3px; }
+        .tag-yellow { background: #fef9c3; color: #854d0e; }
+        .tag-red    { background: #fee2e2; color: #991b1b; }
+        .tag-green  { background: var(--green-light); color: var(--green-dark); }
+        .tag-blue   { background: #eff6ff; color: #1d4ed8; }
+
+        /* LABELS & DIVIDERS */
+        .section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.8px; color: var(--muted); text-transform: uppercase; margin-bottom: 8px; }
+        .job-desc { font-size: 14px; line-height: 1.7; color: #374151; margin-bottom: 24px; }
+        .divider { border: none; border-top: var(--border); margin: 20px 0; }
+
+        /* META GRID */
+        .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+        .meta-item { display: flex; align-items: flex-start; gap: 10px; }
+        .meta-icon {
+            width: 32px; height: 32px; border-radius: 8px; background: var(--bg);
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0; font-size: 15px; color: var(--green);
+        }
+        .meta-text { font-size: 13px; }
+        .meta-text strong { display: block; font-size: 13px; font-weight: 600; }
+        .meta-text span { color: var(--muted); font-size: 12px; }
+
+        /* PHOTO */
+        .photos-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 8px; margin-top: 12px; }
+        .photo-thumb { aspect-ratio: 1; border-radius: var(--radius-card); overflow: hidden; border: var(--border); }
+        .photo-thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* POSTER */
+        .poster-row { display: flex; align-items: center; gap: 12px; }
+        .avatar {
+            width: 44px; height: 44px; border-radius: 50%;
+            background: var(--green-light); color: var(--green);
+            font-size: 17px; font-weight: 700;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden;
+        }
+        .avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .poster-info h4 { font-size: 14px; font-weight: 600; }
+        .poster-info span { font-size: 12px; color: var(--muted); }
+
+        /* SIDEBAR */
+        .sidebar { display: flex; flex-direction: column; gap: 16px; }
+
+        /* STATUS BLOCK */
+        .status-block {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 14px 16px; border-radius: var(--radius-card);
+            background: var(--green-light); border: 0.5px solid #b6e8d4;
+        }
+        .status-block.closed { background: #fee2e2; border-color: #fca5a5; }
+        .status-label { font-size: 13px; font-weight: 600; }
+        .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); }
+        .status-block.closed .status-dot { background: var(--danger); }
+
+        /* REQUESTS */
+        .requests-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+        .requests-header h3 { font-size: 15px; font-weight: 700; }
+        .request-count {
+            font-size: 12px; font-weight: 600; background: var(--green-light);
+            color: var(--green-dark); padding: 3px 9px; border-radius: var(--radius-chip);
+        }
+        .request-list { display: flex; flex-direction: column; gap: 12px; }
+
+        .request-card {
+            border: var(--border); border-radius: var(--radius-card); padding: 14px;
+            transition: border-color 0.15s, box-shadow 0.15s;
+        }
+        .request-card:hover { border-color: var(--green); box-shadow: 0 2px 8px rgba(29,158,117,0.08); }
+        .request-card.accepted { border-color: var(--green); background: #f0fdf8; }
+
+        .req-top { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+        .req-avatar {
+            width: 36px; height: 36px; border-radius: 50%;
+            background: var(--green-light); color: var(--green);
+            font-size: 14px; font-weight: 700;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden;
+        }
+        .req-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .req-info { flex: 1; min-width: 0; }
+        .req-info h4 { font-size: 13px; font-weight: 600; }
+        .req-info .req-meta { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+        .req-note {
+            font-size: 12px; color: #374151; line-height: 1.5;
+            background: var(--bg); border-radius: 6px; padding: 8px 10px; margin-bottom: 10px;
+        }
+        .req-time { font-size: 11px; color: var(--muted); margin-bottom: 10px; }
+        .req-actions { display: flex; gap: 8px; }
+
+        .btn-chat {
+            flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px;
+            font-size: 12px; font-weight: 600; padding: 7px 12px;
+            border-radius: var(--radius-chip); border: var(--border); background: #fff;
+            color: var(--text); cursor: pointer; text-decoration: none; transition: background 0.15s;
+        }
+        .btn-chat:hover { background: var(--bg); }
+
+        .btn-hire {
+            flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px;
+            font-size: 12px; font-weight: 600; padding: 7px 12px;
+            border-radius: var(--radius-chip); border: none;
+            background: var(--green); color: #fff; cursor: pointer; width: 100%; transition: background 0.15s;
+        }
+        .btn-hire:hover { background: var(--green-dark); }
+
+        .btn-hired {
+            flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px;
+            font-size: 12px; font-weight: 600; padding: 7px 12px;
+            border-radius: var(--radius-chip); border: none;
+            background: var(--green-light); color: var(--green-dark); cursor: default;
+        }
+
+        /* EMPTY */
+        .empty-requests { text-align: center; padding: 32px 16px; color: var(--muted); }
+        .empty-requests i { font-size: 32px; opacity: 0.3; display: block; margin-bottom: 8px; }
+        .empty-requests p { font-size: 13px; }
+
+        /* QUICK ACTIONS */
+        .quick-actions { display: flex; flex-direction: column; gap: 8px; }
+        .action-link {
+            display: flex; align-items: center; gap: 10px; padding: 10px 12px;
+            border-radius: var(--radius-card); border: var(--border); background: #fff;
+            font-size: 13px; font-weight: 500; color: var(--text);
+            text-decoration: none; cursor: pointer; transition: border-color 0.15s;
+        }
+        .action-link:hover { border-color: var(--green); }
+        .action-link i { color: var(--green); font-size: 16px; }
+        .action-link.danger { color: var(--danger); }
+        .action-link.danger i { color: var(--danger); }
+        .action-link.danger:hover { border-color: var(--danger); }
+
+        /* TOAST */
+        .toast {
+            position: fixed; bottom: 24px; left: 50%;
+            transform: translateX(-50%) translateY(80px);
+            background: #1a1a1a; color: #fff; font-size: 13px; font-weight: 500;
+            padding: 10px 20px; border-radius: var(--radius-chip);
+            opacity: 0; transition: transform 0.25s ease, opacity 0.25s;
+            z-index: 999; pointer-events: none;
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+        @media (max-width: 768px) {
+            .page { grid-template-columns: 1fr; padding: 16px 16px 48px; }
+            .meta-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav">
+    <a href="{% url 'Home_client' %}" class="logo">Near<span>Help</span></a>
+    <div class="nav-actions">
+        <a href="{% url 'Home_client' %}" class="nav-back">
+            <i class="ti ti-arrow-left"></i> My Jobs
+        </a>
+        <a href="{% url 'Logout' %}" class="nav-logout">Log out</a>
+    </div>
+</header>
+
+<!-- PAGE -->
+<div class="page">
+
+    <!-- BREADCRUMB -->
+    <div class="breadcrumb">
+        <a href="{% url 'Home_client' %}">My Jobs</a>
+        <i class="ti ti-chevron-right"></i>
+        <span>{{ job.Title }}</span>
+    </div>
+
+    <!-- LEFT: JOB DETAILS -->
+    <main>
+        <div class="card" style="margin-bottom: 16px;">
+
+            <div class="job-header">
+                <h1 class="job-title">{{ job.Title }}</h1>
+                <div class="job-budget">₹{{ job.Budget_min }}–{{ job.Budget_max }}</div>
+            </div>
+
+            <div class="tags-row">
+                <span class="tag tag-yellow">{{ job.Category }}</span>
+
+                {% if job.Urgency == 'today' %}
+                    <span class="tag tag-red"><i class="ti ti-urgent"></i> Today</span>
+                {% elif job.Urgency == 'week' %}
+                    <span class="tag tag-red"><i class="ti ti-calendar-week"></i> This Week</span>
+                {% else %}
+                    <span class="tag tag-blue"><i class="ti ti-clock"></i> Flexible</span>
+                {% endif %}
+
+                {% if job.Status == 'open' %}
+                    <span class="tag tag-green"><i class="ti ti-circle-check"></i> Open</span>
+                {% else %}
+                    <span class="tag tag-red">Closed</span>
+                {% endif %}
+
+                {% if job.Duration == 'recurring_weekly' %}
+                    <span class="tag tag-blue">Recurring — weekly</span>
+                {% elif job.Duration == 'recurring_monthly' %}
+                    <span class="tag tag-blue">Recurring — monthly</span>
+                {% else %}
+                    <span class="tag tag-blue">One-time job</span>
+                {% endif %}
+            </div>
+
+            <div class="section-label">Description</div>
+            <p class="job-desc">{{ job.Description }}</p>
+
+            <hr class="divider">
+
+            <div class="meta-grid">
+                <div class="meta-item">
+                    <div class="meta-icon"><i class="ti ti-map-pin"></i></div>
+                    <div class="meta-text">
+                        <strong>{{ job.Area }}</strong>
+                        <span>{{ job.Town }}, {{ job.Pin }}</span>
+                    </div>
+                </div>
+
+                <div class="meta-item">
+                    <div class="meta-icon"><i class="ti ti-clock"></i></div>
+                    <div class="meta-text">
+                        <strong>Posted {{ job.Date_posted|timesince }} ago</strong>
+                        <span>{{ job.Date_posted|date:"d M Y" }}</span>
+                    </div>
+                </div>
+
+                <div class="meta-item">
+                    <div class="meta-icon"><i class="ti ti-message"></i></div>
+                    <div class="meta-text">
+                        <strong>Contact preference</strong>
+                        <span>{{ job.Contact_pref|capfirst }}</span>
+                    </div>
+                </div>
+
+                <div class="meta-item">
+                    <div class="meta-icon"><i class="ti ti-users"></i></div>
+                    <div class="meta-text">
+                        <strong>{{ requests.count }} request{{ requests.count|pluralize }}</strong>
+                        <span>From nearby helpers</span>
+                    </div>
+                </div>
+            </div>
+
+            {% if job.Photos %}
+            <hr class="divider">
+            <div class="section-label">Photos</div>
+            <div class="photos-grid">
+                <div class="photo-thumb">
+                    <img src="{{ job.Photos.url }}" alt="Job photo">
+                </div>
+            </div>
+            {% endif %}
+
+            <hr class="divider">
+
+            <!-- <div class="section-label" style="margin-bottom: 12px;">Posted by</div>
+            <div class="poster-row">
+                <div class="avatar">
+                    {% if client.Photo %}
+                        <img src="{{ client.Photo.url }}" alt="Profile">
+                    {% else %}
+                        {{ client.Fullname|first|upper }}
+                    {% endif %}
+                </div>
+                <div class="poster-info">
+                    <h4>{{ client.Fullname }}</h4>
+                    <span>{{ client.Area }}, {{ client.Town }}</span>
+                </div>
+            </div> -->
+
+        </div>
+    </main>
+
+    <!-- RIGHT: SIDEBAR -->
+    <aside class="sidebar">
+
+        <!-- JOB STATUS -->
+        <div class="status-block {% if job.Status != 'open' %}closed{% endif %}">
+            <span class="status-label">
+                {% if job.Status == 'open' %}Job is Open{% else %}Job is Closed{% endif %}
+            </span>
+            <div class="status-dot"></div>
+        </div>
+
+        <!-- HELPER REQUESTS -->
+        <div class="card">
+            <div class="requests-header">
+                <h3>Helper Requests</h3>
+                <span class="request-count">{{ requests.count }}</span>
+            </div>
+
+            <div class="request-list">
+                {% if requests %}
+                    {% for req in requests %}
+                    <div class="request-card {% if req.Status == 'accepted' %}accepted{% endif %}">
+
+                        <div class="req-top">
+                            <div class="req-avatar">
+                                {% if req.helper.helper_details.Photo %}
+                                    <img src="{{ req.helper.helper_details.Photo.url }}" alt="">
+                                {% else %}
+                                    {{ req.helper.helper_details.Fullname|first|upper }}
+                                {% endif %}
+                            </div>
+                            <div class="req-info">
+                                <h4>{{ req.helper.helper_details.Fullname }}</h4>
+                                <div class="req-meta">
+                                    <i class="ti ti-map-pin" style="font-size:11px;"></i>
+                                    {{ req.helper.helper_details.Area }}, {{ req.helper.helper_details.Town }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Helper's category / skill -->
+                        <div style="margin-bottom: 8px;">
+                            <span style="font-size:11px; padding:3px 9px; border-radius:999px; background:var(--bg); border:var(--border); color:var(--muted);">
+                                {{ req.helper.helper_details.Category }}
+                            </span>
+                        </div>
+
+                        {% if req.Note %}
+                        <div class="req-note">"{{ req.Note }}"</div>
+                        {% endif %}
+
+                        <div class="req-time">
+                            <i class="ti ti-clock"></i>
+                            Requested {{ req.Requested_at|timesince }} ago
+                        </div>
+
+                        <div class="req-actions">
+                            <!-- Chat — wire up URL when chat is built -->
+                            <a href="#" class="btn-chat">
+                                <i class="ti ti-message-circle"></i> Chat
+                            </a>
+
+                            {% if req.Status == 'accepted' %}
+                                <span class="btn-hired">
+                                    <i class="ti ti-circle-check-filled"></i> Hired
+                                </span>
+                            {% else %}
+                                <form method="POST"
+                                      action="{% url 'Accept_request' req.id %}"
+                                      style="flex:1; display:flex;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn-hire">
+                                        <i class="ti ti-check"></i> Hire
+                                    </button>
+                                </form>
+                            {% endif %}
+                        </div>
+
+                    </div>
+                    {% endfor %}
+
+                {% else %}
+                    <div class="empty-requests">
+                        <i class="ti ti-inbox"></i>
+                        <p>No requests yet.<br>Helpers near you will respond soon.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- QUICK ACTIONS -->
+        <div class="card">
+            <div class="section-label" style="margin-bottom: 12px;">Job actions</div>
+            <div class="quick-actions">
+                <a href="" class="action-link">
+                    <i class="ti ti-pencil"></i> Edit this job
+                </a>
+                <a href="{% url 'Toggle_job_status' job.id %}" class="action-link">
+                    {% if job.Status == 'open' %}
+                        <i class="ti ti-lock"></i> Close job
+                    {% else %}
+                        <i class="ti ti-lock-open"></i> Reopen job
+                    {% endif %}
+                </a>
+                <a href="{% url 'Delete_job' job.id %}"
+                   class="action-link danger"
+                   onclick="return confirm('Delete this job? This cannot be undone.')">
+                    <i class="ti ti-trash"></i> Delete job
+                </a>
+            </div>
+        </div>
+
+    </aside>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+    function showToast(msg) {
+        const t = document.getElementById('toast');
+        t.textContent = msg;
+        t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 3000);
+    }
+    // {% if messages %}
+    //     {% for message in messages %}
+    //         showToast("{{ message }}");
+    //     {% endfor %}
+    // {% endif %}
+    {% if messages %}
+        {% for message in messages %}
+            showToast("{{ message|escapejs }}");
+        {% endfor %}
+    {% endif %}
+</script>
+
+</body>
+</html>

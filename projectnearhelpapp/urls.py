@@ -16,7 +16,7 @@ urlpatterns = [
     path('Home_client',views.Home_client,name='Home_client'),
 
     path('Job_posting_form',views.Job_posting_form,name='Job_posting_form'),
-
+    
     #Admin pages
     path('Admin_dashboard',views.Admin_dashboard,name='Admin_dashboard'),
 
@@ -57,5 +57,21 @@ urlpatterns = [
     path('Painting_page',views.Painting_page,name='Painting_page'),
     path('Plumbing_page',views.Plumbing_page,name='Plumbing_page'),
     path('Electrical_page',views.Electrical_page,name='Electrical_page'),
+
+    
+    # Client: full job detail + helper requests
+    path('jobs/<int:job_id>/detail/',         views.job_detail_client,  name='Job_detail_client'),
+ 
+    # Helper: press "Accept" on a listing → creates JobRequest
+    path('jobs/<int:job_id>/accept/',         views.helper_accept_job,  name='Helper_accept_job'),
+ 
+    # Client: press "Hire" on a specific request
+    path('requests/<int:request_id>/accept/', views.accept_request,      name='Accept_request'),
+ 
+    # Client: toggle job open ↔ closed
+    path('jobs/<int:job_id>/toggle-status/',  views.toggle_job_status,  name='Toggle_job_status'),
+ 
+    # Client: delete a job
+    path('jobs/<int:job_id>/delete/',         views.delete_job,         name='Delete_job'),
 
 ]
