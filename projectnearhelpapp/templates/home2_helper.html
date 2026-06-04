@@ -333,7 +333,6 @@
 
                                 <form method="POST" action="{% url 'Helper_accept_job' job.id %}">
                                     {% csrf_token %}
-                                    <textarea name="note" placeholder="Add a note (optional)"></textarea>
                                     <button type="submit">Accept</button>
                                 </form>
 

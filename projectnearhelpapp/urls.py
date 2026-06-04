@@ -43,7 +43,7 @@ urlpatterns = [
 
     #Profile pages
     path('Profile_client',views.Profile_client,name='Profile_client'),
-    path('Profile_helper',views.Profile_helper,name='Profile_helper'),
+    # path('Profile_helper',views.Profile_helper,name='Profile_helper'),
 
     # path('Profile_dashboard_view',views.Profile_dashboard_view,name='Profile_dashboard_view'),
     # path('Profile_view',views.Profile_view,name='Profile_view')
@@ -74,4 +74,7 @@ urlpatterns = [
     # Client: delete a job
     path('jobs/<int:job_id>/delete/',         views.delete_job,         name='Delete_job'),
 
+
+    path('helper/profile/',         views.Profile_helper,   name='Profile_helper'),
+    path('request/<int:request_id>/accept/', views.Accept_request, name='Accept_request'),
 ]

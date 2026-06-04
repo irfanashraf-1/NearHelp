@@ -16,6 +16,8 @@ from django.http import HttpResponseForbidden
 
 from .models import Job_postings, JobRequest, Client_details, Helper_details
 
+from .models import Helper_details, JobRequest
+
 def Welcomepage(request):
     return render(request,'welcome.html')
 #Login & Signup 
@@ -140,19 +142,19 @@ def Profile_client(request):
     }
     return render(request,'profile_pages/profile_client.html', context)
 
-def Profile_helper(request):
-    helper = request.user.helper_details
-    client_jobs = Job_postings.objects.filter(Client=request.user)
+# def Profile_helper(request):
+#     helper = request.user.helper_details
+#     client_jobs = Job_postings.objects.filter(Client=request.user)
 
-    context = {
-        'client': helper,
-        'client_jobs': client_jobs,
-        'total_jobs': client_jobs.count(),
-        'open_jobs': client_jobs.filter(Status='open').count(),     
-        'completed_jobs': client_jobs.filter(Status='closed').count(),
-    }
+#     context = {
+#         'client': helper,
+#         'client_jobs': client_jobs,
+#         'total_jobs': client_jobs.count(),
+#         'open_jobs': client_jobs.filter(Status='open').count(),     
+#         'completed_jobs': client_jobs.filter(Status='closed').count(),
+#     }
         
-    return render(request,'profile_pages/profile_helper.html', context)
+#     return render(request,'profile_pages/profile_helper.html', context)
 
 #Categories
 def Carpentry_page(request):
@@ -546,3 +548,93 @@ def delete_job(request, job_id):
     job.delete()
     messages.success(request, "Job deleted.")
     return redirect('Home_client')
+
+
+
+
+@login_required
+def Profile_helper(request):
+    """
+    Helper's profile page.
+
+    Shows personal info and all jobs the helper has been hired for
+    (i.e. JobRequest rows with Status='accepted' for this user).
+    """
+    # Guard: make sure this user actually has a helper profile
+    try:
+        helper = request.user.helper_details
+    except Helper_details.DoesNotExist:
+        return redirect('Home_helper')          # or wherever non-helpers should land
+
+    # All accepted job requests for this helper, newest first.
+    # select_related pulls job + job's client in one query.
+    committed_jobs = (
+        JobRequest.objects
+        .filter(helper=request.user, Status='accepted')
+        .select_related('job', 'job__Client', 'job__Client__client_details')
+        .order_by('-Requested_at')
+    )
+
+    total_jobs     = committed_jobs.count()
+    open_jobs      = committed_jobs.filter(job__Status='open').count()
+    closed_jobs    = committed_jobs.filter(job__Status='closed').count()
+
+    # ── Handle profile-edit POST ──────────────────────────────────────────
+    if request.method == 'POST':
+        helper.Fullname     = request.POST.get('fullname',      helper.Fullname)
+        helper.Phone_number = request.POST.get('phone_number',  helper.Phone_number)
+        helper.Email        = request.POST.get('email',         helper.Email)
+        helper.Area         = request.POST.get('area',          helper.Area)
+        helper.Town         = request.POST.get('town',          helper.Town)
+        helper.Pin          = request.POST.get('pin',           helper.Pin)
+
+        if request.FILES.get('photo'):
+            helper.Photo = request.FILES['photo']
+
+        new_password = request.POST.get('password', '').strip()
+        if new_password:
+            request.user.set_password(new_password)
+            request.user.save()
+
+        helper.save()
+        messages.success(request, 'Profile updated successfully.')
+        return redirect('Profile_helper')
+
+    # ── GET ───────────────────────────────────────────────────────────────
+    context = {
+        'client':        helper,          # template uses 'client' variable name
+        'committed_jobs': committed_jobs,
+        'total_jobs':    total_jobs,
+        'open_jobs':     open_jobs,
+        'completed_jobs': closed_jobs,    # "completed" = closed in current model
+    }
+    return render(request, 'profile_pages/profile_helper.html', context)
+
+
+# ── Accept a helper's job request (called from job_details_request.html) ──
+
+@login_required
+def Accept_request(request, request_id):
+    """
+    Marks a JobRequest as 'accepted'.
+    Only the job's owner (client) can do this.
+    POST only.
+    """
+    if request.method != 'POST':
+        return redirect('Home_client')
+
+    job_request = get_object_or_404(JobRequest, id=request_id)
+
+    # Security: only the client who posted the job can accept
+    if job_request.job.Client != request.user:
+        messages.error(request, 'You are not authorised to do that.')
+        return redirect('Home_client')
+
+    job_request.Status = 'accepted'
+    job_request.save()
+
+    messages.success(
+        request,
+        f'{job_request.helper.helper_details.Fullname} has been hired!'
+    )
+    return redirect('Job_details_request', job_id=job_request.job.id)
