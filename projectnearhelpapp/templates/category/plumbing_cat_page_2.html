@@ -4,7 +4,7 @@
     {% load static %}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Moving Jobs – NearHelp</title>
+    <title>Plumbing Jobs – NearHelp</title>
     <link rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
     <link rel="stylesheet" href="{% static 'css/category_pages.css' %}" />
@@ -15,9 +15,9 @@
     <!-- NAV -->
     <nav>
       <a class="nav-logo" href="#">Near<span>Help</span></a>
-      <!-- <button class="nav-btn"><i class="ti ti-plus"></i> Post a Job</button> -->
-      <button class="nav-btn"><i class="ti ti-user"></i>Profile</button>
-      <div class="nav-avatar">IK</div>
+      <!-- <button class="nav-btn"><i class="ti ti-plus"></i> Post a Job</button>
+  <button class="nav-btn"><i class="ti ti-briefcase"></i> Find Work</button> -->
+      <div class="nav-avatar">jk</div>
     </nav>
 
     <!-- BREADCRUMB -->
@@ -26,7 +26,7 @@
       <i class="ti ti-chevron-right sep"></i>
       <a href="#">Categories</a>
       <i class="ti ti-chevron-right sep"></i>
-      <span class="current">Moving</span>
+      <span class="current">Plumbing</span>
     </div>
 
     <!-- CATEGORY HEADER -->
@@ -37,23 +37,27 @@
             <i class="ti ti-tool"></i>
           </div>
           <div>
-            <h1>Moving</h1>
-            <p>Relocation, packing, unpacking &amp; more near you</p>
+            <h1>Plumbing</h1>
+            <p>Leaks, pipe repairs, installations &amp; more near you</p>
           </div>
         </div>
 
         <div class="cat-meta">
           <span class="cat-meta-item"><i class="ti ti-list-check"></i> 34 open
             jobs</span>
-          <!-- <span class="cat-meta-item"><i class="ti ti-users"></i> 12 workers nearby</span> -->
-          <!-- <span class="cat-meta-item"><i class="ti ti-clock"></i> Avg. response: 18 min</span> -->
+          <!-- <span class="cat-meta-item"><i class="ti ti-users"></i> 12 workers nearby</span>
+      <span class="cat-meta-item"><i class="ti ti-clock"></i> Avg. response: 18 min</span> -->
         </div>
 
         <div class="subcat-tabs">
-          <button class="subcat-tab active">All Moving</button>
-          <button class="subcat-tab">Packing</button>
-          <button class="subcat-tab">Unpacking</button>
-          <button class="subcat-tab">Relocation</button>
+          <button class="subcat-tab active">All Plumbing</button>
+          <button class="subcat-tab">Leak Repair</button>
+          <button class="subcat-tab">Pipe Fitting</button>
+          <button class="subcat-tab">Tap &amp; Faucet</button>
+          <button class="subcat-tab">Water Heater</button>
+          <button class="subcat-tab">Drain Cleaning</button>
+          <button class="subcat-tab">Toilet Repair</button>
+          <button class="subcat-tab">New Installation</button>
         </div>
       </div>
     </div>
@@ -84,23 +88,23 @@
 
         <!-- Filters -->
         <div class="sidebar-card">
-          <h4>Filters</h4>
+          <h4>Filter</h4>
 
           <div class="filter-group">
-            <div class="filter-label">Urgency</div>
-            <div class="filter-chips">
-              <button class="chip active">Any</button>
-              <button class="chip">Today</button>
-              <button class="chip">This Week</button>
-              <button class="chip">Flexible</button>
+            <div class="filter-label"><label for="">Urgency</label></div>
+            <div class="filter-chips" id="UrgencyGroup">
+              <button class="chip active"  data-val="flexible">Flexible</button>
+              <button class="chip" data-val="today">Today</button>
+              <button class="chip" data-val="week">This Week</button>              
             </div>
+            <input type="hidden" name="urgency" id="urgency_input" value="flexible" />
           </div>
 
           <div class="filter-group" style="margin-top:14px">
-            <div class="filter-label">Budget (₹)</div>
+            <div class="filter-label">Budget (Min)</div>
             <div class="price-inputs">
-              <input type="number" placeholder="Min" />
-              <input type="number" placeholder="Max" />
+              <input name="budget_min" type="number" placeholder="Min-₹" />
+              <!-- <input type="number" placeholder="Max" /> -->
             </div>
           </div>
 
@@ -114,12 +118,13 @@
       </div> -->
 
           <div class="filter-group" style="margin-top:14px">
-            <div class="filter-label">Job Type</div>
-            <div class="filter-chips">
-              <button class="chip active">All</button>
-              <button class="chip">One-time</button>
-              <button class="chip">Recurring</button>
+            <div class="filter-label"><label for="">Job Type</label></div>
+            <div class="filter-chips" id="Job-type-group">
+              <button class="chip active" data-val="all">All</button>
+              <button class="chip" data-val="one-time">One-time</button>
+              <button class="chip" data-val="recurring">Recurring</button>
             </div>
+            <input type="hidden" name="job_type" id="job_type_input" value="all"  />
           </div>
 
           <button class="apply-btn">Apply Filters</button>
@@ -134,23 +139,23 @@
         <div class="toolbar">
           <div class="search-box">
             <i class="ti ti-search"></i>
-            <input type="text" placeholder="Search moving jobs…" />
+            <input type="text" placeholder="Search plumbing jobs…" />
           </div>
           <select class="sort-select">
             <option>Most recent</option>
             <option>Highest pay</option>
-            <option>Lowest pay</option>
+            <!-- <option>Lowest pay</option> -->
           </select>
         </div>
 
-        <div class="results-info"><strong>34 jobs</strong> found in Moving near
-          you</div>
+        <div class="results-info"><strong>34 jobs</strong> found in Plumbing
+          near you</div>
 
         <!-- JOB CARDS -->
         <div class="jobs-grid">
 
           <!-- Card 1 -->
-          {% for job in moving_jobs %}
+          {% for job in plumbing_jobs %}
           <div class="job-card urgent">
             <div class="job-top">
               <div>
@@ -169,12 +174,14 @@
               <span class="tag red-tag">Flexible</span>
               {% endif %}
 
+              <div class="distance"><i class="ti ti-clock"></i>
+               {{ job.Date_posted|timesince }} ago</div>
             </div>
             <div class="job-bottom">
               <div class="user-box">
                 <div class="avatar blue-avatar">
                   <!-- Show photo if uploaded, else initials -->
-                  {% if job.client_photo %}
+                  {% if client.Photo %}
                   <img class="avatar-img"
                     src="{{ job.client_photo.url }}"
                     alt="Profile photo" />
@@ -184,14 +191,12 @@
                   </div>
                   {% endif %}
                 </div>
-                <br>
                 <div>
                   <h5>{{ job.client_fullname }}</h5>
                 </div>
               </div>
               <div class="job-action">
-                <small><div class="distance"><i class="ti ti-clock"></i>
-                    {{ job.Date_posted|timesince }} ago</div></small>
+                <small>20 min ago</small>
                 <button>Chat</button>
               </div>
             </div>
@@ -241,6 +246,35 @@
       btn.classList.add('active');
     });
   });
+
+  document.getElementById('UrgencyGroup').querySelectorAll('.chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.getElementById('UrgencyGroup').querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+      });
+    });
+
+  document.getElementById('Job-type-group').querySelectorAll('.chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.getElementById('Job-type-group').querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+      });
+    });
+
+
+    // Chip selection — single select
+    function setupChips(groupId, hiddenId) {
+      document.getElementById(groupId).querySelectorAll('.chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          document.getElementById(groupId).querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+          document.getElementById(hiddenId).value = chip.dataset.val;
+        });
+      });
+    }
+
+    setupChips('UrgencyGroup', 'urgency_input');
+    setupChips('Job-type-group', 'job_type_input');
 </script>
   </body>
 </html>

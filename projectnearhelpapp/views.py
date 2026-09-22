@@ -19,7 +19,7 @@ from .models import Job_postings, JobRequest, Client_details, Helper_details
 from .models import Helper_details, JobRequest
 
 def Welcomepage(request):
-    return render(request,'welcome.html')
+    return render(request,'index.html')
 #Login & Signup 
 def Helper_signup_page(request):
     return render(request,'login_signup/helper_signup_page.html')
@@ -162,19 +162,25 @@ def Carpentry_page(request):
     return render(request,'category/carpentry_cat_page.html', {'carpentry_jobs': carpentry_jobs})
 def Plumbing_page(request):
     plumbing_jobs = Job_postings.objects.filter(Category='plumbing')
-    return render(request,'category/plumbing_cat_page.html', {'plumbing_jobs': plumbing_jobs})
+    return render(request,'category/plumbing_cat_page_2.html', {'plumbing_jobs': plumbing_jobs})
 def Electrical_page(request):
-    return render(request,'category/electrical_cat_page.html')
+    electrical_jobs = Job_postings.objects.filter(Category='electrical')
+    return render(request,'category/electrical_cat_page.html', {'electrical_jobs': electrical_jobs})
 def Cleaning_page(request):
-    return render(request,'category/cleaning_cat_page.html')
+    cleaning_jobs = Job_postings.objects.filter(Category='cleaning')
+    return render(request,'category/cleaning_cat_page.html', {'cleaning_jobs': cleaning_jobs})
 def Painting_page(request):
-    return render(request,'category/painting_cat_page.html')
+    painting_jobs = Job_postings.objects.filter(Category='painting')
+    return render(request,'category/painting_cat_page.html', {'painting_jobs': painting_jobs})
 def Moving_page(request):
-    return render(request,'category/moving_cat_page.html')
+    moving_jobs = Job_postings.objects.filter(Category='moving')
+    return render(request,'category/moving_cat_page.html', {'moving_jobs': moving_jobs})
 def Gardening_page(request):
-    return render(request,'category/gardening_cat_page.html')
+    gardening_jobs = Job_postings.objects.filter(Category='gardening')
+    return render(request,'category/gardening_cat_page.html', {'gardening_jobs': gardening_jobs})
 def Techhelp_page(request):
-    return render(request,'category/techhelp_cat_page.html')
+    techhelp_jobs = Job_postings.objects.filter(Category='techhelp')
+    return render(request,'category/techhelp_cat_page.html', {'techhelp_jobs': techhelp_jobs})
 
 
 def Save_client_data(request):
@@ -488,8 +494,8 @@ def helper_accept_job(request, job_id):
         )
         messages.success(request, "Request sent! The client will be in touch.")
 
-    return redirect('Home_helper')
-
+    
+    return redirect('Home_helper')  
 
 # ── 3. CLIENT HIRES A HELPER ─────────────────────────────────────────────────
 
@@ -510,7 +516,7 @@ def accept_request(request, request_id):
 
     helper_name = job_request.helper.helper_details.Fullname
     messages.success(request, f"{helper_name} has been hired for this job.")
-    return redirect('Job_detail_client', job_id=job_request.job.id)
+    return redirect('job_detail_client', job_id=job_request.job.id)
 
 
 # ── 4. TOGGLE JOB STATUS ─────────────────────────────────────────────────────

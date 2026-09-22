@@ -87,24 +87,27 @@
     </div> -->
 
         <!-- Filters -->
+        <form action="" method="post">
+          {% csrf_token %}
+          <input type="hidden" name="search" id="filter-search-hidden" value="{{ request.POST.search }}">
         <div class="sidebar-card">
           <h4>Filter</h4>
 
           <div class="filter-group">
-            <div class="filter-label">Urgency</div>
-            <div class="filter-chips">
-              <button class="chip active">Any</button>
-              <button class="chip">Today</button>
-              <button class="chip">This Week</button>
-              <button class="chip">Flexible</button>
+            <label for=""><div class="filter-label">Urgency</div></label>
+            <div class="filter-chips chip-group" id="UrgencyGroup">
+              <button class="chip active" data-val="flexible" >Flexible</button>
+              <button class="chip" data-val="today">Today</button>
+              <button class="chip" data-val="this_week">This Week</button>         
             </div>
+            <input type="text" name="urgency" id="urgency_input" value="flexible" hidden>
           </div>
 
           <div class="filter-group" style="margin-top:14px">
             <div class="filter-label">Budget (₹)</div>
             <div class="price-inputs">
               <input type="number" placeholder="Min" />
-              <input type="number" placeholder="Max" />
+              
             </div>
           </div>
 
@@ -128,6 +131,7 @@
 
           <button class="apply-btn">Apply Filters</button>
         </div>
+        </form>
 
       </aside>
 
@@ -138,12 +142,18 @@
         <div class="toolbar">
           <div class="search-box">
             <i class="ti ti-search"></i>
-            <input type="text" placeholder="Search plumbing jobs…" />
+            <input type="text"
+                                name="search"
+                                id="hero-search"
+                                value="{{ request.POST.search }}"
+                                placeholder="Search plumbing jobs…"
+                                autocomplete="off" />
+
           </div>
           <select class="sort-select">
             <option>Most recent</option>
             <option>Highest pay</option>
-            <option>Lowest pay</option>
+            
           </select>
         </div>
 
@@ -173,14 +183,12 @@
               <span class="tag red-tag">Flexible</span>
               {% endif %}
 
-              <div class="distance"><i class="ti ti-clock"></i>
-               {{ job.Date_posted|timesince }} ago</div>
             </div>
             <div class="job-bottom">
               <div class="user-box">
                 <div class="avatar blue-avatar">
                   <!-- Show photo if uploaded, else initials -->
-                  {% if client.Photo %}
+                  {% if job.client_photo %}
                   <img class="avatar-img"
                     src="{{ job.client_photo.url }}"
                     alt="Profile photo" />
@@ -190,12 +198,14 @@
                   </div>
                   {% endif %}
                 </div>
+                <br>
                 <div>
                   <h5>{{ job.client_fullname }}</h5>
                 </div>
               </div>
               <div class="job-action">
-                <small>20 min ago</small>
+                <small><div class="distance"><i class="ti ti-clock"></i>
+                    {{ job.Date_posted|timesince }} ago</div></small>
                 <button>Chat</button>
               </div>
             </div>
@@ -219,7 +229,7 @@
       <!-- /right-col -->
     </div>
 
-    <script>
+  <script>
   // Sub-category tab switching
   document.querySelectorAll('.subcat-tab').forEach(tab => {
     tab.addEventListener('click', () => {
@@ -229,7 +239,7 @@
   });
 
   // Filter chip toggling
-  document.querySelectorAll('.filter-chips').forEach(group => {
+  document.getElementById('filter-chips').querySelectorAll('.chip').forEach(group => {
     group.querySelectorAll('.chip').forEach(chip => {
       chip.addEventListener('click', () => {
         group.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
@@ -238,6 +248,20 @@
     });
   });
 
+  // Chip selection — single select
+    function setupChips(groupId, hiddenId) {
+      document.getElementById(groupId).querySelectorAll('.chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          document.getElementById(groupId).querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+          document.getElementById(hiddenId).value = chip.dataset.val;
+        });
+      });
+    }
+
+    setupChips('UrgencyGroup', 'urgency_input');
+    setupChips('', '');
+    
   // Pagination
   document.querySelectorAll('.page-btn:not(.disabled)').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -245,6 +269,36 @@
       btn.classList.add('active');
     });
   });
-</script>
+
+  // ── NearHelp: keyword search ──────────────────────────────────
+            
+            const heroInput   = document.getElementById('hero-search');
+            const filterForm  = document.getElementById('filter-form');
+            const hiddenField = document.getElementById('filter-search-hidden');
+ 
+            let debounceTimer;
+ 
+            heroInput.addEventListener('input', () => {
+                hiddenField.value = heroInput.value.trim();
+ 
+                // Debounce: wait 2000 ms after the user stops typing, then submit
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(() => {
+                    filterForm.submit();
+                }, 2000);
+            });
+ 
+            heroInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    clearTimeout(debounceTimer);
+                    hiddenField.value = heroInput.value.trim();
+                    filterForm.submit();
+                }
+            });
+
+  
+  
+  </script>
   </body>
 </html>

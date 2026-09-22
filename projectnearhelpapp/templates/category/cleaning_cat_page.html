@@ -136,7 +136,7 @@
     <div class="toolbar">
       <div class="search-box">
         <i class="ti ti-search"></i>
-        <input type="text" placeholder="Search carpentry jobs…" />
+        <input type="text" placeholder="Search cleaning jobs…" />
       </div>
       <select class="sort-select">
         <option>Most recent</option>
@@ -150,184 +150,56 @@
     <!-- JOB CARDS -->
     <div class="jobs-grid">
 
+      
       <!-- Card 1 -->
-      <div class="job-card urgent">
-        <div class="job-top">
-          <div>
-            <h3>Kitchen sink pipe leaking urgently</h3>
-            <p>Water dripping under the sink cabinet. Needs immediate repair. Please come ASAP, minor flooding risk.</p>
-          </div>
-          <h4>₹400–700</h4>
-        </div>
-        <div class="job-tags">
-          <span class="tag green-tag">Plumbing</span>
-          <span class="tag red-tag">Urgent</span>
-          <span class="tag red-tag">Today</span>
-          <div class="distance"><i class="ti ti-map-pin"></i>1.2 km away</div>
-        </div>
-        <div class="job-bottom">
-          <div class="user-box">
-            <div class="avatar blue-avatar">RM</div>
-            <div>
-              <h5>Rahul M.</h5>
-              <span><i class="ti ti-star-filled"></i>4.9</span>
+          {% for job in cleaning_jobs %}
+          <div class="job-card urgent">
+            <div class="job-top">
+              <div>
+                <h3>{{ job.Title }}</h3>
+                <p>{{ job.Description }}</p>
+              </div>
+              <h4>₹{{ job.Budget_min }}–{{ job.Budget_max }}</h4>
             </div>
-          </div>
-          <div class="job-action">
-            <small>20 min ago</small>
-            <button>Chat</button>
-          </div>
-        </div>
-      </div>
+            <div class="job-tags">
+              <span class="tag green-tag">{{ job.Category }}</span>
+              {% if job.Urgency == 'today' %}
+              <span class="tag red-tag">Today</span>
+              {% elif job.Urgency == 'week' %}
+              <span class="tag red-tag">This Week</span>
+              {% else %}
+              <span class="tag red-tag">Flexible</span>
+              {% endif %}
 
-      <!-- Card 2 -->
-      <div class="job-card">
-        <div class="job-top">
-          <div>
-            <h3>Bathroom tap replacement</h3>
-            <p>Old mixer tap needs replacing in master bathroom. New tap already purchased and ready. Should be a straightforward swap.</p>
-          </div>
-          <h4>₹250–400</h4>
-        </div>
-        <div class="job-tags">
-          <span class="tag green-tag">Plumbing</span>
-          <span class="tag blue-tag">This Week</span>
-          <div class="distance"><i class="ti ti-map-pin"></i>2.7 km away</div>
-        </div>
-        <div class="job-bottom">
-          <div class="user-box">
-            <div class="avatar pink-avatar">SV</div>
-            <div>
-              <h5>Sunita V.</h5>
-              <span><i class="ti ti-star-filled"></i>4.6</span>
+            </div>
+            <div class="job-bottom">
+              <div class="user-box">
+                <div class="avatar blue-avatar">
+                  <!-- Show photo if uploaded, else initials -->
+                  {% if job.client_photo %}
+                  <img class="avatar-img"
+                    src="{{ job.client_photo.url }}"
+                    alt="Profile photo" />
+                  {% else %}
+                  <div class="avatar-placeholder">
+                    {{ job.client_fullname|first|upper }}
+                  </div>
+                  {% endif %}
+                </div>
+                <br>
+                <div>
+                  <h5>{{ job.client_fullname }}</h5>
+                </div>
+              </div>
+              <div class="job-action">
+                <small><div class="distance"><i class="ti ti-clock"></i>
+                    {{ job.Date_posted|timesince }} ago</div></small>
+                <button>Chat</button>
+              </div>
             </div>
           </div>
-          <div class="job-action">
-            <small>2 hrs ago</small>
-            <button>Chat</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card 3 -->
-      <div class="job-card">
-        <div class="job-top">
-          <div>
-            <h3>Overhead tank pipeline connection</h3>
-            <p>New overhead tank installed, need plumber to connect pipelines and fit ball valve. Approx 3–4 hours work.</p>
-          </div>
-          <h4>₹800–1,200</h4>
-        </div>
-        <div class="job-tags">
-          <span class="tag green-tag">Plumbing</span>
-          <span class="tag green-tag">New Installation</span>
-          <span class="tag orange-tag">Tomorrow</span>
-          <div class="distance"><i class="ti ti-map-pin"></i>3.1 km away</div>
-        </div>
-        <div class="job-bottom">
-          <div class="user-box">
-            <div class="avatar yellow-avatar">AK</div>
-            <div>
-              <h5>Arjun K.</h5>
-              <span><i class="ti ti-star-filled"></i>4.8</span>
-            </div>
-          </div>
-          <div class="job-action">
-            <small>Yesterday</small>
-            <button>Chat</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card 4 -->
-      <div class="job-card">
-        <div class="job-top">
-          <div>
-            <h3>Blocked drain in kitchen</h3>
-            <p>Kitchen drain is completely blocked, water not draining at all. Need a plumber with drain cleaning equipment today.</p>
-          </div>
-          <h4>₹300–500</h4>
-        </div>
-        <div class="job-tags">
-          <span class="tag green-tag">Plumbing</span>
-          <span class="tag green-tag">Drain Cleaning</span>
-          <span class="tag red-tag">Today</span>
-          <div class="distance"><i class="ti ti-map-pin"></i>4.0 km away</div>
-        </div>
-        <div class="job-bottom">
-          <div class="user-box">
-            <div class="avatar purple-avatar">MN</div>
-            <div>
-              <h5>Meera N.</h5>
-              <span><i class="ti ti-star-filled"></i>4.4</span>
-            </div>
-          </div>
-          <div class="job-action">
-            <small>3 hrs ago</small>
-            <button>Chat</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card 5 -->
-      <div class="job-card">
-        <div class="job-top">
-          <div>
-            <h3>Geyser/water heater pipe fitting</h3>
-            <p>New 25L geyser installed but inlet/outlet pipes not connected yet. Need someone experienced with heater connections.</p>
-          </div>
-          <h4>₹350–550</h4>
-        </div>
-        <div class="job-tags">
-          <span class="tag green-tag">Plumbing</span>
-          <span class="tag green-tag">Water Heater</span>
-          <span class="tag blue-tag">This Week</span>
-          <div class="distance"><i class="ti ti-map-pin"></i>2.2 km away</div>
-        </div>
-        <div class="job-bottom">
-          <div class="user-box">
-            <div class="avatar teal-avatar">VR</div>
-            <div>
-              <h5>Vijay R.</h5>
-              <span><i class="ti ti-star-filled"></i>4.7</span>
-            </div>
-          </div>
-          <div class="job-action">
-            <small>5 hrs ago</small>
-            <button>Chat</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card 6 -->
-      <div class="job-card">
-        <div class="job-top">
-          <div>
-            <h3>Toilet flush mechanism repair</h3>
-            <p>Toilet cistern not filling properly, flush weak. Likely needs new fill valve or float ball. Small apartment in 2nd floor.</p>
-          </div>
-          <h4>₹200–350</h4>
-        </div>
-        <div class="job-tags">
-          <span class="tag green-tag">Plumbing</span>
-          <span class="tag green-tag">Toilet Repair</span>
-          <span class="tag blue-tag">Flexible</span>
-          <div class="distance"><i class="ti ti-map-pin"></i>5.5 km away</div>
-        </div>
-        <div class="job-bottom">
-          <div class="user-box">
-            <div class="avatar orange-avatar">PK</div>
-            <div>
-              <h5>Pradeep K.</h5>
-              <span><i class="ti ti-star-filled"></i>4.3</span>
-            </div>
-          </div>
-          <div class="job-action">
-            <small>Yesterday</small>
-            <button>Chat</button>
-          </div>
-        </div>
-      </div>
+          {% endfor %}
+      
 
     </div>
     <!-- /jobs-grid -->

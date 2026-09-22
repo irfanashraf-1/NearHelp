@@ -154,7 +154,7 @@
         <div class="jobs-grid">
 
           <!-- Card 1 -->
-          {% for job in plumbing_jobs %}
+          {% for job in carpentry_jobs %}
           <div class="job-card urgent">
             <div class="job-top">
               <div>
@@ -173,14 +173,12 @@
               <span class="tag red-tag">Flexible</span>
               {% endif %}
 
-              <div class="distance"><i class="ti ti-clock"></i>
-                {{ job.Date_posted|timesince }} ago</div>
             </div>
             <div class="job-bottom">
               <div class="user-box">
                 <div class="avatar blue-avatar">
                   <!-- Show photo if uploaded, else initials -->
-                  {% if client.Photo %}
+                  {% if job.client_photo %}
                   <img class="avatar-img"
                     src="{{ job.client_photo.url }}"
                     alt="Profile photo" />
@@ -190,12 +188,14 @@
                   </div>
                   {% endif %}
                 </div>
+                <br>
                 <div>
                   <h5>{{ job.client_fullname }}</h5>
                 </div>
               </div>
               <div class="job-action">
-                <small>20 min ago</small>
+                <small><div class="distance"><i class="ti ti-clock"></i>
+                    {{ job.Date_posted|timesince }} ago</div></small>
                 <button>Chat</button>
               </div>
             </div>

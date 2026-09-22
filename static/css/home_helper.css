@@ -817,6 +817,14 @@ body {
     font-size:18px;
     font-weight:600;
 }
+.avatar-img {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #e0e0e0;
+        display: block;
+    }
 
 .brown-avatar{
     background:#FAEEDA;

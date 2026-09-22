@@ -238,7 +238,7 @@
                                 <div class="filter-left">
                                     <input type="checkbox" name="urgency"
                                         value="flexible"
-                                        {% if 'flexible' in selected_urgencies %}                                        
+                                        {% if 'flexible' in selected_urgencies %}
                                         checked
                                         {% endif %}
                                         onchange="document.getElementById('filter-form').submit()">
@@ -260,12 +260,20 @@
                 </form>
 
                 <!-- JOB CARDS -->
-                <div class="jobs-list">
+                <div class="jobs-list" id="jobsection">
+                    <!-- FLASH MESSAGES -->
+                        <div class="flash-messages">
+                            {% for i in messages %}
+                            <h4 style="color: red; font-weight: 100;">{{ i }}</h4>
+                                
+                            {% endfor %}
+                        </div>
 
                     <!-- CARD 2 -->
+
                     {% for job in client_jobs %}
                     <div class="job-card">
-
+                        
                         <div class="job-top">
 
                             <div>
@@ -306,7 +314,7 @@
 
                                 <div class="avatar green-avatar">
                                     <!-- Show photo if uploaded, else initials -->
-                                    {% if client.Photo %}
+                                    {% if job.client_photo %}
                                     <img class="avatar-img"
                                         src="{{ job.client_photo.url }}"
                                         alt="Profile photo" />
@@ -331,7 +339,8 @@
 
                             <div class="job-action">
 
-                                <form method="POST" action="{% url 'Helper_accept_job' job.id %}">
+                                <form method="POST"
+                                    action="{% url 'Helper_accept_job' job.id %}">
                                     {% csrf_token %}
                                     <button type="submit">Accept</button>
                                 </form>
