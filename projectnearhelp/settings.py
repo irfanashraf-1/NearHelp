@@ -124,3 +124,6 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR,'static')]
 
 
 LOGIN_URL = 'Login_page'
+CSRF_TRUSTED_ORIGINS = [
+    'https://nearhelp-q7el.onrender.com',
+]
