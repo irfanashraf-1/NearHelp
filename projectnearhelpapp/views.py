@@ -18,6 +18,11 @@ from .models import Job_postings, JobRequest, Client_details, Helper_details
 
 from .models import Helper_details, JobRequest
 
+from django.http import HttpResponse
+
+def health_check(request):
+  return HttpResponse("OK", status=200)
+
 def Welcomepage(request):
     return render(request,'index.html')
 #Login & Signup 
