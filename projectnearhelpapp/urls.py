@@ -1,6 +1,7 @@
 from django.urls import path 
 from projectnearhelpapp import views
 
+
 urlpatterns = [
     path('',views.Welcomepage,name='Welcomepage'),
 
@@ -77,4 +78,6 @@ urlpatterns = [
 
     path('helper/profile/',         views.Profile_helper,   name='Profile_helper'),
     path('request/<int:request_id>/accept/', views.Accept_request, name='Accept_request'),
+
+    path("health/", health_check, name="health_check"),
 ]
