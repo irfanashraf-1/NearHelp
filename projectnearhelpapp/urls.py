@@ -79,5 +79,5 @@ urlpatterns = [
     path('helper/profile/',         views.Profile_helper,   name='Profile_helper'),
     path('request/<int:request_id>/accept/', views.Accept_request, name='Accept_request'),
 
-    path("health", health_check, name="health_check"),
+    path("health", views.health_check, name="health_check"),
 ]
