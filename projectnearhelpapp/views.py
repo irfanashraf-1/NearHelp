@@ -21,7 +21,7 @@ from .models import Helper_details, JobRequest
 from django.http import HttpResponse
 
 def health_check(request):
-  return HttpResponse("OK", status=200)
+    return HttpResponse("OK", status=200)
 
 def Welcomepage(request):
     return render(request,'index.html')
